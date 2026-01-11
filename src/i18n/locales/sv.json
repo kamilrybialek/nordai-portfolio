@@ -1,0 +1,195 @@
+{
+  "nav": {
+    "home": "Hem",
+    "about": "Om Oss",
+    "services": "Tjänster",
+    "portfolio": "Portfolio",
+    "blog": "Blogg",
+    "contact": "Kontakt"
+  },
+  "hero": {
+    "tagline": "AI-Driven Digital Studio",
+    "headline": "Där Intelligens Möter Kreativitet",
+    "subheadline": "Vi skapar digitala upplevelser som blandar artificiell intelligens med människocentrerad design. Från automation till varumärke, vi hjälper framåtblickande företag att blomstra i AI-eran.",
+    "cta": "Starta Ditt Projekt",
+    "cta_secondary": "Se Vårt Arbete"
+  },
+  "about": {
+    "title": "Om Oss",
+    "headline": "Vi Är nordAi.studio",
+    "intro": "En nordisk digital studio i skärningspunkten mellan artificiell intelligens och kreativ excellens.",
+    "mission_title": "Vårt Uppdrag",
+    "mission": "Att demokratisera AI-drivna lösningar och ge företag möjlighet att uppnå mer med mindre. Vi tror att teknologi ska förstärka mänsklig kreativitet, inte ersätta den.",
+    "approach_title": "Vårt Tillvägagångssätt",
+    "approach": "Vi kombinerar skandinaviska designprinciper—enkelhet, funktionalitet och skönhet—med banbrytande AI-kapacitet. Varje projekt börjar med att förstå dina unika utmaningar och slutar med lösningar som verkligen fungerar.",
+    "values": {
+      "innovation": {
+        "title": "Innovation Först",
+        "description": "Vi ligger steget före och utforskar ständigt nya AI-möjligheter."
+      },
+      "quality": {
+        "title": "Kvalitetsbesatta",
+        "description": "Varje pixel, varje kodrad, varje interaktion skapas med omsorg."
+      },
+      "partnership": {
+        "title": "Äkta Partnerskap",
+        "description": "Din framgång är vår framgång. Vi gör detta tillsammans."
+      }
+    }
+  },
+  "services": {
+    "title": "Tjänster",
+    "headline": "Vad Vi Gör",
+    "subheadline": "Omfattande digitala lösningar drivna av AI och mänsklig expertis",
+    "items": {
+      "ai_automation": {
+        "title": "AI & Automation",
+        "short": "Effektivisera verksamheten med intelligent automation",
+        "description": "Transformera dina arbetsflöden med skräddarsydda AI-lösningar. Från chatbotar till processautomation bygger vi system som arbetar smartare, inte hårdare.",
+        "features": ["Skräddarsydda AI-agenter", "Arbetsflödesautomation", "Databehandling", "Prediktiv Analys"]
+      },
+      "branding": {
+        "title": "AI-Driven Varumärkesutveckling",
+        "short": "Datadriven varumärkesstrategi och identitet",
+        "description": "Skapa varumärken som resonerar. Vi använder AI-insikter för att utveckla identiteter som ansluter till din målgrupp på en djupare nivå.",
+        "features": ["Varumärkesstrategi", "Visuell Identitet", "Varumärkesriktlinjer", "Marknadsanalys"]
+      },
+      "ux_design": {
+        "title": "UX/UI Design",
+        "short": "Människocentrerade digitala upplevelser",
+        "description": "Design som förtjusar och konverterar. Vi skapar intuitiva gränssnitt backat av användarforskning och AI-förbättrade designsystem.",
+        "features": ["Användarforskning", "Gränssnittsdesign", "Prototyper", "Designsystem"]
+      },
+      "digital_products": {
+        "title": "Digitala Produkter & Webbplatser",
+        "short": "Fullstack-utveckling med AI-integration",
+        "description": "Från koncept till lansering bygger vi digitala produkter som skalar. Moderna tekniska stackar, AI-funktioner, exceptionell prestanda.",
+        "features": ["Webbapplikationer", "E-handel", "AI-integration", "Prestandaoptimering"]
+      },
+      "content_marketing": {
+        "title": "AI-Drivet Innehåll & Marknadsföring",
+        "short": "Innehåll som rankar och konverterar",
+        "description": "Innehållsstrategi driven av AI-insikter. Vi skapar, optimerar och distribuerar innehåll som bygger auktoritet och driver resultat.",
+        "features": ["Innehållsstrategi", "SEO-optimering", "AI-innehållsverktyg", "Analys & Rapportering"]
+      }
+    },
+    "cta": "Utforska Denna Tjänst"
+  },
+  "portfolio": {
+    "title": "Portfolio",
+    "headline": "Vårt Arbete",
+    "subheadline": "Utvalda projekt som visar vår expertis inom AI, design och utveckling",
+    "view_case": "Visa Fallstudie",
+    "challenge": "Utmaning",
+    "solution": "Lösning",
+    "process": "Process",
+    "results": "Resultat",
+    "tech_stack": "Teknisk Stack",
+    "all": "Alla Projekt",
+    "filter": {
+      "ai": "AI & Automation",
+      "branding": "Varumärke",
+      "web": "Webbutveckling",
+      "design": "UX/UI Design"
+    }
+  },
+  "blog": {
+    "title": "Blogg",
+    "headline": "Insikter & Idéer",
+    "subheadline": "Tankar om AI, design, automation och digitalens framtid",
+    "read_more": "Läs Artikel",
+    "categories": {
+      "all": "Alla",
+      "ai": "AI",
+      "automation": "Automation",
+      "design": "Design",
+      "insights": "Insikter",
+      "trends": "Trender"
+    },
+    "min_read": "min läsning"
+  },
+  "why": {
+    "title": "Varför nordAi.studio",
+    "headline": "Varför Välja Oss",
+    "items": {
+      "expertise": {
+        "title": "Djup AI-Expertis",
+        "description": "Vårt team kombinerar års erfarenhet inom AI, maskininlärning och praktiska affärsapplikationer."
+      },
+      "design": {
+        "title": "Designexcellens",
+        "description": "Vi bygger inte bara funktionella lösningar—vi skapar vackra upplevelser som användare älskar."
+      },
+      "results": {
+        "title": "Bevisade Resultat",
+        "description": "Våra kunder ser mätbara förbättringar i effektivitet, engagemang och intäkter."
+      },
+      "partnership": {
+        "title": "Långsiktigt Partnerskap",
+        "description": "Vi är inte bara leverantörer. Vi är partners investerade i din fortsatta framgång."
+      }
+    }
+  },
+  "testimonials": {
+    "title": "Omdömen",
+    "headline": "Vad Våra Kunder Säger"
+  },
+  "contact": {
+    "title": "Kontakt",
+    "headline": "Låt Oss Skapa Tillsammans",
+    "subheadline": "Redo att ta med AI-driven innovation till ditt företag? Vi skulle älska att höra från dig.",
+    "form": {
+      "name": "Ditt Namn",
+      "email": "E-postadress",
+      "company": "Företag (Valfritt)",
+      "project": "Berätta om ditt projekt",
+      "submit": "Skicka Meddelande"
+    },
+    "info": {
+      "email": "hello@nordai.studio",
+      "location": "Stockholm, Sverige"
+    }
+  },
+  "footer": {
+    "tagline": "AI-drivna digitala lösningar för framåtblickande företag.",
+    "navigation": "Navigation",
+    "services": "Tjänster",
+    "connect": "Anslut",
+    "legal": {
+      "privacy": "Integritetspolicy",
+      "terms": "Användarvillkor"
+    },
+    "copyright": "© 2025 nordAi.studio. Alla rättigheter förbehållna."
+  },
+  "cta": {
+    "global_headline": "Redo att Transformera Ditt Företag?",
+    "global_text": "Låt oss diskutera hur AI kan driva ditt nästa genombrott.",
+    "global_button": "Kontakta Oss"
+  },
+  "meta": {
+    "home": {
+      "title": "nordAi.studio | AI-Driven Digital Studio",
+      "description": "Vi skapar digitala upplevelser som blandar artificiell intelligens med människocentrerad design. AI-automation, varumärke, UX/UI och webbutveckling."
+    },
+    "about": {
+      "title": "Om Oss | nordAi.studio",
+      "description": "En nordisk digital studio i skärningspunkten mellan artificiell intelligens och kreativ excellens. Lär dig om vårt uppdrag och tillvägagångssätt."
+    },
+    "services": {
+      "title": "Våra Tjänster | nordAi.studio",
+      "description": "AI & Automation, Varumärke, UX/UI Design, Webbutveckling och Innehållsmarknadsföring. Omfattande digitala lösningar drivna av AI."
+    },
+    "portfolio": {
+      "title": "Portfolio | nordAi.studio",
+      "description": "Utforska våra utvalda projekt som visar expertis inom AI, design och utveckling. Se fallstudier och resultat."
+    },
+    "blog": {
+      "title": "Blogg | nordAi.studio",
+      "description": "Insikter om AI, automation, design och digitala trender. Expertperspektiv från nordAi.studio-teamet."
+    },
+    "contact": {
+      "title": "Kontakta Oss | nordAi.studio",
+      "description": "Redo att ta med AI-driven innovation till ditt företag? Kontakta vårt team i Stockholm."
+    }
+  }
+}

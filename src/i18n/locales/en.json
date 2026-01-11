@@ -1,0 +1,195 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "portfolio": "Portfolio",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "hero": {
+    "tagline": "AI-Powered Digital Studio",
+    "headline": "Where Intelligence Meets Creativity",
+    "subheadline": "We craft digital experiences that blend artificial intelligence with human-centered design. From automation to branding, we help forward-thinking companies thrive in the AI era.",
+    "cta": "Start Your Project",
+    "cta_secondary": "View Our Work"
+  },
+  "about": {
+    "title": "About Us",
+    "headline": "We Are nordAi.studio",
+    "intro": "A Nordic digital studio at the intersection of artificial intelligence and creative excellence.",
+    "mission_title": "Our Mission",
+    "mission": "To democratize AI-powered solutions and empower businesses to achieve more with less. We believe technology should amplify human creativity, not replace it.",
+    "approach_title": "Our Approach",
+    "approach": "We combine Scandinavian design principles—simplicity, functionality, and beauty—with cutting-edge AI capabilities. Every project starts with understanding your unique challenges and ends with solutions that truly work.",
+    "values": {
+      "innovation": {
+        "title": "Innovation First",
+        "description": "We stay ahead of the curve, constantly exploring new AI possibilities."
+      },
+      "quality": {
+        "title": "Quality Obsessed",
+        "description": "Every pixel, every line of code, every interaction is crafted with care."
+      },
+      "partnership": {
+        "title": "True Partnership",
+        "description": "Your success is our success. We're in this together."
+      }
+    }
+  },
+  "services": {
+    "title": "Services",
+    "headline": "What We Do",
+    "subheadline": "Comprehensive digital solutions powered by AI and human expertise",
+    "items": {
+      "ai_automation": {
+        "title": "AI & Automation",
+        "short": "Streamline operations with intelligent automation",
+        "description": "Transform your workflows with custom AI solutions. From chatbots to process automation, we build systems that work smarter, not harder.",
+        "features": ["Custom AI Agents", "Workflow Automation", "Data Processing", "Predictive Analytics"]
+      },
+      "branding": {
+        "title": "AI-Powered Branding",
+        "short": "Data-driven brand strategy and identity",
+        "description": "Create brands that resonate. We use AI insights to develop identities that connect with your audience on a deeper level.",
+        "features": ["Brand Strategy", "Visual Identity", "Brand Guidelines", "Market Analysis"]
+      },
+      "ux_design": {
+        "title": "UX/UI Design",
+        "short": "Human-centered digital experiences",
+        "description": "Design that delights and converts. We create intuitive interfaces backed by user research and AI-enhanced design systems.",
+        "features": ["User Research", "Interface Design", "Prototyping", "Design Systems"]
+      },
+      "digital_products": {
+        "title": "Digital Products & Websites",
+        "short": "Full-stack development with AI integration",
+        "description": "From concept to launch, we build digital products that scale. Modern tech stacks, AI features, exceptional performance.",
+        "features": ["Web Applications", "E-commerce", "AI Integration", "Performance Optimization"]
+      },
+      "content_marketing": {
+        "title": "AI-Driven Content & Marketing",
+        "short": "Content that ranks and converts",
+        "description": "Content strategy powered by AI insights. We create, optimize, and distribute content that builds authority and drives results.",
+        "features": ["Content Strategy", "SEO Optimization", "AI Content Tools", "Analytics & Reporting"]
+      }
+    },
+    "cta": "Explore This Service"
+  },
+  "portfolio": {
+    "title": "Portfolio",
+    "headline": "Our Work",
+    "subheadline": "Selected projects showcasing our expertise in AI, design, and development",
+    "view_case": "View Case Study",
+    "challenge": "Challenge",
+    "solution": "Solution",
+    "process": "Process",
+    "results": "Results",
+    "tech_stack": "Tech Stack",
+    "all": "All Projects",
+    "filter": {
+      "ai": "AI & Automation",
+      "branding": "Branding",
+      "web": "Web Development",
+      "design": "UX/UI Design"
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "headline": "Insights & Ideas",
+    "subheadline": "Thoughts on AI, design, automation, and the future of digital",
+    "read_more": "Read Article",
+    "categories": {
+      "all": "All",
+      "ai": "AI",
+      "automation": "Automation",
+      "design": "Design",
+      "insights": "Insights",
+      "trends": "Trends"
+    },
+    "min_read": "min read"
+  },
+  "why": {
+    "title": "Why nordAi.studio",
+    "headline": "Why Choose Us",
+    "items": {
+      "expertise": {
+        "title": "Deep AI Expertise",
+        "description": "Our team combines years of experience in AI, machine learning, and practical business applications."
+      },
+      "design": {
+        "title": "Design Excellence",
+        "description": "We don't just build functional solutions—we create beautiful experiences that users love."
+      },
+      "results": {
+        "title": "Proven Results",
+        "description": "Our clients see measurable improvements in efficiency, engagement, and revenue."
+      },
+      "partnership": {
+        "title": "Long-term Partnership",
+        "description": "We're not just vendors. We're partners invested in your continued success."
+      }
+    }
+  },
+  "testimonials": {
+    "title": "Testimonials",
+    "headline": "What Our Clients Say"
+  },
+  "contact": {
+    "title": "Contact",
+    "headline": "Let's Create Together",
+    "subheadline": "Ready to bring AI-powered innovation to your business? We'd love to hear from you.",
+    "form": {
+      "name": "Your Name",
+      "email": "Email Address",
+      "company": "Company (Optional)",
+      "project": "Tell us about your project",
+      "submit": "Send Message"
+    },
+    "info": {
+      "email": "hello@nordai.studio",
+      "location": "Stockholm, Sweden"
+    }
+  },
+  "footer": {
+    "tagline": "AI-powered digital solutions for forward-thinking companies.",
+    "navigation": "Navigation",
+    "services": "Services",
+    "connect": "Connect",
+    "legal": {
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service"
+    },
+    "copyright": "© 2025 nordAi.studio. All rights reserved."
+  },
+  "cta": {
+    "global_headline": "Ready to Transform Your Business?",
+    "global_text": "Let's discuss how AI can drive your next breakthrough.",
+    "global_button": "Get in Touch"
+  },
+  "meta": {
+    "home": {
+      "title": "nordAi.studio | AI-Powered Digital Studio",
+      "description": "We craft digital experiences that blend artificial intelligence with human-centered design. AI automation, branding, UX/UI, and web development."
+    },
+    "about": {
+      "title": "About Us | nordAi.studio",
+      "description": "A Nordic digital studio at the intersection of artificial intelligence and creative excellence. Learn about our mission and approach."
+    },
+    "services": {
+      "title": "Our Services | nordAi.studio",
+      "description": "AI & Automation, Branding, UX/UI Design, Web Development, and Content Marketing. Comprehensive digital solutions powered by AI."
+    },
+    "portfolio": {
+      "title": "Portfolio | nordAi.studio",
+      "description": "Explore our selected projects showcasing expertise in AI, design, and development. View case studies and results."
+    },
+    "blog": {
+      "title": "Blog | nordAi.studio",
+      "description": "Insights on AI, automation, design, and digital trends. Expert perspectives from the nordAi.studio team."
+    },
+    "contact": {
+      "title": "Contact Us | nordAi.studio",
+      "description": "Ready to bring AI-powered innovation to your business? Get in touch with our team in Stockholm."
+    }
+  }
+}

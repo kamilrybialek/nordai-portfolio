@@ -1,0 +1,195 @@
+{
+  "nav": {
+    "home": "Strona Główna",
+    "about": "O Nas",
+    "services": "Usługi",
+    "portfolio": "Portfolio",
+    "blog": "Blog",
+    "contact": "Kontakt"
+  },
+  "hero": {
+    "tagline": "Studio Cyfrowe Napędzane AI",
+    "headline": "Gdzie Inteligencja Spotyka Kreatywność",
+    "subheadline": "Tworzymy cyfrowe doświadczenia, które łączą sztuczną inteligencję z projektowaniem zorientowanym na człowieka. Od automatyzacji po branding, pomagamy przyszłościowym firmom rozwijać się w erze AI.",
+    "cta": "Rozpocznij Projekt",
+    "cta_secondary": "Zobacz Nasze Prace"
+  },
+  "about": {
+    "title": "O Nas",
+    "headline": "Jesteśmy nordAi.studio",
+    "intro": "Nordyckie studio cyfrowe na przecięciu sztucznej inteligencji i kreatywnej doskonałości.",
+    "mission_title": "Nasza Misja",
+    "mission": "Demokratyzacja rozwiązań opartych na AI i umożliwienie firmom osiągania więcej przy mniejszym nakładzie. Wierzymy, że technologia powinna wzmacniać ludzką kreatywność, a nie ją zastępować.",
+    "approach_title": "Nasze Podejście",
+    "approach": "Łączymy skandynawskie zasady projektowania—prostotę, funkcjonalność i piękno—z najnowocześniejszymi możliwościami AI. Każdy projekt zaczyna się od zrozumienia Twoich unikalnych wyzwań i kończy rozwiązaniami, które naprawdę działają.",
+    "values": {
+      "innovation": {
+        "title": "Innowacja na Pierwszym Miejscu",
+        "description": "Wyprzedzamy trendy, stale eksplorując nowe możliwości AI."
+      },
+      "quality": {
+        "title": "Obsesja Jakości",
+        "description": "Każdy piksel, każda linia kodu, każda interakcja jest tworzona z dbałością."
+      },
+      "partnership": {
+        "title": "Prawdziwe Partnerstwo",
+        "description": "Twój sukces to nasz sukces. Działamy razem."
+      }
+    }
+  },
+  "services": {
+    "title": "Usługi",
+    "headline": "Co Robimy",
+    "subheadline": "Kompleksowe rozwiązania cyfrowe napędzane AI i ludzką ekspertyzą",
+    "items": {
+      "ai_automation": {
+        "title": "AI i Automatyzacja",
+        "short": "Usprawniaj operacje dzięki inteligentnej automatyzacji",
+        "description": "Przekształć swoje przepływy pracy dzięki niestandardowym rozwiązaniom AI. Od chatbotów po automatyzację procesów, budujemy systemy, które pracują mądrzej, nie ciężej.",
+        "features": ["Niestandardowi Agenci AI", "Automatyzacja Przepływów", "Przetwarzanie Danych", "Analityka Predykcyjna"]
+      },
+      "branding": {
+        "title": "Branding Oparty na AI",
+        "short": "Strategia marki i tożsamość oparta na danych",
+        "description": "Twórz marki, które rezonują. Wykorzystujemy wglądy AI do tworzenia tożsamości, które łączą się z Twoją publicznością na głębszym poziomie.",
+        "features": ["Strategia Marki", "Identyfikacja Wizualna", "Wytyczne Marki", "Analiza Rynku"]
+      },
+      "ux_design": {
+        "title": "Projektowanie UX/UI",
+        "short": "Cyfrowe doświadczenia zorientowane na człowieka",
+        "description": "Design, który zachwyca i konwertuje. Tworzymy intuicyjne interfejsy wsparte badaniami użytkowników i systemami projektowymi wzbogaconymi AI.",
+        "features": ["Badania Użytkowników", "Projektowanie Interfejsów", "Prototypowanie", "Systemy Projektowe"]
+      },
+      "digital_products": {
+        "title": "Produkty Cyfrowe i Strony",
+        "short": "Pełnostackowy rozwój z integracją AI",
+        "description": "Od koncepcji do uruchomienia, budujemy produkty cyfrowe, które się skalują. Nowoczesne stosy technologiczne, funkcje AI, wyjątkowa wydajność.",
+        "features": ["Aplikacje Webowe", "E-commerce", "Integracja AI", "Optymalizacja Wydajności"]
+      },
+      "content_marketing": {
+        "title": "Treści i Marketing Napędzane AI",
+        "short": "Treści, które pozycjonują i konwertują",
+        "description": "Strategia treści napędzana wglądami AI. Tworzymy, optymalizujemy i dystrybuujemy treści, które budują autorytet i przynoszą rezultaty.",
+        "features": ["Strategia Treści", "Optymalizacja SEO", "Narzędzia AI do Treści", "Analityka i Raportowanie"]
+      }
+    },
+    "cta": "Poznaj Tę Usługę"
+  },
+  "portfolio": {
+    "title": "Portfolio",
+    "headline": "Nasze Prace",
+    "subheadline": "Wybrane projekty prezentujące naszą ekspertyzę w AI, designie i rozwoju",
+    "view_case": "Zobacz Case Study",
+    "challenge": "Wyzwanie",
+    "solution": "Rozwiązanie",
+    "process": "Proces",
+    "results": "Rezultaty",
+    "tech_stack": "Stos Technologiczny",
+    "all": "Wszystkie Projekty",
+    "filter": {
+      "ai": "AI i Automatyzacja",
+      "branding": "Branding",
+      "web": "Rozwój Web",
+      "design": "Projektowanie UX/UI"
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "headline": "Wglądy i Pomysły",
+    "subheadline": "Przemyślenia o AI, designie, automatyzacji i przyszłości cyfrowej",
+    "read_more": "Czytaj Artykuł",
+    "categories": {
+      "all": "Wszystkie",
+      "ai": "AI",
+      "automation": "Automatyzacja",
+      "design": "Design",
+      "insights": "Wglądy",
+      "trends": "Trendy"
+    },
+    "min_read": "min czytania"
+  },
+  "why": {
+    "title": "Dlaczego nordAi.studio",
+    "headline": "Dlaczego My",
+    "items": {
+      "expertise": {
+        "title": "Głęboka Ekspertyza AI",
+        "description": "Nasz zespół łączy lata doświadczenia w AI, uczeniu maszynowym i praktycznych aplikacjach biznesowych."
+      },
+      "design": {
+        "title": "Doskonałość Projektowania",
+        "description": "Nie tylko budujemy funkcjonalne rozwiązania—tworzymy piękne doświadczenia, które użytkownicy kochają."
+      },
+      "results": {
+        "title": "Udowodnione Rezultaty",
+        "description": "Nasi klienci widzą mierzalne poprawy w wydajności, zaangażowaniu i przychodach."
+      },
+      "partnership": {
+        "title": "Długoterminowe Partnerstwo",
+        "description": "Nie jesteśmy tylko dostawcami. Jesteśmy partnerami zainwestowanymi w Twój ciągły sukces."
+      }
+    }
+  },
+  "testimonials": {
+    "title": "Referencje",
+    "headline": "Co Mówią Nasi Klienci"
+  },
+  "contact": {
+    "title": "Kontakt",
+    "headline": "Twórzmy Razem",
+    "subheadline": "Gotowy na wprowadzenie innowacji opartych na AI do swojej firmy? Chętnie od Ciebie usłyszymy.",
+    "form": {
+      "name": "Twoje Imię",
+      "email": "Adres Email",
+      "company": "Firma (Opcjonalnie)",
+      "project": "Opowiedz nam o swoim projekcie",
+      "submit": "Wyślij Wiadomość"
+    },
+    "info": {
+      "email": "hello@nordai.studio",
+      "location": "Sztokholm, Szwecja"
+    }
+  },
+  "footer": {
+    "tagline": "Cyfrowe rozwiązania napędzane AI dla przyszłościowych firm.",
+    "navigation": "Nawigacja",
+    "services": "Usługi",
+    "connect": "Połącz się",
+    "legal": {
+      "privacy": "Polityka Prywatności",
+      "terms": "Warunki Usługi"
+    },
+    "copyright": "© 2025 nordAi.studio. Wszelkie prawa zastrzeżone."
+  },
+  "cta": {
+    "global_headline": "Gotowy na Transformację Swojej Firmy?",
+    "global_text": "Porozmawiajmy o tym, jak AI może napędzić Twój kolejny przełom.",
+    "global_button": "Skontaktuj Się"
+  },
+  "meta": {
+    "home": {
+      "title": "nordAi.studio | Studio Cyfrowe Napędzane AI",
+      "description": "Tworzymy cyfrowe doświadczenia łączące sztuczną inteligencję z projektowaniem zorientowanym na człowieka. Automatyzacja AI, branding, UX/UI i rozwój web."
+    },
+    "about": {
+      "title": "O Nas | nordAi.studio",
+      "description": "Nordyckie studio cyfrowe na przecięciu sztucznej inteligencji i kreatywnej doskonałości. Poznaj naszą misję i podejście."
+    },
+    "services": {
+      "title": "Nasze Usługi | nordAi.studio",
+      "description": "AI i Automatyzacja, Branding, Projektowanie UX/UI, Rozwój Web i Marketing Treści. Kompleksowe rozwiązania cyfrowe napędzane AI."
+    },
+    "portfolio": {
+      "title": "Portfolio | nordAi.studio",
+      "description": "Odkryj nasze wybrane projekty prezentujące ekspertyzę w AI, designie i rozwoju. Zobacz case studies i rezultaty."
+    },
+    "blog": {
+      "title": "Blog | nordAi.studio",
+      "description": "Wglądy o AI, automatyzacji, designie i trendach cyfrowych. Eksperckie perspektywy od zespołu nordAi.studio."
+    },
+    "contact": {
+      "title": "Kontakt | nordAi.studio",
+      "description": "Gotowy na wprowadzenie innowacji opartych na AI do swojej firmy? Skontaktuj się z naszym zespołem w Sztokholmie."
+    }
+  }
+}
