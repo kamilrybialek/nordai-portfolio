@@ -1,4 +1,8 @@
+import { useTranslation } from 'react-i18next';
+
 const PhilosophySection = () => {
+  const { t } = useTranslation();
+
   return (
     <section id="philosophy" className="py-24 bg-muted/30">
       <div className="container mx-auto px-8">
@@ -6,25 +10,25 @@ const PhilosophySection = () => {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-8">
               <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
-                Our Philosophy
+                {t('about.headline')}
               </h2>
-              
+
               <div className="space-y-6">
                 <div className="p-6 bg-card rounded-xl border border-border">
                   <h3 className="text-xl font-bold text-foreground mb-3">
-                    Scandinavian Design Principles
+                    {t('about.mission_title')}
                   </h3>
                   <p className="text-muted-foreground leading-relaxed">
-                    We embrace the Nordic philosophy of simplicity, functionality, and beauty. Every pixel has a purpose, every interaction feels natural.
+                    {t('about.mission')}
                   </p>
                 </div>
 
                 <div className="p-6 bg-card rounded-xl border border-border">
                   <h3 className="text-xl font-bold text-foreground mb-3">
-                    AI-First Approach
+                    {t('about.approach_title')}
                   </h3>
                   <p className="text-muted-foreground leading-relaxed">
-                    By integrating AI from the ground up, we create websites that learn, adapt, and provide personalized experiences for every user.
+                    {t('about.approach')}
                   </p>
                 </div>
               </div>
@@ -38,8 +42,8 @@ const PhilosophySection = () => {
                       <span className="text-primary font-bold">01</span>
                     </div>
                     <div>
-                      <h4 className="text-lg font-bold text-foreground mb-2">Minimalism</h4>
-                      <p className="text-sm text-muted-foreground">Less is more. We strip away the unnecessary to reveal the essential.</p>
+                      <h4 className="text-lg font-bold text-foreground mb-2">{t('about.values.innovation.title')}</h4>
+                      <p className="text-sm text-muted-foreground">{t('about.values.innovation.description')}</p>
                     </div>
                   </div>
 
@@ -48,8 +52,8 @@ const PhilosophySection = () => {
                       <span className="text-primary font-bold">02</span>
                     </div>
                     <div>
-                      <h4 className="text-lg font-bold text-foreground mb-2">Functionality</h4>
-                      <p className="text-sm text-muted-foreground">Beautiful design that works flawlessly across all devices.</p>
+                      <h4 className="text-lg font-bold text-foreground mb-2">{t('about.values.quality.title')}</h4>
+                      <p className="text-sm text-muted-foreground">{t('about.values.quality.description')}</p>
                     </div>
                   </div>
 
@@ -58,8 +62,8 @@ const PhilosophySection = () => {
                       <span className="text-primary font-bold">03</span>
                     </div>
                     <div>
-                      <h4 className="text-lg font-bold text-foreground mb-2">Innovation</h4>
-                      <p className="text-sm text-muted-foreground">Constantly pushing boundaries with the latest AI technology.</p>
+                      <h4 className="text-lg font-bold text-foreground mb-2">{t('about.values.partnership.title')}</h4>
+                      <p className="text-sm text-muted-foreground">{t('about.values.partnership.description')}</p>
                     </div>
                   </div>
                 </div>

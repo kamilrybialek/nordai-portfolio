@@ -1,37 +1,41 @@
-const projects = [
-  {
-    title: "Webshop for Fashion Brand Limitato.",
-    tags: ["Development", "Shopify"],
-    description: "Web development for Limitato a Scandinavian Fashion brand with a focus on Wearable Art."
-  },
-  {
-    title: "A Web Platform for SDSN Northern Europe.",
-    tags: ["Development", "CMS"],
-    description: "A web platform for SDSN Northern Europe that links knowledge to action for society."
-  },
-  {
-    title: "AI-Powered E-Commerce",
-    tags: ["Development", "AI"],
-    description: "Modern online store with intelligent product recommendations."
-  },
-  {
-    title: "Minimalist Brand Identity",
-    tags: ["Design", "Branding"],
-    description: "Complete brand identity for a Nordic startup."
-  }
-];
+import { useTranslation } from 'react-i18next';
 
 const WorkSection = () => {
+  const { t } = useTranslation();
+
+  const projects = [
+    {
+      title: "Webshop for Fashion Brand Limitato.",
+      tags: ["Development", "Shopify"],
+      description: "Web development for Limitato a Scandinavian Fashion brand with a focus on Wearable Art."
+    },
+    {
+      title: "A Web Platform for SDSN Northern Europe.",
+      tags: ["Development", "CMS"],
+      description: "A web platform for SDSN Northern Europe that links knowledge to action for society."
+    },
+    {
+      title: "AI-Powered E-Commerce",
+      tags: ["Development", "AI"],
+      description: "Modern online store with intelligent product recommendations."
+    },
+    {
+      title: "Minimalist Brand Identity",
+      tags: ["Design", "Branding"],
+      description: "Complete brand identity for a Nordic startup."
+    }
+  ];
+
   return (
     <section id="work" className="py-24 bg-background">
       <div className="container mx-auto px-8">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-4">
-              Featured Work
+              {t('portfolio.headline')}
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Explore our recent projects and success stories
+              {t('portfolio.subheadline')}
             </p>
           </div>
           

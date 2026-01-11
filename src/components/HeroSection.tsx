@@ -1,6 +1,9 @@
 import { Button } from "@/components/ui/button";
+import { useTranslation } from 'react-i18next';
 
 const HeroSection = () => {
+  const { t } = useTranslation();
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: 'smooth' });
@@ -13,33 +16,33 @@ const HeroSection = () => {
           <div className="space-y-8">
             <div className="space-y-6">
               <div className="inline-block px-4 py-2 bg-secondary rounded-full">
-                <span className="text-sm font-medium text-primary">Scandinavian Design × AI</span>
+                <span className="text-sm font-medium text-primary">{t('hero.tagline')}</span>
               </div>
-              
+
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground leading-[1.1]">
-                Crafting Digital Excellence
+                {t('hero.headline')}
               </h1>
-              
+
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl">
-                We blend timeless Scandinavian aesthetics with cutting-edge AI technology to create websites that are both beautiful and intelligent.
+                {t('hero.subheadline')}
               </p>
             </div>
 
             <div className="flex flex-wrap gap-4">
-              <Button 
+              <Button
                 size="lg"
                 onClick={() => scrollToSection('contact')}
                 className="rounded-full px-8"
               >
-                Start a Project
+                {t('hero.cta')}
               </Button>
-              <Button 
+              <Button
                 size="lg"
                 variant="outline"
                 onClick={() => scrollToSection('work')}
                 className="rounded-full px-8"
               >
-                View Cases
+                {t('hero.cta_secondary')}
               </Button>
             </div>
 

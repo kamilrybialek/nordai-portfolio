@@ -1,4 +1,8 @@
+import { useTranslation } from 'react-i18next';
+
 const Footer = () => {
+  const { t } = useTranslation();
+
   return (
     <footer className="py-16 bg-background border-t border-border">
       <div className="container mx-auto px-8">
@@ -9,31 +13,31 @@ const Footer = () => {
                 nordAi studio
               </div>
               <p className="text-sm text-muted-foreground">
-                Scandinavian Design & AI Innovation
+                {t('footer.tagline')}
               </p>
             </div>
-            
+
             <div>
-              <p className="text-sm font-bold text-foreground mb-4">Services</p>
+              <p className="text-sm font-bold text-foreground mb-4">{t('footer.services')}</p>
               <div className="space-y-2 text-sm text-muted-foreground">
-                <p className="hover:text-foreground transition-colors cursor-pointer">Web Development</p>
-                <p className="hover:text-foreground transition-colors cursor-pointer">Design & Branding</p>
-                <p className="hover:text-foreground transition-colors cursor-pointer">AI Integration</p>
+                <p className="hover:text-foreground transition-colors cursor-pointer">{t('services.items.ai_automation.title')}</p>
+                <p className="hover:text-foreground transition-colors cursor-pointer">{t('services.items.ux_design.title')}</p>
+                <p className="hover:text-foreground transition-colors cursor-pointer">{t('services.items.digital_products.title')}</p>
               </div>
             </div>
-            
+
             <div>
               <p className="text-sm font-bold text-foreground mb-4">Legal</p>
               <div className="space-y-2 text-sm text-muted-foreground">
-                <a href="#" className="block hover:text-foreground transition-colors">Privacy Policy</a>
-                <a href="#" className="block hover:text-foreground transition-colors">Terms of Service</a>
+                <a href="#" className="block hover:text-foreground transition-colors">{t('footer.legal.privacy')}</a>
+                <a href="#" className="block hover:text-foreground transition-colors">{t('footer.legal.terms')}</a>
               </div>
             </div>
           </div>
-          
+
           <div className="mt-16 pt-8 border-t border-border">
             <p className="text-sm text-muted-foreground">
-              © 2025 nordAi studio. All rights reserved.
+              {t('footer.copyright')}
             </p>
           </div>
         </div>

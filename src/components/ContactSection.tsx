@@ -1,4 +1,8 @@
+import { useTranslation } from 'react-i18next';
+
 const ContactSection = () => {
+  const { t } = useTranslation();
+
   return (
     <section id="contact" className="py-24 bg-background">
       <div className="container mx-auto px-8">
@@ -7,10 +11,10 @@ const ContactSection = () => {
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="space-y-6">
                 <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
-                  Let's Work Together
+                  {t('contact.headline')}
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  Ready to transform your digital presence? Get in touch and let's create something extraordinary together.
+                  {t('contact.subheadline')}
                 </p>
                 
                 <div className="space-y-4 pt-6">

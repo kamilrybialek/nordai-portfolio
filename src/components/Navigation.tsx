@@ -1,6 +1,10 @@
 import { AnimatedThemeToggler } from "./AnimatedThemeToggler";
+import LanguageSwitcher from "./layout/LanguageSwitcher";
+import { useTranslation } from 'react-i18next';
 
 const Navigation = () => {
+  const { t } = useTranslation();
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: 'smooth' });
@@ -12,35 +16,38 @@ const Navigation = () => {
         <div className="text-xl font-bold tracking-tight text-foreground">
           nordAi studio
         </div>
-        
+
         <div className="flex items-center gap-8">
           <div className="hidden md:flex items-center gap-12">
-            <button 
+            <button
               onClick={() => scrollToSection('services')}
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
-              Services
+              {t('nav.services')}
             </button>
-            <button 
+            <button
               onClick={() => scrollToSection('work')}
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
-              Cases
+              Portfolio
             </button>
-            <button 
+            <button
               onClick={() => scrollToSection('philosophy')}
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               Studio
             </button>
-            <button 
+            <button
               onClick={() => scrollToSection('contact')}
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
-              Contact
+              {t('nav.contact')}
             </button>
           </div>
-          <AnimatedThemeToggler />
+          <div className="flex items-center gap-4">
+            <LanguageSwitcher />
+            <AnimatedThemeToggler />
+          </div>
         </div>
       </div>
     </nav>
