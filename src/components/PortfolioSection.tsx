@@ -1,0 +1,110 @@
+import { useTranslation } from 'react-i18next';
+
+const projects = [
+  {
+    id: 'fintech-automation',
+    title: 'FinTech AI Automation',
+    client: 'Nordic Bank Group',
+    category: 'ai',
+    tags: ["AI", "Automation"],
+    excerpt: 'Automated customer service reducing response times by 80%.',
+  },
+  {
+    id: 'ecommerce-redesign',
+    title: 'E-commerce Redesign',
+    client: 'Scandinavian Retail Co',
+    category: 'web',
+    tags: ["Development", "Web"],
+    excerpt: 'Complete platform overhaul resulting in 150% conversion increase.',
+  },
+  {
+    id: 'brand-identity',
+    title: 'Tech Startup Branding',
+    client: 'GreenTech Innovations',
+    category: 'branding',
+    tags: ["Design", "Branding"],
+    excerpt: 'Full brand identity for sustainability-focused tech company.',
+  },
+  {
+    id: 'healthcare-app',
+    title: 'Healthcare App UX',
+    client: 'MedCare Solutions',
+    category: 'design',
+    tags: ["Design", "UX"],
+    excerpt: 'Patient-centered mobile app with accessibility focus.',
+  },
+  {
+    id: 'ai-content-platform',
+    title: 'AI Content Platform',
+    client: 'MediaHouse International',
+    category: 'ai',
+    tags: ["AI", "Development"],
+    excerpt: 'AI-powered content generation and distribution platform.',
+  },
+  {
+    id: 'saas-dashboard',
+    title: 'SaaS Analytics Dashboard',
+    client: 'DataDriven Inc',
+    category: 'web',
+    tags: ["Development", "Analytics"],
+    excerpt: 'Real-time analytics dashboard with predictive insights.',
+  },
+];
+
+const PortfolioSection = () => {
+  const { t } = useTranslation();
+
+  return (
+    <section id="portfolio" className="py-24 bg-muted/30">
+      <div className="container mx-auto px-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-4">
+              {t('portfolio.headline')}
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              {t('portfolio.subheadline')}
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {projects.map((project, index) => (
+              <div
+                key={index}
+                className="group bg-card rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 border border-border hover:border-primary/50"
+              >
+                <div className="aspect-video bg-gradient-to-br from-secondary via-accent to-muted"></div>
+                <div className="p-8 space-y-4">
+                  <div className="flex flex-wrap gap-2">
+                    {project.tags.map((tag, tagIndex) => (
+                      <span
+                        key={tagIndex}
+                        className="text-xs px-3 py-1 bg-secondary text-muted-foreground rounded-full"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <h3 className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors">
+                    {project.title}
+                  </h3>
+
+                  <p className="text-sm text-muted-foreground mb-2">
+                    {project.client}
+                  </p>
+
+                  <p className="text-muted-foreground leading-relaxed">
+                    {project.excerpt}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default PortfolioSection;
