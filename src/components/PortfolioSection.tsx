@@ -1,55 +1,5 @@
 import { useTranslation } from 'react-i18next';
-
-const projects = [
-  {
-    id: 'fintech-automation',
-    title: 'FinTech AI Automation',
-    client: 'Nordic Bank Group',
-    category: 'ai',
-    tags: ["AI", "Automation"],
-    excerpt: 'Automated customer service reducing response times by 80%.',
-  },
-  {
-    id: 'ecommerce-redesign',
-    title: 'E-commerce Redesign',
-    client: 'Scandinavian Retail Co',
-    category: 'web',
-    tags: ["Development", "Web"],
-    excerpt: 'Complete platform overhaul resulting in 150% conversion increase.',
-  },
-  {
-    id: 'brand-identity',
-    title: 'Tech Startup Branding',
-    client: 'GreenTech Innovations',
-    category: 'branding',
-    tags: ["Design", "Branding"],
-    excerpt: 'Full brand identity for sustainability-focused tech company.',
-  },
-  {
-    id: 'healthcare-app',
-    title: 'Healthcare App UX',
-    client: 'MedCare Solutions',
-    category: 'design',
-    tags: ["Design", "UX"],
-    excerpt: 'Patient-centered mobile app with accessibility focus.',
-  },
-  {
-    id: 'ai-content-platform',
-    title: 'AI Content Platform',
-    client: 'MediaHouse International',
-    category: 'ai',
-    tags: ["AI", "Development"],
-    excerpt: 'AI-powered content generation and distribution platform.',
-  },
-  {
-    id: 'saas-dashboard',
-    title: 'SaaS Analytics Dashboard',
-    client: 'DataDriven Inc',
-    category: 'web',
-    tags: ["Development", "Analytics"],
-    excerpt: 'Real-time analytics dashboard with predictive insights.',
-  },
-];
+import { portfolioProjects } from '@/data/portfolio';
 
 const PortfolioSection = () => {
   const { t } = useTranslation();
@@ -68,9 +18,9 @@ const PortfolioSection = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project, index) => (
+            {portfolioProjects.map((project, index) => (
               <div
-                key={index}
+                key={project.id}
                 className="group bg-card rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 border border-border hover:border-primary/50"
               >
                 <div className="aspect-video bg-gradient-to-br from-secondary via-accent to-muted"></div>
