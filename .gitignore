@@ -31,3 +31,4 @@ dist-ssr
 # Tina CMS
 # Note: .tina/__generated__ is committed for Tina Cloud production
 public/admin
+.vercel
