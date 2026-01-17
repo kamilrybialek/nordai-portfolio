@@ -53,33 +53,41 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 220 18% 15%;
-    --foreground: 30 15% 92%;
+    /* Brand colors from brand board */
+    /* Background: Black #0D0D0D */
+    --background: 0 0% 5%;
+    --foreground: 26 22% 88%;
 
-    --card: 220 16% 18%;
-    --card-foreground: 30 15% 92%;
+    /* Card: Slightly lighter than background */
+    --card: 0 0% 8%;
+    --card-foreground: 26 22% 88%;
 
-    --popover: 220 16% 18%;
-    --popover-foreground: 30 15% 92%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 26 22% 88%;
 
-    --primary: 210 50% 65%;
-    --primary-foreground: 220 18% 15%;
+    /* Primary: Graphite #506B78 */
+    --primary: 200 20% 39%;
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 220 15% 22%;
-    --secondary-foreground: 30 15% 92%;
+    /* Secondary: Light gray-blue #7E9CAA */
+    --secondary: 199 22% 58%;
+    --secondary-foreground: 0 0% 5%;
 
-    --muted: 220 15% 20%;
-    --muted-foreground: 220 10% 65%;
+    /* Muted: Darker graphite tones */
+    --muted: 200 15% 15%;
+    --muted-foreground: 199 22% 58%;
 
-    --accent: 25 35% 50%;
-    --accent-foreground: 30 15% 92%;
+    /* Accent: Beige/Taupe #BAA897 */
+    --accent: 26 22% 66%;
+    --accent-foreground: 0 0% 5%;
 
     --destructive: 0 65% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 25%;
-    --input: 220 15% 25%;
-    --ring: 210 50% 65%;
+    /* Borders: Subtle graphite */
+    --border: 200 15% 20%;
+    --input: 200 15% 20%;
+    --ring: 26 22% 66%;
   }
 }
 
@@ -90,5 +98,14 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
   }
 }

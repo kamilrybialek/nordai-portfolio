@@ -5,8 +5,8 @@ const Admin = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Redirect to the working admin interface
-    navigate('/simple-admin', { replace: true });
+    // Redirect to the full admin interface
+    navigate('/full-admin', { replace: true });
   }, [navigate]);
 
   return (

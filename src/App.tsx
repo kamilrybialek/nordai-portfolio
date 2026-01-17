@@ -17,6 +17,7 @@ import BlogPost from "./pages/BlogPost";
 import Contact from "./pages/Contact";
 import Admin from "./pages/Admin";
 import SimpleAdmin from "./pages/SimpleAdmin";
+import FullAdmin from "./pages/FullAdmin";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -40,6 +41,7 @@ const App = () => (
             <Route path="/contact" element={<Contact />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/simple-admin" element={<SimpleAdmin />} />
+            <Route path="/full-admin" element={<FullAdmin />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
