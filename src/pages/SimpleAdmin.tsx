@@ -63,21 +63,46 @@ const SimpleAdmin = () => {
     setSaveMessage('');
 
     try {
-      await client.mutations.updatePortfolio({
-        relativePath: editingProject._sys.filename,
-        params: {
-          title: editingProject.title,
-          client: editingProject.client,
-          category: editingProject.category,
-          tags: editingProject.tags,
-          excerpt: editingProject.excerpt,
-          image: editingProject.image || '',
-          link: editingProject.link || '',
-          seoTitle: editingProject.seoTitle || '',
-          seoDescription: editingProject.seoDescription || '',
-          body: editingProject.body,
+      // Use direct GraphQL mutation since client.mutations is not generated
+      const mutation = `
+        mutation UpdatePortfolio($relativePath: String!, $params: PortfolioMutation!) {
+          updatePortfolio(relativePath: $relativePath, params: $params) {
+            id
+            title
+          }
+        }
+      `;
+
+      const response = await fetch('http://localhost:4001/graphql', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
+        body: JSON.stringify({
+          query: mutation,
+          variables: {
+            relativePath: editingProject._sys.filename,
+            params: {
+              title: editingProject.title,
+              client: editingProject.client,
+              category: editingProject.category,
+              tags: editingProject.tags,
+              excerpt: editingProject.excerpt,
+              image: editingProject.image || '',
+              link: editingProject.link || '',
+              seoTitle: editingProject.seoTitle || '',
+              seoDescription: editingProject.seoDescription || '',
+              body: editingProject.body,
+            },
+          },
+        }),
       });
+
+      const result = await response.json();
+
+      if (result.errors) {
+        throw new Error(result.errors[0].message);
+      }
 
       setSaveMessage('✅ Saved successfully!');
       setTimeout(() => {
