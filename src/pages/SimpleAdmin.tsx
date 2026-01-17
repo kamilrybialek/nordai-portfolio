@@ -18,6 +18,114 @@ interface Project {
   body: any;
 }
 
+// Helper functions to convert between TinaCMS body format and Markdown
+const convertBodyToMarkdown = (body: any): string => {
+  if (!body || !body.children) return '';
+
+  return body.children.map((node: any) => {
+    switch (node.type) {
+      case 'h1':
+        return `# ${node.children.map((child: any) => child.text).join('')}\n\n`;
+      case 'h2':
+        return `## ${node.children.map((child: any) => child.text).join('')}\n\n`;
+      case 'h3':
+        return `### ${node.children.map((child: any) => child.text).join('')}\n\n`;
+      case 'p':
+        return `${node.children.map((child: any) => child.text).join('')}\n\n`;
+      case 'ul':
+        return node.children.map((li: any) =>
+          `- ${li.children.map((lic: any) => lic.children.map((child: any) => child.text).join('')).join('')}\n`
+        ).join('') + '\n';
+      case 'ol':
+        return node.children.map((li: any, idx: number) =>
+          `${idx + 1}. ${li.children.map((lic: any) => lic.children.map((child: any) => child.text).join('')).join('')}\n`
+        ).join('') + '\n';
+      default:
+        return '';
+    }
+  }).join('');
+};
+
+const convertMarkdownToBody = (markdown: string): any => {
+  const lines = markdown.split('\n');
+  const children: any[] = [];
+  let i = 0;
+
+  while (i < lines.length) {
+    const line = lines[i].trim();
+
+    if (!line) {
+      i++;
+      continue;
+    }
+
+    if (line.startsWith('### ')) {
+      children.push({
+        type: 'h3',
+        children: [{ type: 'text', text: line.substring(4) }]
+      });
+    } else if (line.startsWith('## ')) {
+      children.push({
+        type: 'h2',
+        children: [{ type: 'text', text: line.substring(3) }]
+      });
+    } else if (line.startsWith('# ')) {
+      children.push({
+        type: 'h1',
+        children: [{ type: 'text', text: line.substring(2) }]
+      });
+    } else if (line.startsWith('- ') || line.startsWith('* ')) {
+      const listItems: any[] = [];
+      while (i < lines.length && (lines[i].trim().startsWith('- ') || lines[i].trim().startsWith('* '))) {
+        const itemText = lines[i].trim().substring(2);
+        listItems.push({
+          type: 'li',
+          children: [{
+            type: 'lic',
+            children: [{ type: 'text', text: itemText }]
+          }]
+        });
+        i++;
+      }
+      children.push({
+        type: 'ul',
+        children: listItems
+      });
+      continue;
+    } else if (/^\d+\.\s/.test(line)) {
+      const listItems: any[] = [];
+      while (i < lines.length && /^\d+\.\s/.test(lines[i].trim())) {
+        const itemText = lines[i].trim().replace(/^\d+\.\s/, '');
+        listItems.push({
+          type: 'li',
+          children: [{
+            type: 'lic',
+            children: [{ type: 'text', text: itemText }]
+          }]
+        });
+        i++;
+      }
+      children.push({
+        type: 'ol',
+        children: listItems
+      });
+      continue;
+    } else {
+      children.push({
+        type: 'p',
+        children: [{ type: 'text', text: line }]
+      });
+    }
+
+    i++;
+  }
+
+  return {
+    type: 'root',
+    children
+  };
+};
+
 const SimpleAdmin = () => {
   const [portfolioProjects, setPortfolioProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
@@ -272,10 +380,19 @@ const SimpleAdmin = () => {
                 <p className="text-xs text-gray-500 mt-1">Recommended: 150-160 characters</p>
               </div>
 
-              <div className="bg-yellow-50 border border-yellow-200 rounded-md p-4">
-                <p className="text-sm text-yellow-800">
-                  <strong>Note:</strong> Full content (body) editing is available in the advanced editor.
-                  For now, you can edit basic project information here.
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Full Content (Markdown)
+                </label>
+                <textarea
+                  value={convertBodyToMarkdown(editingProject.body)}
+                  onChange={(e) => updateField('body', convertMarkdownToBody(e.target.value))}
+                  rows={15}
+                  placeholder="Write your content here using Markdown...&#10;&#10;## Heading 2&#10;&#10;This is a paragraph.&#10;&#10;- List item 1&#10;- List item 2"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Supports Markdown: ## Headings, **bold**, *italic*, - lists, etc.
                 </p>
               </div>
             </div>
