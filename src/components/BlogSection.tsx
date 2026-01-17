@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { getBlogArticles, BlogArticle } from '@/lib/tina';
 
 const BlogSection = () => {
@@ -45,9 +46,10 @@ const BlogSection = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {articles.map((article) => (
-              <div
+              <Link
                 key={article._sys.filename}
-                className="group bg-card rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 border border-border hover:border-primary/50"
+                to={`/blog/${article._sys.filename.replace('.mdx', '')}`}
+                className="group bg-card rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 border border-border hover:border-primary/50 block cursor-pointer"
               >
                 <div className="aspect-video bg-gradient-to-br from-primary/10 via-accent/10 to-secondary/10"></div>
                 <div className="p-8 space-y-4">
@@ -77,7 +79,7 @@ const BlogSection = () => {
                     </span>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

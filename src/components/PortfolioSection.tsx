@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { getPortfolioProjects, PortfolioProject } from '@/lib/tina';
 
 const PortfolioSection = () => {
@@ -25,9 +26,10 @@ const PortfolioSection = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project) => (
-              <div
+              <Link
                 key={project._sys.filename}
-                className="group bg-card rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 border border-border hover:border-primary/50"
+                to={`/portfolio/${project._sys.filename.replace('.mdx', '')}`}
+                className="group bg-card rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 border border-border hover:border-primary/50 block cursor-pointer"
               >
                 <div className="aspect-video bg-gradient-to-br from-secondary via-accent to-muted"></div>
                 <div className="p-8 space-y-4">
@@ -54,7 +56,7 @@ const PortfolioSection = () => {
                     {project.excerpt}
                   </p>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
