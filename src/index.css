@@ -98,7 +98,7 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Jost', sans-serif;
+    font-family: 'futura-pt', 'Futura', 'Trebuchet MS', 'Arial', sans-serif;
     font-weight: 400;
     letter-spacing: -0.01em;
   }

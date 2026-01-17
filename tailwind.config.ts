@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Jost', 'sans-serif'],
+        sans: ['futura-pt', 'Futura', 'Trebuchet MS', 'Arial', 'sans-serif'],
         heading: ['Montserrat', 'sans-serif'],
         body: ['Open Sans', 'sans-serif'],
       },
