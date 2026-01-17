@@ -1,8 +1,14 @@
 import { useTranslation } from 'react-i18next';
-import { blogArticles } from '@/data/blog';
+import { useEffect, useState } from 'react';
+import { getBlogArticles, BlogArticle } from '@/lib/tina';
 
 const BlogSection = () => {
   const { t } = useTranslation();
+  const [articles, setArticles] = useState<BlogArticle[]>([]);
+
+  useEffect(() => {
+    getBlogArticles().then(setArticles);
+  }, []);
 
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
@@ -38,9 +44,9 @@ const BlogSection = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogArticles.map((article, index) => (
+            {articles.map((article) => (
               <div
-                key={article.id}
+                key={article._sys.filename}
                 className="group bg-card rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 border border-border hover:border-primary/50"
               >
                 <div className="aspect-video bg-gradient-to-br from-primary/10 via-accent/10 to-secondary/10"></div>

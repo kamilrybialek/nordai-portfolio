@@ -30,12 +30,6 @@ const Navigation = () => {
               {t('nav.services')}
             </button>
             <button
-              onClick={() => scrollToSection('work')}
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Cases
-            </button>
-            <button
               onClick={() => scrollToSection('portfolio')}
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
@@ -81,12 +75,6 @@ const Navigation = () => {
               className="block w-full text-left px-4 py-3 text-base rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
             >
               {t('nav.services')}
-            </button>
-            <button
-              onClick={() => scrollToSection('work')}
-              className="block w-full text-left px-4 py-3 text-base rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
-            >
-              Cases
             </button>
             <button
               onClick={() => scrollToSection('portfolio')}

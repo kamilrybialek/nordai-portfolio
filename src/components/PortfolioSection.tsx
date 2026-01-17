@@ -1,8 +1,14 @@
 import { useTranslation } from 'react-i18next';
-import { portfolioProjects } from '@/data/portfolio';
+import { useEffect, useState } from 'react';
+import { getPortfolioProjects, PortfolioProject } from '@/lib/tina';
 
 const PortfolioSection = () => {
   const { t } = useTranslation();
+  const [projects, setProjects] = useState<PortfolioProject[]>([]);
+
+  useEffect(() => {
+    getPortfolioProjects().then(setProjects);
+  }, []);
 
   return (
     <section id="portfolio" className="py-24 bg-muted/30">
@@ -18,9 +24,9 @@ const PortfolioSection = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {portfolioProjects.map((project, index) => (
+            {projects.map((project) => (
               <div
-                key={project.id}
+                key={project._sys.filename}
                 className="group bg-card rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 border border-border hover:border-primary/50"
               >
                 <div className="aspect-video bg-gradient-to-br from-secondary via-accent to-muted"></div>
