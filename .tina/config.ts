@@ -7,6 +7,8 @@ const branch =
   process.env.HEAD ||
   "main";
 
+// Tina Cloud configuration
+
 export default defineConfig({
   branch,
 
