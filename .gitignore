@@ -29,5 +29,5 @@ dist-ssr
 *.sw?
 
 # Tina CMS
-.tina/__generated__
+# Note: .tina/__generated__ is committed for Tina Cloud production
 public/admin

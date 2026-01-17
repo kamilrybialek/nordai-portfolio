@@ -1,0 +1,27 @@
+fragment PortfolioParts on Portfolio {
+  __typename
+  title
+  client
+  category
+  tags
+  excerpt
+  body
+  image
+  link
+  seoTitle
+  seoDescription
+}
+
+fragment BlogParts on Blog {
+  __typename
+  title
+  excerpt
+  category
+  date
+  readTime
+  author
+  image
+  body
+  seoTitle
+  seoDescription
+}
