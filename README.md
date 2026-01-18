@@ -17,6 +17,10 @@ This is a modern, multilingual portfolio website for **nordai.studio** - a Nordi
 - GitHub repository: https://github.com/kamilrybialek/nordai-portfolio
 - Vercel for production hosting (automatic deployments from `main` branch)
 
+**Project Location:**
+- Local path: `/Users/Kamil/Projects/nordAi/nordai-portfolio`
+- **When starting a new AI session, set working directory to this path**
+
 ---
 
 ## Project Structure
@@ -68,8 +72,16 @@ nordai-portfolio/
 │   └── portfolio/
 ├── .tina/                   # TinaCMS configuration
 │   └── config.ts
-├── public/
-├── index.html               # HTML template with font imports
+├── public/                  # Static assets
+│   ├── favicon.ico
+│   ├── favicon-16x16.png
+│   ├── favicon-32x32.png
+│   ├── apple-touch-icon.png
+│   ├── android-chrome-192x192.png
+│   ├── android-chrome-512x512.png
+│   ├── site.webmanifest
+│   └── robots.txt
+├── index.html               # HTML template with font imports and favicons
 ├── tailwind.config.ts       # Tailwind configuration
 ├── tsconfig.json            # TypeScript configuration
 └── vite.config.ts           # Vite configuration
@@ -135,6 +147,27 @@ fontFamily: {
   body: ['Montserrat', 'sans-serif'],
 }
 ```
+
+### Favicons
+
+Complete favicon set is included in `public/` folder:
+- `favicon.ico` - Standard favicon (supports all browsers)
+- `favicon-16x16.png` - 16x16 PNG favicon
+- `favicon-32x32.png` - 32x32 PNG favicon
+- `apple-touch-icon.png` - 180x180 for iOS devices
+- `android-chrome-192x192.png` - 192x192 for Android
+- `android-chrome-512x512.png` - 512x512 for Android
+- `site.webmanifest` - Web app manifest
+
+**Configured in `index.html`:**
+```html
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+```
+
+**Theme colors** in manifest match dark mode background: `#0D0D0D`
 
 ---
 
