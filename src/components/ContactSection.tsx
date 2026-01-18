@@ -1,14 +1,46 @@
 import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
 
 const ContactSection = () => {
   const { t } = useTranslation();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    company: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    // Simulate form submission
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', company: '', message: '' });
+
+      // Reset success message after 3 seconds
+      setTimeout(() => setSubmitStatus('idle'), 3000);
+    }, 1000);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
 
   return (
     <section id="contact" className="py-24 bg-background">
       <div className="container mx-auto px-8">
         <div className="max-w-6xl mx-auto">
           <div className="bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5 rounded-2xl p-12 md:p-16 border border-border">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="grid md:grid-cols-2 gap-12">
+              {/* Contact Info */}
               <div className="space-y-6">
                 <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
                   {t('contact.headline')}
@@ -16,7 +48,7 @@ const ContactSection = () => {
                 <p className="text-lg text-muted-foreground leading-relaxed">
                   {t('contact.subheadline')}
                 </p>
-                
+
                 <div className="space-y-4 pt-6">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
@@ -27,37 +59,93 @@ const ContactSection = () => {
                     <div>
                       <p className="text-sm font-medium text-muted-foreground">Email</p>
                       <a href="mailto:hello@nordai.studio" className="text-foreground hover:text-primary transition-colors font-medium">
-                        hello@nordai.studio
-                      </a>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                      <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">Phone</p>
-                      <a href="tel:+1234567890" className="text-foreground hover:text-primary transition-colors font-medium">
-                        +1 (234) 567-890
+                        {t('contact.info.email')}
                       </a>
                     </div>
                   </div>
                 </div>
               </div>
-              
-              <div className="hidden md:flex items-center justify-center">
-                <div className="relative w-64 h-64">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full animate-pulse"></div>
-                  <div className="absolute inset-8 bg-background rounded-full flex items-center justify-center">
-                    <div className="text-center space-y-2">
-                      <p className="text-4xl font-bold text-primary">24/7</p>
-                      <p className="text-sm text-muted-foreground">Response Time</p>
-                    </div>
+
+              {/* Contact Form */}
+              <div className="bg-card rounded-xl p-8 border border-border">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
+                      {t('contact.form.name')}
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+                      placeholder="Your name"
+                    />
                   </div>
-                </div>
+
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
+                      {t('contact.form.email')}
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+                      placeholder="your@email.com"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="company" className="block text-sm font-medium text-foreground mb-2">
+                      {t('contact.form.company')}
+                    </label>
+                    <input
+                      type="text"
+                      id="company"
+                      name="company"
+                      value={formData.company}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+                      placeholder="Your company"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
+                      {t('contact.form.project')}
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                      rows={4}
+                      className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none"
+                      placeholder="Tell us about your project"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full px-8 py-4 bg-primary text-primary-foreground font-medium rounded-lg hover:bg-primary/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? 'Sending...' : t('contact.form.submit')}
+                  </button>
+
+                  {submitStatus === 'success' && (
+                    <p className="text-center text-sm text-green-600 dark:text-green-400">
+                      Message sent successfully! We'll get back to you soon.
+                    </p>
+                  )}
+                </form>
               </div>
             </div>
           </div>

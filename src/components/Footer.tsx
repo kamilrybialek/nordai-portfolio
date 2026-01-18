@@ -10,7 +10,7 @@ const Footer = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             <div>
               <div className="text-xl font-bold tracking-tight text-foreground mb-6">
-                nordAi studio
+                nordai.studio
               </div>
               <p className="text-sm text-muted-foreground">
                 {t('footer.tagline')}

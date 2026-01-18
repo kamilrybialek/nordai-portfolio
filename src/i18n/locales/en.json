@@ -16,7 +16,7 @@
   },
   "about": {
     "title": "About Us",
-    "headline": "nordai.studio",
+    "headline": "We Are nordai.studio",
     "intro": "A Nordic digital studio at the intersection of artificial intelligence and creative excellence.",
     "mission_title": "Our Mission",
     "mission": "To democratize AI-powered solutions and empower businesses to achieve more with less. We believe technology should amplify human creativity, not replace it.",
@@ -34,6 +34,19 @@
       "partnership": {
         "title": "True Partnership",
         "description": "Your success is our success. We're in this together."
+      }
+    },
+    "founders_title": "Meet the Founders",
+    "founders": {
+      "daniela": {
+        "name": "Daniela",
+        "role": "Graphic Designer",
+        "bio": "With 3 years of experience in the industry, Daniela brings creative excellence and artistic vision to every project. Her expertise in graphic design ensures that every visual element tells a compelling story."
+      },
+      "kamil": {
+        "name": "Kamil",
+        "role": "AI Technology Lead",
+        "bio": "A technology enthusiast specializing in AI implementation and innovation. Kamil transforms cutting-edge AI technologies into practical solutions that drive real business results."
       }
     }
   },
@@ -159,7 +172,7 @@
       "privacy": "Privacy Policy",
       "terms": "Terms of Service"
     },
-    "copyright": "© 2025 nordAi.studio. All rights reserved."
+    "copyright": "© 2025 nordai.studio. All rights reserved."
   },
   "cta": {
     "global_headline": "Ready to Transform Your Business?",
