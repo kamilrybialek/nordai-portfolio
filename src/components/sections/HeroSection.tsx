@@ -25,8 +25,8 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <span className="inline-flex items-center gap-2 px-4 py-2 bg-nordic-warm-light text-primary rounded-full text-sm font-medium mb-8">
-              <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+            <span className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-full text-sm font-medium mb-8">
+              <span className="w-2 h-2 bg-primary-foreground rounded-full animate-pulse" />
               {t('hero.tagline')}
             </span>
           </motion.div>

@@ -131,7 +131,7 @@ const Blog = () => {
                 className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 ${
                   activeCategory === cat
                     ? 'bg-primary text-primary-foreground'
-                    : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                    : 'bg-primary text-primary-foreground opacity-60 hover:opacity-100'
                 }`}
               >
                 {t(`blog.categories.${cat}`)}

@@ -137,7 +137,7 @@ const CaseStudy = () => {
                 {project.tags.map((tag, index) => (
                   <span
                     key={index}
-                    className="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full font-medium"
+                    className="text-xs px-3 py-1 bg-primary text-primary-foreground rounded-full font-medium"
                   >
                     {tag}
                   </span>

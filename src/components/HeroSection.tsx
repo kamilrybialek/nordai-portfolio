@@ -15,8 +15,8 @@ const HeroSection = () => {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div className="space-y-8">
             <div className="space-y-6">
-              <div className="inline-block px-4 py-2 bg-secondary rounded-full">
-                <span className="text-sm font-medium text-primary">{t('hero.tagline')}</span>
+              <div className="inline-block px-4 py-2 bg-primary rounded-full">
+                <span className="text-sm font-medium text-primary-foreground">{t('hero.tagline')}</span>
               </div>
 
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground leading-[1.1]">

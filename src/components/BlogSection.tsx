@@ -54,7 +54,7 @@ const BlogSection = () => {
                 <div className="aspect-video bg-gradient-to-br from-primary/10 via-accent/10 to-secondary/10"></div>
                 <div className="p-8 space-y-4">
                   <div className="flex flex-wrap gap-2 items-center">
-                    <span className="text-xs px-3 py-1 bg-secondary text-muted-foreground rounded-full">
+                    <span className="text-xs px-3 py-1 bg-primary text-primary-foreground rounded-full">
                       {getCategoryLabel(article.category)}
                     </span>
                     <span className="text-xs text-muted-foreground">

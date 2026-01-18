@@ -56,18 +56,18 @@ All colors MUST be HSL.
     /* Brand colors from brand board */
     /* Background: Black #0D0D0D */
     --background: 0 0% 5%;
-    --foreground: 26 22% 88%;
+    --foreground: 0 0% 100%;
 
     /* Card: Slightly lighter than background */
     --card: 0 0% 8%;
-    --card-foreground: 26 22% 88%;
+    --card-foreground: 0 0% 100%;
 
     --popover: 0 0% 8%;
-    --popover-foreground: 26 22% 88%;
+    --popover-foreground: 0 0% 100%;
 
-    /* Primary: Graphite #506B78 */
-    --primary: 200 20% 39%;
-    --primary-foreground: 0 0% 98%;
+    /* Primary: White buttons */
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 5%;
 
     /* Secondary: Light gray-blue #7E9CAA */
     --secondary: 199 22% 58%;
@@ -75,7 +75,7 @@ All colors MUST be HSL.
 
     /* Muted: Darker graphite tones */
     --muted: 200 15% 15%;
-    --muted-foreground: 199 22% 58%;
+    --muted-foreground: 0 0% 85%;
 
     /* Accent: Beige/Taupe #BAA897 */
     --accent: 26 22% 66%;
@@ -87,7 +87,7 @@ All colors MUST be HSL.
     /* Borders: Subtle graphite */
     --border: 200 15% 20%;
     --input: 200 15% 20%;
-    --ring: 26 22% 66%;
+    --ring: 0 0% 100%;
   }
 }
 

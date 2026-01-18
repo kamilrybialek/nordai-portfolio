@@ -154,7 +154,7 @@ const BlogPost = () => {
 
             <div className="space-y-6">
               <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                <span className="px-3 py-1 bg-primary/10 text-primary rounded-full font-medium">
+                <span className="px-3 py-1 bg-primary text-primary-foreground rounded-full font-medium">
                   {getCategoryLabel(article.category)}
                 </span>
                 <span className="flex items-center gap-1">

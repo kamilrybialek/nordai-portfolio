@@ -45,7 +45,7 @@ const ServicesSection = () => {
                     {service.tags.map((tag, tagIndex) => (
                       <span
                         key={tagIndex}
-                        className="text-xs px-3 py-1 bg-secondary text-muted-foreground rounded-full"
+                        className="text-xs px-3 py-1 bg-primary text-primary-foreground rounded-full"
                       >
                         {tag}
                       </span>
