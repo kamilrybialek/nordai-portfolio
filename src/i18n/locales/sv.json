@@ -16,7 +16,7 @@
   },
   "about": {
     "title": "Om Oss",
-    "headline": "Vi Är nordAi.studio",
+    "headline": "Vi Är nordai.studio",
     "intro": "En nordisk digital studio i skärningspunkten mellan artificiell intelligens och kreativ excellens.",
     "mission_title": "Vårt Uppdrag",
     "mission": "Att demokratisera AI-drivna lösningar och ge företag möjlighet att uppnå mer med mindre. Vi tror att teknologi ska förstärka mänsklig kreativitet, inte ersätta den.",
@@ -34,6 +34,19 @@
       "partnership": {
         "title": "Äkta Partnerskap",
         "description": "Din framgång är vår framgång. Vi gör detta tillsammans."
+      }
+    },
+    "founders_title": "Möt Grundarna",
+    "founders": {
+      "daniela": {
+        "name": "Daniela",
+        "role": "Graphic Designer",
+        "bio": "Med 3 års erfarenhet i branschen ger Daniela kreativ excellens och konstnärlig vision till varje projekt. Hennes expertis inom grafisk design säkerställer att varje visuellt element berättar en övertygande historia."
+      },
+      "kamil": {
+        "name": "Kamil",
+        "role": "AI Technology Lead",
+        "bio": "En teknikentusiast specialiserad på AI-implementering och innovation. Kamil omvandlar banbrytande AI-teknologier till praktiska lösningar som ger verkliga affärsresultat."
       }
     }
   },
@@ -109,7 +122,7 @@
     "min_read": "min läsning"
   },
   "why": {
-    "title": "Varför nordAi.studio",
+    "title": "Varför nordai.studio",
     "headline": "Varför Välja Oss",
     "items": {
       "expertise": {
@@ -159,7 +172,7 @@
       "privacy": "Integritetspolicy",
       "terms": "Användarvillkor"
     },
-    "copyright": "© 2025 nordAi.studio. Alla rättigheter förbehållna."
+    "copyright": "© 2025 nordai.studio. Alla rättigheter förbehållna."
   },
   "cta": {
     "global_headline": "Redo att Transformera Ditt Företag?",
@@ -168,27 +181,27 @@
   },
   "meta": {
     "home": {
-      "title": "nordAi.studio | AI-Driven Digital Studio",
+      "title": "nordai.studio | AI-Driven Digital Studio",
       "description": "Vi skapar digitala upplevelser som blandar artificiell intelligens med människocentrerad design. AI-automation, varumärke, UX/UI och webbutveckling."
     },
     "about": {
-      "title": "Om Oss | nordAi.studio",
+      "title": "Om Oss | nordai.studio",
       "description": "En nordisk digital studio i skärningspunkten mellan artificiell intelligens och kreativ excellens. Lär dig om vårt uppdrag och tillvägagångssätt."
     },
     "services": {
-      "title": "Våra Tjänster | nordAi.studio",
+      "title": "Våra Tjänster | nordai.studio",
       "description": "AI & Automation, Varumärke, UX/UI Design, Webbutveckling och Innehållsmarknadsföring. Omfattande digitala lösningar drivna av AI."
     },
     "portfolio": {
-      "title": "Portfolio | nordAi.studio",
+      "title": "Portfolio | nordai.studio",
       "description": "Utforska våra utvalda projekt som visar expertis inom AI, design och utveckling. Se fallstudier och resultat."
     },
     "blog": {
-      "title": "Blogg | nordAi.studio",
-      "description": "Insikter om AI, automation, design och digitala trender. Expertperspektiv från nordAi.studio-teamet."
+      "title": "Blogg | nordai.studio",
+      "description": "Insikter om AI, automation, design och digitala trender. Expertperspektiv från nordai.studio-teamet."
     },
     "contact": {
-      "title": "Kontakta Oss | nordAi.studio",
+      "title": "Kontakta Oss | nordai.studio",
       "description": "Redo att ta med AI-driven innovation till ditt företag? Kontakta vårt team i Stockholm."
     }
   }

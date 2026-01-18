@@ -16,7 +16,7 @@
   },
   "about": {
     "title": "O Nas",
-    "headline": "Jesteśmy nordAi.studio",
+    "headline": "Jesteśmy nordai.studio",
     "intro": "Nordyckie studio cyfrowe na przecięciu sztucznej inteligencji i kreatywnej doskonałości.",
     "mission_title": "Nasza Misja",
     "mission": "Demokratyzacja rozwiązań opartych na AI i umożliwienie firmom osiągania więcej przy mniejszym nakładzie. Wierzymy, że technologia powinna wzmacniać ludzką kreatywność, a nie ją zastępować.",
@@ -34,6 +34,19 @@
       "partnership": {
         "title": "Prawdziwe Partnerstwo",
         "description": "Twój sukces to nasz sukces. Działamy razem."
+      }
+    },
+    "founders_title": "Poznaj Założycieli",
+    "founders": {
+      "daniela": {
+        "name": "Daniela",
+        "role": "Graphic Designer",
+        "bio": "Z 3-letnim doświadczeniem w branży, Daniela wnosi kreatywną doskonałość i artystyczną wizję do każdego projektu. Jej ekspertyza w projektowaniu graficznym zapewnia, że każdy element wizualny opowiada przekonującą historię."
+      },
+      "kamil": {
+        "name": "Kamil",
+        "role": "AI Technology Lead",
+        "bio": "Entuzjasta technologii specjalizujący się we wdrażaniu i innowacjach AI. Kamil przekształca najnowocześniejsze technologie AI w praktyczne rozwiązania, które przynoszą realne wyniki biznesowe."
       }
     }
   },
@@ -109,7 +122,7 @@
     "min_read": "min czytania"
   },
   "why": {
-    "title": "Dlaczego nordAi.studio",
+    "title": "Dlaczego nordai.studio",
     "headline": "Dlaczego My",
     "items": {
       "expertise": {
@@ -159,7 +172,7 @@
       "privacy": "Polityka Prywatności",
       "terms": "Warunki Usługi"
     },
-    "copyright": "© 2025 nordAi.studio. Wszelkie prawa zastrzeżone."
+    "copyright": "© 2025 nordai.studio. Wszelkie prawa zastrzeżone."
   },
   "cta": {
     "global_headline": "Gotowy na Transformację Swojej Firmy?",
@@ -168,27 +181,27 @@
   },
   "meta": {
     "home": {
-      "title": "nordAi.studio | Studio Cyfrowe Napędzane AI",
+      "title": "nordai.studio | Studio Cyfrowe Napędzane AI",
       "description": "Tworzymy cyfrowe doświadczenia łączące sztuczną inteligencję z projektowaniem zorientowanym na człowieka. Automatyzacja AI, branding, UX/UI i rozwój web."
     },
     "about": {
-      "title": "O Nas | nordAi.studio",
+      "title": "O Nas | nordai.studio",
       "description": "Nordyckie studio cyfrowe na przecięciu sztucznej inteligencji i kreatywnej doskonałości. Poznaj naszą misję i podejście."
     },
     "services": {
-      "title": "Nasze Usługi | nordAi.studio",
+      "title": "Nasze Usługi | nordai.studio",
       "description": "AI i Automatyzacja, Branding, Projektowanie UX/UI, Rozwój Web i Marketing Treści. Kompleksowe rozwiązania cyfrowe napędzane AI."
     },
     "portfolio": {
-      "title": "Portfolio | nordAi.studio",
+      "title": "Portfolio | nordai.studio",
       "description": "Odkryj nasze wybrane projekty prezentujące ekspertyzę w AI, designie i rozwoju. Zobacz case studies i rezultaty."
     },
     "blog": {
-      "title": "Blog | nordAi.studio",
-      "description": "Wglądy o AI, automatyzacji, designie i trendach cyfrowych. Eksperckie perspektywy od zespołu nordAi.studio."
+      "title": "Blog | nordai.studio",
+      "description": "Wglądy o AI, automatyzacji, designie i trendach cyfrowych. Eksperckie perspektywy od zespołu nordai.studio."
     },
     "contact": {
-      "title": "Kontakt | nordAi.studio",
+      "title": "Kontakt | nordai.studio",
       "description": "Gotowy na wprowadzenie innowacji opartych na AI do swojej firmy? Skontaktuj się z naszym zespołem w Sztokholmie."
     }
   }
