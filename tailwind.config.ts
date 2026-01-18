@@ -14,9 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['futura-pt', 'Futura', 'Trebuchet MS', 'Arial', 'sans-serif'],
+        sans: ['Montserrat', 'sans-serif'],
         heading: ['Montserrat', 'sans-serif'],
-        body: ['Open Sans', 'sans-serif'],
+        body: ['Montserrat', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",

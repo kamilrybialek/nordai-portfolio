@@ -19,7 +19,7 @@ const HeroSection = () => {
                 <span className="text-sm font-medium text-primary">{t('hero.tagline')}</span>
               </div>
 
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground leading-[1.1]">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground leading-[1.1]">
                 {t('hero.headline')}
               </h1>
 
