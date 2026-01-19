@@ -32,3 +32,6 @@ dist-ssr
 # Note: .tina/__generated__ is committed for Tina Cloud production
 public/admin
 .vercel
+
+# Aider AI assistant cache
+.aider*

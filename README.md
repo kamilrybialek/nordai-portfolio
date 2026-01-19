@@ -315,9 +315,36 @@ This starts both Vite and TinaCMS dev server:
 - GraphQL API: http://localhost:4001/graphql
 
 ### Admin Access
-- Route: `/admin` (redirects to `/full-admin`)
-- Full admin panel at `/full-admin`
-- Authenticated access via TinaCMS
+
+**⚠️ SECURITY NOTICE:**
+- Admin panel is **ONLY available in development mode** (`npm run dev`)
+- In production builds, admin routes are **completely disabled** and redirect to homepage
+- Password-protected access in development environment
+
+**Development Access:**
+1. Start dev server: `npm run dev`
+2. Navigate to: `http://localhost:5173/admin`
+3. Enter admin password (set in `.env` file)
+4. Default password: Check `.env.example` or set `VITE_ADMIN_PASSWORD`
+
+**Admin Routes:**
+- `/admin` → Redirects to `/full-admin`
+- `/full-admin` → Full admin panel with Portfolio & Blog management
+- All routes protected by `AdminGuard` component
+
+**Environment Setup:**
+```bash
+# Copy .env.example to .env
+cp .env.example .env
+
+# Edit .env and set your admin password
+VITE_ADMIN_PASSWORD=your_secure_password_here
+```
+
+**Production Behavior:**
+- Admin routes are disabled in production builds
+- Any attempt to access `/admin` will redirect to homepage
+- No admin panel is exposed to public
 
 ---
 
