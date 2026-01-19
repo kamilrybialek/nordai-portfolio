@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "tinacms dev -c \"vite\"",
     "dev:vite": "vite",
-    "build": "vite build",
-    "build:tina": "tinacms build && vite build",
+    "build": "tinacms build && vite build",
+    "build:vite-only": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview"
