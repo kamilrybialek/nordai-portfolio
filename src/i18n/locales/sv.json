@@ -93,6 +93,7 @@
     "headline": "Vårt Arbete",
     "subheadline": "Utvalda projekt som visar vår expertis inom AI, design och utveckling",
     "view_case": "Visa Fallstudie",
+    "show_more": "Visa Alla Projekt",
     "challenge": "Utmaning",
     "solution": "Lösning",
     "process": "Process",
@@ -111,6 +112,7 @@
     "headline": "Insikter & Idéer",
     "subheadline": "Tankar om AI, design, automation och digitalens framtid",
     "read_more": "Läs Artikel",
+    "show_more": "Visa Alla Artiklar",
     "categories": {
       "all": "Alla",
       "ai": "AI",

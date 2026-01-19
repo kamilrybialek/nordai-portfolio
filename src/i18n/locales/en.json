@@ -93,6 +93,7 @@
     "headline": "Our Work",
     "subheadline": "Selected projects showcasing our expertise in AI, design, and development",
     "view_case": "View Case Study",
+    "show_more": "View All Projects",
     "challenge": "Challenge",
     "solution": "Solution",
     "process": "Process",
@@ -111,6 +112,7 @@
     "headline": "Insights & Ideas",
     "subheadline": "Thoughts on AI, design, automation, and the future of digital",
     "read_more": "Read Article",
+    "show_more": "View All Articles",
     "categories": {
       "all": "All",
       "ai": "AI",

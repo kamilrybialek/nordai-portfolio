@@ -86,6 +86,13 @@ export default defineConfig({
             },
           },
           {
+            type: "boolean",
+            name: "featured",
+            label: "Show on Homepage",
+            description: "Display this project on the homepage (max 6 featured projects will be shown)",
+            default: false,
+          },
+          {
             type: "rich-text",
             name: "body",
             label: "Full Description",
@@ -178,6 +185,13 @@ export default defineConfig({
             name: "author",
             label: "Author",
             default: "nordAi Team",
+          },
+          {
+            type: "boolean",
+            name: "featured",
+            label: "Show on Homepage",
+            description: "Display this article on the homepage (max 6 featured articles will be shown)",
+            default: false,
           },
           {
             type: "image",

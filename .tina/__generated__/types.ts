@@ -190,6 +190,7 @@ export type Portfolio = Node & Document & {
   category: Scalars['String']['output'];
   tags: Array<Scalars['String']['output']>;
   excerpt: Scalars['String']['output'];
+  featured?: Maybe<Scalars['Boolean']['output']>;
   body?: Maybe<Scalars['JSON']['output']>;
   image?: Maybe<Scalars['String']['output']>;
   link?: Maybe<Scalars['String']['output']>;
@@ -205,6 +206,11 @@ export type StringFilter = {
   eq?: InputMaybe<Scalars['String']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type BooleanFilter = {
+  eq?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type RichTextFilter = {
@@ -226,6 +232,7 @@ export type PortfolioFilter = {
   category?: InputMaybe<StringFilter>;
   tags?: InputMaybe<StringFilter>;
   excerpt?: InputMaybe<StringFilter>;
+  featured?: InputMaybe<BooleanFilter>;
   body?: InputMaybe<RichTextFilter>;
   image?: InputMaybe<ImageFilter>;
   link?: InputMaybe<StringFilter>;
@@ -254,6 +261,7 @@ export type Blog = Node & Document & {
   date: Scalars['String']['output'];
   readTime: Scalars['Float']['output'];
   author?: Maybe<Scalars['String']['output']>;
+  featured?: Maybe<Scalars['Boolean']['output']>;
   image?: Maybe<Scalars['String']['output']>;
   body?: Maybe<Scalars['JSON']['output']>;
   seoTitle?: Maybe<Scalars['String']['output']>;
@@ -288,6 +296,7 @@ export type BlogFilter = {
   date?: InputMaybe<DatetimeFilter>;
   readTime?: InputMaybe<NumberFilter>;
   author?: InputMaybe<StringFilter>;
+  featured?: InputMaybe<BooleanFilter>;
   image?: InputMaybe<ImageFilter>;
   body?: InputMaybe<RichTextFilter>;
   seoTitle?: InputMaybe<StringFilter>;
@@ -394,6 +403,7 @@ export type PortfolioMutation = {
   category?: InputMaybe<Scalars['String']['input']>;
   tags?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   excerpt?: InputMaybe<Scalars['String']['input']>;
+  featured?: InputMaybe<Scalars['Boolean']['input']>;
   body?: InputMaybe<Scalars['JSON']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
   link?: InputMaybe<Scalars['String']['input']>;
@@ -408,22 +418,23 @@ export type BlogMutation = {
   date?: InputMaybe<Scalars['String']['input']>;
   readTime?: InputMaybe<Scalars['Float']['input']>;
   author?: InputMaybe<Scalars['String']['input']>;
+  featured?: InputMaybe<Scalars['Boolean']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
   body?: InputMaybe<Scalars['JSON']['input']>;
   seoTitle?: InputMaybe<Scalars['String']['input']>;
   seoDescription?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type PortfolioPartsFragment = { __typename: 'Portfolio', title: string, client: string, category: string, tags: Array<string>, excerpt: string, body?: any | null, image?: string | null, link?: string | null, seoTitle?: string | null, seoDescription?: string | null };
+export type PortfolioPartsFragment = { __typename: 'Portfolio', title: string, client: string, category: string, tags: Array<string>, excerpt: string, featured?: boolean | null, body?: any | null, image?: string | null, link?: string | null, seoTitle?: string | null, seoDescription?: string | null };
 
-export type BlogPartsFragment = { __typename: 'Blog', title: string, excerpt: string, category: string, date: string, readTime: number, author?: string | null, image?: string | null, body?: any | null, seoTitle?: string | null, seoDescription?: string | null };
+export type BlogPartsFragment = { __typename: 'Blog', title: string, excerpt: string, category: string, date: string, readTime: number, author?: string | null, featured?: boolean | null, image?: string | null, body?: any | null, seoTitle?: string | null, seoDescription?: string | null };
 
 export type PortfolioQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
 }>;
 
 
-export type PortfolioQuery = { __typename?: 'Query', portfolio: { __typename: 'Portfolio', id: string, title: string, client: string, category: string, tags: Array<string>, excerpt: string, body?: any | null, image?: string | null, link?: string | null, seoTitle?: string | null, seoDescription?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
+export type PortfolioQuery = { __typename?: 'Query', portfolio: { __typename: 'Portfolio', id: string, title: string, client: string, category: string, tags: Array<string>, excerpt: string, featured?: boolean | null, body?: any | null, image?: string | null, link?: string | null, seoTitle?: string | null, seoDescription?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
 
 export type PortfolioConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -435,14 +446,14 @@ export type PortfolioConnectionQueryVariables = Exact<{
 }>;
 
 
-export type PortfolioConnectionQuery = { __typename?: 'Query', portfolioConnection: { __typename?: 'PortfolioConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PortfolioConnectionEdges', cursor: string, node?: { __typename: 'Portfolio', id: string, title: string, client: string, category: string, tags: Array<string>, excerpt: string, body?: any | null, image?: string | null, link?: string | null, seoTitle?: string | null, seoDescription?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
+export type PortfolioConnectionQuery = { __typename?: 'Query', portfolioConnection: { __typename?: 'PortfolioConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PortfolioConnectionEdges', cursor: string, node?: { __typename: 'Portfolio', id: string, title: string, client: string, category: string, tags: Array<string>, excerpt: string, featured?: boolean | null, body?: any | null, image?: string | null, link?: string | null, seoTitle?: string | null, seoDescription?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
 
 export type BlogQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
 }>;
 
 
-export type BlogQuery = { __typename?: 'Query', blog: { __typename: 'Blog', id: string, title: string, excerpt: string, category: string, date: string, readTime: number, author?: string | null, image?: string | null, body?: any | null, seoTitle?: string | null, seoDescription?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
+export type BlogQuery = { __typename?: 'Query', blog: { __typename: 'Blog', id: string, title: string, excerpt: string, category: string, date: string, readTime: number, author?: string | null, featured?: boolean | null, image?: string | null, body?: any | null, seoTitle?: string | null, seoDescription?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
 
 export type BlogConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -454,7 +465,7 @@ export type BlogConnectionQueryVariables = Exact<{
 }>;
 
 
-export type BlogConnectionQuery = { __typename?: 'Query', blogConnection: { __typename?: 'BlogConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'BlogConnectionEdges', cursor: string, node?: { __typename: 'Blog', id: string, title: string, excerpt: string, category: string, date: string, readTime: number, author?: string | null, image?: string | null, body?: any | null, seoTitle?: string | null, seoDescription?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
+export type BlogConnectionQuery = { __typename?: 'Query', blogConnection: { __typename?: 'BlogConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'BlogConnectionEdges', cursor: string, node?: { __typename: 'Blog', id: string, title: string, excerpt: string, category: string, date: string, readTime: number, author?: string | null, featured?: boolean | null, image?: string | null, body?: any | null, seoTitle?: string | null, seoDescription?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
 
 export const PortfolioPartsFragmentDoc = gql`
     fragment PortfolioParts on Portfolio {
@@ -464,6 +475,7 @@ export const PortfolioPartsFragmentDoc = gql`
   category
   tags
   excerpt
+  featured
   body
   image
   link
@@ -480,6 +492,7 @@ export const BlogPartsFragmentDoc = gql`
   date
   readTime
   author
+  featured
   image
   body
   seoTitle

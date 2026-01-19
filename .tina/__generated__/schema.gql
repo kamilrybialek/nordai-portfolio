@@ -96,6 +96,7 @@ type Portfolio implements Node & Document {
   category: String!
   tags: [String!]!
   excerpt: String!
+  featured: Boolean
   body: JSON
   image: String
   link: String
@@ -111,6 +112,11 @@ input StringFilter {
   eq: String
   exists: Boolean
   in: [String]
+}
+
+input BooleanFilter {
+  eq: Boolean
+  exists: Boolean
 }
 
 input RichTextFilter {
@@ -132,6 +138,7 @@ input PortfolioFilter {
   category: StringFilter
   tags: StringFilter
   excerpt: StringFilter
+  featured: BooleanFilter
   body: RichTextFilter
   image: ImageFilter
   link: StringFilter
@@ -157,6 +164,7 @@ type Blog implements Node & Document {
   date: String!
   readTime: Float!
   author: String
+  featured: Boolean
   image: String
   body: JSON
   seoTitle: String
@@ -191,6 +199,7 @@ input BlogFilter {
   date: DatetimeFilter
   readTime: NumberFilter
   author: StringFilter
+  featured: BooleanFilter
   image: ImageFilter
   body: RichTextFilter
   seoTitle: StringFilter
@@ -237,6 +246,7 @@ input PortfolioMutation {
   category: String
   tags: [String]
   excerpt: String
+  featured: Boolean
   body: JSON
   image: String
   link: String
@@ -251,6 +261,7 @@ input BlogMutation {
   date: String
   readTime: Float
   author: String
+  featured: Boolean
   image: String
   body: JSON
   seoTitle: String

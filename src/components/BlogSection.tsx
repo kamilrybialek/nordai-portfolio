@@ -8,7 +8,13 @@ const BlogSection = () => {
   const [articles, setArticles] = useState<BlogArticle[]>([]);
 
   useEffect(() => {
-    getBlogArticles().then(setArticles);
+    getBlogArticles().then((allArticles) => {
+      // Filter only featured articles and limit to 6
+      const featuredArticles = allArticles
+        .filter(article => article.featured)
+        .slice(0, 6);
+      setArticles(featuredArticles);
+    });
   }, []);
 
   const formatDate = (dateStr: string) => {
@@ -81,6 +87,16 @@ const BlogSection = () => {
                 </div>
               </Link>
             ))}
+          </div>
+
+          {/* Show More Button */}
+          <div className="mt-12 text-center">
+            <Link
+              to="/blog"
+              className="inline-flex items-center px-8 py-4 bg-primary text-primary-foreground rounded-full font-medium hover:opacity-90 transition-opacity"
+            >
+              {t('blog.show_more')}
+            </Link>
           </div>
         </div>
       </div>

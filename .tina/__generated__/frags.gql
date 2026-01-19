@@ -5,6 +5,7 @@ fragment PortfolioParts on Portfolio {
   category
   tags
   excerpt
+  featured
   body
   image
   link
@@ -20,6 +21,7 @@ fragment BlogParts on Blog {
   date
   readTime
   author
+  featured
   image
   body
   seoTitle

@@ -8,7 +8,13 @@ const PortfolioSection = () => {
   const [projects, setProjects] = useState<PortfolioProject[]>([]);
 
   useEffect(() => {
-    getPortfolioProjects().then(setProjects);
+    getPortfolioProjects().then((allProjects) => {
+      // Filter only featured projects and limit to 6
+      const featuredProjects = allProjects
+        .filter(project => project.featured)
+        .slice(0, 6);
+      setProjects(featuredProjects);
+    });
   }, []);
 
   return (
@@ -58,6 +64,16 @@ const PortfolioSection = () => {
                 </div>
               </Link>
             ))}
+          </div>
+
+          {/* Show More Button */}
+          <div className="mt-12 text-center">
+            <Link
+              to="/portfolio"
+              className="inline-flex items-center px-8 py-4 bg-primary text-primary-foreground rounded-full font-medium hover:opacity-90 transition-opacity"
+            >
+              {t('portfolio.show_more')}
+            </Link>
           </div>
         </div>
       </div>

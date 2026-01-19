@@ -7,6 +7,7 @@ export interface PortfolioProject {
   category: 'ai' | 'web' | 'branding' | 'design';
   tags: string[];
   excerpt: string;
+  featured?: boolean;
   body?: any;
   image?: string;
   link?: string;
@@ -23,6 +24,7 @@ export interface BlogArticle {
   category: 'ai' | 'automation' | 'design' | 'insights' | 'trends';
   date: string;
   readTime: number;
+  featured?: boolean;
   author?: string;
   image?: string;
   body?: any;
@@ -45,6 +47,7 @@ export async function getPortfolioProjects(): Promise<PortfolioProject[]> {
       category: 'ai',
       tags: ['AI', 'Automation'],
       excerpt: 'Automated customer service reducing response times by 80%.',
+      featured: true,
       image: '/placeholder.svg',
       link: 'https://example.com',
       seoTitle: 'FinTech AI Automation - Nordic Bank Group Case Study',
@@ -57,6 +60,7 @@ export async function getPortfolioProjects(): Promise<PortfolioProject[]> {
       category: 'web',
       tags: ['Development', 'Web'],
       excerpt: 'Complete platform overhaul resulting in 150% conversion increase.',
+      featured: true,
       image: '/placeholder.svg',
       link: 'https://example.com',
       seoTitle: 'E-commerce Redesign - Scandinavian Retail Co Success Story',
@@ -69,6 +73,7 @@ export async function getPortfolioProjects(): Promise<PortfolioProject[]> {
       category: 'branding',
       tags: ['Design', 'Branding'],
       excerpt: 'Full brand identity for sustainability-focused tech company.',
+      featured: true,
       image: '/placeholder.svg',
       link: 'https://example.com',
       seoTitle: 'Tech Startup Branding - GreenTech Innovations Brand Identity',
@@ -81,6 +86,7 @@ export async function getPortfolioProjects(): Promise<PortfolioProject[]> {
       category: 'design',
       tags: ['Design', 'UX'],
       excerpt: 'Patient-centered mobile app with accessibility focus.',
+      featured: true,
       image: '/placeholder.svg',
       link: 'https://example.com',
       seoTitle: 'Healthcare App UX Design - MedCare Solutions Mobile Application',
@@ -124,6 +130,7 @@ export async function getBlogArticles(): Promise<BlogArticle[]> {
       category: 'ai',
       date: '2025-01-08',
       readTime: 8,
+      featured: true,
       author: 'nordAi Team',
       image: '/placeholder.svg',
       seoTitle: 'The Future of AI Automation in Business - 2025 Trends & Insights',
@@ -136,6 +143,7 @@ export async function getBlogArticles(): Promise<BlogArticle[]> {
       category: 'design',
       date: '2025-01-05',
       readTime: 6,
+      featured: true,
       author: 'nordAi Team',
       image: '/placeholder.svg',
       seoTitle: 'Building Design Systems That Scale - Complete Guide 2025',
@@ -148,6 +156,7 @@ export async function getBlogArticles(): Promise<BlogArticle[]> {
       category: 'insights',
       date: '2025-01-02',
       readTime: 5,
+      featured: true,
       author: 'nordAi Team',
       image: '/placeholder.svg',
       seoTitle: 'How AI is Transforming Brand Strategy - Data-Driven Insights 2025',
@@ -160,6 +169,7 @@ export async function getBlogArticles(): Promise<BlogArticle[]> {
       category: 'automation',
       date: '2024-12-28',
       readTime: 10,
+      featured: true,
       author: 'nordAi Team',
       image: '/placeholder.svg',
       seoTitle: 'Complete Guide to Workflow Automation - Step-by-Step Process',

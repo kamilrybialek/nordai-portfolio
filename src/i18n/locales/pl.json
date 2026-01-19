@@ -93,6 +93,7 @@
     "headline": "Nasze Prace",
     "subheadline": "Wybrane projekty prezentujące naszą ekspertyzę w AI, designie i rozwoju",
     "view_case": "Zobacz Case Study",
+    "show_more": "Zobacz Wszystkie Projekty",
     "challenge": "Wyzwanie",
     "solution": "Rozwiązanie",
     "process": "Proces",
@@ -111,6 +112,7 @@
     "headline": "Wglądy i Pomysły",
     "subheadline": "Przemyślenia o AI, designie, automatyzacji i przyszłości cyfrowej",
     "read_more": "Czytaj Artykuł",
+    "show_more": "Zobacz Wszystkie Artykuły",
     "categories": {
       "all": "Wszystkie",
       "ai": "AI",
