@@ -15,11 +15,7 @@ import CaseStudy from "./pages/CaseStudy";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import Contact from "./pages/Contact";
-import Admin from "./pages/Admin";
-import SimpleAdmin from "./pages/SimpleAdmin";
-import FullAdmin from "./pages/FullAdmin";
 import NotFound from "./pages/NotFound";
-import AdminGuard from "./components/AdminGuard";
 
 const queryClient = new QueryClient();
 
@@ -40,9 +36,6 @@ const App = () => (
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/admin" element={<AdminGuard><Admin /></AdminGuard>} />
-            <Route path="/simple-admin" element={<AdminGuard><SimpleAdmin /></AdminGuard>} />
-            <Route path="/full-admin" element={<AdminGuard><FullAdmin /></AdminGuard>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

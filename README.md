@@ -314,37 +314,53 @@ This starts both Vite and TinaCMS dev server:
 - TinaCMS Admin: http://localhost:8080/admin
 - GraphQL API: http://localhost:4001/graphql
 
-### Admin Access
+### Admin Access - TinaCMS Cloud
 
-**⚠️ SECURITY NOTICE:**
-- Admin panel is **ONLY available in development mode** (`npm run dev`)
-- In production builds, admin routes are **completely disabled** and redirect to homepage
-- Password-protected access in development environment
+**📚 Full setup guide:** See [TINACMS_SETUP.md](./TINACMS_SETUP.md) for detailed step-by-step instructions in Polish.
 
-**Development Access:**
-1. Start dev server: `npm run dev`
-2. Navigate to: `http://localhost:5173/admin`
-3. Enter admin password (set in `.env` file)
-4. Default password: Check `.env.example` or set `VITE_ADMIN_PASSWORD`
+**Admin panel is powered by TinaCMS Cloud with secure authentication.**
 
-**Admin Routes:**
-- `/admin` → Redirects to `/full-admin`
-- `/full-admin` → Full admin panel with Portfolio & Blog management
-- All routes protected by `AdminGuard` component
+**Access URLs:**
+- Development: `http://localhost:5173/admin/index.html`
+- Production: `https://yourdomain.com/admin/index.html`
 
-**Environment Setup:**
-```bash
-# Copy .env.example to .env
-cp .env.example .env
+**Authentication:**
+- TinaCMS Cloud handles all authentication through [tina.io](https://tina.io)
+- You must be logged into your TinaCMS Cloud account to access the admin panel
+- No passwords stored in the codebase
+- Secure OAuth-based authentication
 
-# Edit .env and set your admin password
-VITE_ADMIN_PASSWORD=your_secure_password_here
-```
+**Setup TinaCMS Cloud:**
 
-**Production Behavior:**
-- Admin routes are disabled in production builds
-- Any attempt to access `/admin` will redirect to homepage
-- No admin panel is exposed to public
+1. **Create TinaCMS Cloud Project:**
+   - Go to https://app.tina.io/
+   - Create a new project or select existing
+   - Connect your GitHub repository
+
+2. **Get Credentials:**
+   - In TinaCMS Cloud dashboard, go to your project settings
+   - Copy `Client ID` and `Token`
+   - Add these to your `.env` file:
+   ```bash
+   TINA_CLIENT_ID=your_client_id
+   TINA_TOKEN=your_token
+   ```
+
+3. **Configure Vercel Environment Variables:**
+   - Go to Vercel project settings → Environment Variables
+   - Add `TINA_CLIENT_ID` and `TINA_TOKEN`
+   - These are required for production
+
+4. **Access Admin Panel:**
+   - Development: `npm run dev` then visit `/admin/index.html`
+   - Production: Visit `yourdomain.com/admin/index.html`
+   - Log in with your tina.io account
+
+**Managing Content:**
+- Portfolio projects: Edit MDX files in `content/portfolio/`
+- Blog articles: Edit MDX files in `content/blog/`
+- Mark items as "Featured" to show on homepage (max 6)
+- All changes are committed directly to your GitHub repository
 
 ---
 
