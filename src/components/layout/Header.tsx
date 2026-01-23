@@ -15,7 +15,6 @@ const Header = () => {
 
   const navItems = [
     { href: '/', label: t('nav.home'), scrollId: null },
-    { href: '/about', label: t('nav.about'), scrollId: null },
     { href: '/services', label: t('nav.services'), scrollId: 'services' },
     { href: '/portfolio', label: t('nav.portfolio'), scrollId: 'portfolio' },
     { href: '/blog', label: t('nav.blog'), scrollId: 'blog' },
