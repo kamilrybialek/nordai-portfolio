@@ -1,0 +1,4 @@
+# Redirect all traffic to index.html for SPA routing
+# except for /admin/* which should serve static files
+/admin/*  /admin/:splat  200
+/*        /index.html     200
