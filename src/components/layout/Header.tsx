@@ -28,7 +28,7 @@ const Header = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
       <div className="container mx-auto px-8 py-6 flex items-center justify-between">
         <Link to="/" className="text-xl font-bold tracking-tight text-foreground">
-          nordAi studio
+          nordai.studio
         </Link>
 
         <div className="flex items-center gap-8">
