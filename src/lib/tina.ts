@@ -38,14 +38,14 @@ export interface BlogArticle {
 }
 
 // Load all portfolio MDX files using Vite's glob import
-const portfolioFiles = import.meta.glob('/content/portfolio/*.mdx', {
+const portfolioFiles = import.meta.glob<string>('/content/portfolio/*.mdx', {
   eager: true,
   query: '?raw',
   import: 'default'
 });
 
 // Load all blog MDX files using Vite's glob import
-const blogFiles = import.meta.glob('/content/blog/*.mdx', {
+const blogFiles = import.meta.glob<string>('/content/blog/*.mdx', {
   eager: true,
   query: '?raw',
   import: 'default'
@@ -54,10 +54,18 @@ const blogFiles = import.meta.glob('/content/blog/*.mdx', {
 export async function getPortfolioProjects(): Promise<PortfolioProject[]> {
   const projects: PortfolioProject[] = [];
 
+  console.log('Portfolio files:', Object.keys(portfolioFiles));
+
   for (const [path, content] of Object.entries(portfolioFiles)) {
     const rawContent = content as string;
     const { data } = matter(rawContent);
     const filename = path.split('/').pop()?.replace('.mdx', '') || '';
+
+    console.log(`Processing ${filename}:`, {
+      title: data.title,
+      featured: data.featured,
+      hasData: !!data
+    });
 
     projects.push({
       title: data.title || '',
@@ -75,6 +83,7 @@ export async function getPortfolioProjects(): Promise<PortfolioProject[]> {
     });
   }
 
+  console.log(`Loaded ${projects.length} portfolio projects, ${projects.filter(p => p.featured).length} featured`);
   return projects;
 }
 
