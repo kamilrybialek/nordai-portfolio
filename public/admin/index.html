@@ -4,16 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>nordAi Portfolio - Content Manager</title>
-    <script>
-      window.CMS_MANUAL_INIT = true;
-    </script>
   </head>
   <body>
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
     <script>
-      // Initialize CMS with inline config (bypasses config.yml routing issues)
-      CMS.init({
-        config: {
+      console.log('[DEBUG] Decap CMS script loaded');
+      console.log('[DEBUG] window.CMS:', typeof window.CMS);
+      console.log('[DEBUG] window.initCMS:', typeof window.initCMS);
+
+      // Wait for CMS to be available
+      if (window.CMS) {
+        console.log('[DEBUG] CMS available, registering manual init');
+        window.CMS_MANUAL_INIT = true;
+
+        const config = {
+          load_config_file: false,
           backend: {
             name: 'github',
             repo: 'kamilrybialek/nordai-portfolio',
@@ -67,8 +72,20 @@
               ]
             }
           ]
+        };
+
+        console.log('[DEBUG] Config object:', config);
+        console.log('[DEBUG] Calling CMS.init()...');
+
+        try {
+          window.CMS.init({ config });
+          console.log('[DEBUG] CMS.init() completed successfully');
+        } catch(error) {
+          console.error('[DEBUG] CMS.init() error:', error);
         }
-      });
+      } else {
+        console.error('[DEBUG] window.CMS not available!');
+      }
     </script>
   </body>
 </html>
