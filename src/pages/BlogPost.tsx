@@ -1,24 +1,13 @@
 import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ArrowLeft, Clock, Calendar } from 'lucide-react';
-import { client } from '../../.tina/__generated__/client';
+import { getBlogArticleBySlug, BlogArticle } from '@/lib/tina';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 
-interface Article {
-  title: string;
-  excerpt: string;
-  category: string;
-  date: string;
-  readTime: number;
-  author: string;
-  image?: string;
-  body: any;
-}
-
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
-  const [article, setArticle] = useState<Article | null>(null);
+  const [article, setArticle] = useState<BlogArticle | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -26,10 +15,8 @@ const BlogPost = () => {
       if (!slug) return;
 
       try {
-        const response = await client.queries.blog({
-          relativePath: `${slug}.mdx`,
-        });
-        setArticle(response.data.blog);
+        const articleData = await getBlogArticleBySlug(slug);
+        setArticle(articleData);
       } catch (error) {
         console.error('Error loading article:', error);
       } finally {
@@ -61,58 +48,10 @@ const BlogPost = () => {
   };
 
   const renderBody = (body: any) => {
-    if (!body || !body.children) return null;
-
-    return body.children.map((node: any, index: number) => {
-      switch (node.type) {
-        case 'h1':
-          return (
-            <h1 key={index} className="text-4xl font-bold mb-6 mt-12">
-              {node.children.map((child: any) => child.text).join('')}
-            </h1>
-          );
-        case 'h2':
-          return (
-            <h2 key={index} className="text-3xl font-bold mb-4 mt-10">
-              {node.children.map((child: any) => child.text).join('')}
-            </h2>
-          );
-        case 'h3':
-          return (
-            <h3 key={index} className="text-2xl font-bold mb-3 mt-8">
-              {node.children.map((child: any) => child.text).join('')}
-            </h3>
-          );
-        case 'p':
-          return (
-            <p key={index} className="text-lg leading-relaxed mb-6 text-muted-foreground">
-              {node.children.map((child: any) => child.text).join('')}
-            </p>
-          );
-        case 'ul':
-          return (
-            <ul key={index} className="list-disc list-inside mb-6 space-y-2">
-              {node.children.map((li: any, liIndex: number) => (
-                <li key={liIndex} className="text-lg text-muted-foreground">
-                  {li.children.map((lic: any) => lic.children.map((child: any) => child.text).join('')).join('')}
-                </li>
-              ))}
-            </ul>
-          );
-        case 'ol':
-          return (
-            <ol key={index} className="list-decimal list-inside mb-6 space-y-2">
-              {node.children.map((li: any, liIndex: number) => (
-                <li key={liIndex} className="text-lg text-muted-foreground">
-                  {li.children.map((lic: any) => lic.children.map((child: any) => child.text).join('')).join('')}
-                </li>
-              ))}
-            </ol>
-          );
-        default:
-          return null;
-      }
-    });
+    // For now, body rendering is handled through static content
+    // In the future, this can be enhanced with dynamic MDX rendering
+    if (!body) return <p className="text-muted-foreground">Content will be displayed here.</p>;
+    return <div className="prose prose-lg max-w-none text-muted-foreground">{body}</div>;
   };
 
   if (loading) {

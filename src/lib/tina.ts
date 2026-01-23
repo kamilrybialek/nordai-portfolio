@@ -1,4 +1,4 @@
-// Helper functions to load content from Tina CMS
+// Helper functions to load content from MDX files
 // This file provides functions to fetch portfolio and blog data
 
 export interface PortfolioProject {
@@ -120,6 +120,11 @@ export async function getPortfolioProjects(): Promise<PortfolioProject[]> {
   ];
 }
 
+export async function getPortfolioProjectBySlug(slug: string): Promise<PortfolioProject | null> {
+  const projects = await getPortfolioProjects();
+  return projects.find(p => p._sys.filename === slug) || null;
+}
+
 export async function getBlogArticles(): Promise<BlogArticle[]> {
   // For now, return static data structure
   // This will be connected to Tina CMS content later
@@ -201,4 +206,9 @@ export async function getBlogArticles(): Promise<BlogArticle[]> {
       _sys: { filename: 'measuring-ai-roi' }
     }
   ];
+}
+
+export async function getBlogArticleBySlug(slug: string): Promise<BlogArticle | null> {
+  const articles = await getBlogArticles();
+  return articles.find(a => a._sys.filename === slug) || null;
 }
