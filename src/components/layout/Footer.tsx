@@ -21,17 +21,17 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-foreground text-background">
+    <footer className="bg-muted/30 border-t border-border mt-24">
       <div className="container-wide section-padding">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link to="/" className="inline-block mb-6">
-              <span className="text-2xl font-display font-bold tracking-tight">
-                nord<span className="text-nordic-warm">Ai</span>.studio
+              <span className="text-2xl font-display font-bold tracking-tight text-foreground">
+                nord<span className="text-primary">Ai</span>.studio
               </span>
             </Link>
-            <p className="text-background/70 text-sm leading-relaxed mb-6">
+            <p className="text-muted-foreground text-sm leading-relaxed mb-6">
               {t('footer.tagline')}
             </p>
             <div className="flex items-center gap-4">
@@ -39,7 +39,7 @@ const Footer = () => {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 text-background/60 hover:text-background transition-colors"
+                className="p-2 text-muted-foreground hover:text-primary transition-colors"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="w-5 h-5" />
@@ -48,7 +48,7 @@ const Footer = () => {
                 href="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 text-background/60 hover:text-background transition-colors"
+                className="p-2 text-muted-foreground hover:text-primary transition-colors"
                 aria-label="Twitter"
               >
                 <Twitter className="w-5 h-5" />
@@ -57,7 +57,7 @@ const Footer = () => {
                 href="https://github.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 text-background/60 hover:text-background transition-colors"
+                className="p-2 text-muted-foreground hover:text-primary transition-colors"
                 aria-label="GitHub"
               >
                 <Github className="w-5 h-5" />
@@ -67,7 +67,7 @@ const Footer = () => {
 
           {/* Navigation */}
           <div>
-            <h4 className="text-sm font-display font-semibold uppercase tracking-wider mb-6">
+            <h4 className="text-sm font-display font-semibold uppercase tracking-wider mb-6 text-foreground">
               {t('footer.navigation')}
             </h4>
             <ul className="space-y-3">
@@ -75,7 +75,7 @@ const Footer = () => {
                 <li key={item.href}>
                   <Link
                     to={item.href}
-                    className="text-background/70 hover:text-background text-sm transition-colors"
+                    className="text-muted-foreground hover:text-foreground text-sm transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -86,7 +86,7 @@ const Footer = () => {
 
           {/* Services */}
           <div>
-            <h4 className="text-sm font-display font-semibold uppercase tracking-wider mb-6">
+            <h4 className="text-sm font-display font-semibold uppercase tracking-wider mb-6 text-foreground">
               {t('footer.services')}
             </h4>
             <ul className="space-y-3">
@@ -94,7 +94,7 @@ const Footer = () => {
                 <li key={item.href}>
                   <Link
                     to={item.href}
-                    className="text-background/70 hover:text-background text-sm transition-colors"
+                    className="text-muted-foreground hover:text-foreground text-sm transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -105,20 +105,20 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h4 className="text-sm font-display font-semibold uppercase tracking-wider mb-6">
+            <h4 className="text-sm font-display font-semibold uppercase tracking-wider mb-6 text-foreground">
               {t('footer.connect')}
             </h4>
             <ul className="space-y-4">
               <li>
                 <a
                   href="mailto:hello@nordai.studio"
-                  className="flex items-center gap-3 text-background/70 hover:text-background text-sm transition-colors"
+                  className="flex items-center gap-3 text-muted-foreground hover:text-foreground text-sm transition-colors"
                 >
                   <Mail className="w-4 h-4" />
                   {t('contact.info.email')}
                 </a>
               </li>
-              <li className="flex items-center gap-3 text-background/70 text-sm">
+              <li className="flex items-center gap-3 text-muted-foreground text-sm">
                 <MapPin className="w-4 h-4" />
                 {t('contact.info.location')}
               </li>
@@ -127,20 +127,20 @@ const Footer = () => {
         </div>
 
         {/* Bottom */}
-        <div className="mt-16 pt-8 border-t border-background/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-background/50 text-sm">
+        <div className="mt-16 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-muted-foreground text-sm">
             {t('footer.copyright')}
           </p>
           <div className="flex items-center gap-6">
             <Link
               to="/privacy"
-              className="text-background/50 hover:text-background/70 text-sm transition-colors"
+              className="text-muted-foreground hover:text-foreground text-sm transition-colors"
             >
               {t('footer.legal.privacy')}
             </Link>
             <Link
               to="/terms"
-              className="text-background/50 hover:text-background/70 text-sm transition-colors"
+              className="text-muted-foreground hover:text-foreground text-sm transition-colors"
             >
               {t('footer.legal.terms')}
             </Link>

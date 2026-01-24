@@ -40,13 +40,13 @@ const Blog = () => {
       />
 
       {/* Hero */}
-      <section className="pt-24 md:pt-32 pb-16 bg-gradient-to-b from-background to-muted/20">
+      <section className="pt-12 md:pt-16 pb-12 bg-gradient-to-b from-muted/20 to-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-4xl mx-auto text-center space-y-6">
             <motion.span
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="inline-block text-sm font-semibold text-primary uppercase tracking-wider mb-4"
+              className="inline-block text-sm font-bold text-primary uppercase tracking-[0.2em] mb-2"
             >
               {t('blog.title')}
             </motion.span>
@@ -54,7 +54,7 @@ const Blog = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-4xl md:text-6xl font-bold text-foreground mb-6"
+              className="text-5xl md:text-7xl font-bold text-foreground leading-[1.1] tracking-tight"
             >
               {t('blog.headline')}
             </motion.h1>
@@ -62,7 +62,7 @@ const Blog = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-xl text-muted-foreground max-w-2xl mx-auto"
+              className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto font-medium"
             >
               {t('blog.subheadline')}
             </motion.p>
@@ -71,17 +71,17 @@ const Blog = () => {
       </section>
 
       {/* Filter */}
-      <section className="py-8 bg-muted/20">
+      <section className="py-12 bg-background border-y border-border">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap justify-center gap-3">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-6 py-2.5 text-sm font-semibold rounded-full transition-all duration-200 ${
+                className={`px-6 py-3 text-sm font-bold rounded-full transition-all duration-200 ${
                   activeCategory === cat
-                    ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25'
-                    : 'bg-background border-2 border-border text-muted-foreground hover:border-primary hover:text-foreground'
+                    ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105'
+                    : 'bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground hover:scale-105'
                 }`}
               >
                 {t(`blog.categories.${cat}`)}
@@ -92,11 +92,11 @@ const Blog = () => {
       </section>
 
       {/* Articles Grid */}
-      <section className="py-16 bg-background">
+      <section className="py-20 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           {filteredArticles.length === 0 ? (
-            <div className="text-center py-16">
-              <p className="text-xl text-muted-foreground">No articles found in this category.</p>
+            <div className="text-center py-20">
+              <p className="text-2xl font-semibold text-muted-foreground">No articles found in this category.</p>
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
@@ -122,20 +122,20 @@ const Blog = () => {
                     </div>
 
                     {/* Content */}
-                    <div className="p-6 space-y-4 flex-1 flex flex-col">
+                    <div className="p-7 space-y-4 flex-1 flex flex-col">
                       {/* Category & Read Time */}
                       <div className="flex items-center gap-3 flex-wrap">
-                        <span className="px-3 py-1 text-xs font-semibold bg-primary/10 text-primary rounded-full">
+                        <span className="px-3 py-1.5 text-xs font-bold bg-primary/10 text-primary rounded-full uppercase tracking-wide">
                           {t(`blog.categories.${article.category}`)}
                         </span>
-                        <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+                        <span className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground">
                           <Clock className="w-3.5 h-3.5" />
                           {article.readTime} {t('blog.min_read')}
                         </span>
                       </div>
 
                       {/* Title */}
-                      <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors line-clamp-2">
+                      <h3 className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-tight">
                         {article.title}
                       </h3>
 
@@ -145,12 +145,12 @@ const Blog = () => {
                       </p>
 
                       {/* Footer */}
-                      <div className="pt-4 border-t border-border flex items-center justify-between">
-                        <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                          <Calendar className="w-3.5 h-3.5" />
+                      <div className="pt-5 border-t border-border flex items-center justify-between">
+                        <span className="flex items-center gap-2 text-sm text-muted-foreground font-medium">
+                          <Calendar className="w-4 h-4" />
                           {formatDate(article.date)}
                         </span>
-                        <span className="inline-flex items-center gap-2 text-sm font-semibold text-primary group-hover:gap-3 transition-all">
+                        <span className="inline-flex items-center gap-2 text-sm font-bold text-primary group-hover:gap-3 transition-all">
                           {t('blog.read_more')}
                           <ArrowRight className="w-4 h-4" />
                         </span>
