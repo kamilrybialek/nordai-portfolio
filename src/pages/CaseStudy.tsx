@@ -136,15 +136,19 @@ const CaseStudy = () => {
             <div className="mt-16 pt-16 border-t border-border">
               <h2 className="text-3xl font-bold text-foreground mb-8">Project Gallery</h2>
               <div className="grid md:grid-cols-2 gap-6">
-                {project.gallery.map((image, index) => (
-                  <div key={index} className="group relative aspect-video overflow-hidden rounded-xl shadow-lg">
-                    <img
-                      src={image}
-                      alt={`Project image ${index + 1}`}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                ))}
+                {project.gallery.map((item, index) => {
+                  const imageUrl = typeof item === 'string' ? item : (item?.url || '');
+                  if (!imageUrl) return null;
+                  return (
+                    <div key={index} className="group relative aspect-video overflow-hidden rounded-xl shadow-lg">
+                      <img
+                        src={imageUrl}
+                        alt={`Project image ${index + 1}`}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}

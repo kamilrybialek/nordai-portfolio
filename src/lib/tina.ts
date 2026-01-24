@@ -12,7 +12,7 @@ export interface PortfolioProject {
   featured?: boolean;
   body?: string;
   image?: string;
-  gallery?: string[];
+  gallery?: (string | { url: string })[];
   link?: string;
   seoTitle?: string;
   seoDescription?: string;
@@ -30,7 +30,7 @@ export interface BlogArticle {
   featured?: boolean;
   author?: string;
   image?: string;
-  gallery?: string[];
+  gallery?: (string | { url: string })[];
   body?: string;
   seoTitle?: string;
   seoDescription?: string;
