@@ -1,12 +1,28 @@
 [build]
   command = "npm run build"
   publish = "dist"
+  functions = "netlify/functions"
 
+# Force HTTPS redirect
+[[redirects]]
+  from = "http://nordai.studio/*"
+  to = "https://nordai.studio/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.nordai.studio/*"
+  to = "https://nordai.studio/:splat"
+  status = 301
+  force = true
+
+# Admin panel routing
 [[redirects]]
   from = "/admin/*"
   to = "/admin/:splat"
   status = 200
 
+# SPA routing
 [[redirects]]
   from = "/*"
   to = "/index.html"
