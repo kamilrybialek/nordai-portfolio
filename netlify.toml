@@ -16,13 +16,7 @@
   status = 301
   force = true
 
-# Admin panel routing
-[[redirects]]
-  from = "/admin/*"
-  to = "/admin/:splat"
-  status = 200
-
-# SPA routing
+# SPA routing - must handle all routes including /admin
 [[redirects]]
   from = "/*"
   to = "/index.html"

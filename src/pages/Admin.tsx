@@ -45,8 +45,8 @@ export default function Admin() {
 
   const handleOAuthCallback = async (code: string) => {
     try {
-      // Exchange code for access token via our backend
-      const response = await fetch(`/.netlify/functions/github-oauth?code=${code}`);
+      // Exchange code for access token via our backend (works on both Vercel and Netlify)
+      const response = await fetch(`/api/github-oauth?code=${code}`);
       const data = await response.json();
 
       if (data.access_token) {
