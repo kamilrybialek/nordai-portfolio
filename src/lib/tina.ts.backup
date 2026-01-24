@@ -12,7 +12,6 @@ export interface PortfolioProject {
   featured?: boolean;
   body?: string;
   image?: string;
-  gallery?: string[];
   link?: string;
   seoTitle?: string;
   seoDescription?: string;
@@ -30,7 +29,6 @@ export interface BlogArticle {
   featured?: boolean;
   author?: string;
   image?: string;
-  gallery?: string[];
   body?: string;
   seoTitle?: string;
   seoDescription?: string;
@@ -60,7 +58,7 @@ export async function getPortfolioProjects(): Promise<PortfolioProject[]> {
 
   for (const [path, content] of Object.entries(portfolioFiles)) {
     const rawContent = content as string;
-    const { data, content: bodyContent } = matter(rawContent);
+    const { data } = matter(rawContent);
     const filename = path.split('/').pop()?.replace('.mdx', '') || '';
 
     console.log(`Processing ${filename}:`, {
@@ -76,9 +74,8 @@ export async function getPortfolioProjects(): Promise<PortfolioProject[]> {
       tags: data.tags || [],
       excerpt: data.excerpt || '',
       featured: data.featured || false,
-      body: bodyContent,
+      body: data.body,
       image: data.image || '/placeholder.svg',
-      gallery: data.gallery || [],
       link: data.link,
       seoTitle: data.seoTitle,
       seoDescription: data.seoDescription,
@@ -100,7 +97,7 @@ export async function getBlogArticles(): Promise<BlogArticle[]> {
 
   for (const [path, content] of Object.entries(blogFiles)) {
     const rawContent = content as string;
-    const { data, content: bodyContent } = matter(rawContent);
+    const { data } = matter(rawContent);
     const filename = path.split('/').pop()?.replace('.mdx', '') || '';
 
     articles.push({
@@ -112,8 +109,7 @@ export async function getBlogArticles(): Promise<BlogArticle[]> {
       featured: data.featured || false,
       author: data.author || 'nordAi Team',
       image: data.image || '/placeholder.svg',
-      gallery: data.gallery || [],
-      body: bodyContent,
+      body: data.body,
       seoTitle: data.seoTitle,
       seoDescription: data.seoDescription,
       _sys: { filename }

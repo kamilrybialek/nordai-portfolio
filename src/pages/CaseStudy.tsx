@@ -1,9 +1,10 @@
 import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { getPortfolioProjectBySlug, PortfolioProject } from '@/lib/tina';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import Markdown from 'markdown-to-jsx';
 
 const CaseStudy = () => {
   const { id } = useParams<{ id: string }>();
@@ -27,13 +28,6 @@ const CaseStudy = () => {
     fetchProject();
   }, [id]);
 
-  const renderBody = (body: any) => {
-    // For now, body rendering is handled through static content
-    // In the future, this can be enhanced with dynamic MDX rendering
-    if (!body) return <p className="text-muted-foreground">Content will be displayed here.</p>;
-    return <div className="prose prose-lg max-w-none text-muted-foreground">{body}</div>;
-  };
-
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -50,8 +44,8 @@ const CaseStudy = () => {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold mb-4">Project Not Found</h2>
-          <Link to="/" className="text-primary hover:underline">
-            ← Back to Home
+          <Link to="/portfolio" className="text-primary hover:underline">
+            ← Back to Portfolio
           </Link>
         </div>
       </div>
@@ -63,32 +57,41 @@ const CaseStudy = () => {
       <Navigation />
 
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5 py-20">
+      <div className="bg-gradient-to-b from-muted/30 to-background py-16 md:py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
-            <Link to="/" className="inline-flex items-center text-primary hover:underline mb-8">
+            <Link to="/portfolio" className="inline-flex items-center text-primary hover:underline mb-8 font-medium">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Portfolio
             </Link>
 
-            <div className="space-y-4">
+            <div className="space-y-6">
+              {/* Tags */}
               <div className="flex flex-wrap gap-2">
-                {project.tags.map((tag, index) => (
+                {project.tags && project.tags.map((tag, index) => (
                   <span
                     key={index}
-                    className="text-xs px-3 py-1 bg-primary text-primary-foreground rounded-full font-medium"
+                    className="px-4 py-1.5 text-sm font-semibold bg-primary/10 text-primary rounded-full"
                   >
                     {tag}
                   </span>
                 ))}
               </div>
 
-              <h1 className="text-4xl md:text-5xl font-bold text-foreground">
+              {/* Title */}
+              <h1 className="text-4xl md:text-6xl font-bold text-foreground leading-tight">
                 {project.title}
               </h1>
 
-              <p className="text-xl text-muted-foreground">
-                {project.client}
+              {/* Client */}
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-medium text-muted-foreground">Client:</span>
+                <span className="text-xl font-semibold text-foreground">{project.client}</span>
+              </div>
+
+              {/* Excerpt */}
+              <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
+                {project.excerpt}
               </p>
             </div>
           </div>
@@ -97,48 +100,92 @@ const CaseStudy = () => {
 
       {/* Featured Image */}
       {project.image && (
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 -mt-10 mb-12">
-          <div className="max-w-4xl mx-auto">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+          <div className="max-w-5xl mx-auto">
             <img
               src={project.image}
               alt={project.title}
-              className="w-full h-96 object-cover rounded-lg shadow-2xl"
+              className="w-full h-[400px] md:h-[500px] object-cover rounded-2xl shadow-2xl"
             />
           </div>
         </div>
       )}
 
       {/* Content */}
-      <article className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <article className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="max-w-3xl mx-auto">
-          {/* Excerpt */}
-          <div className="text-xl leading-relaxed mb-12 pb-12 border-b border-border">
-            <p className="text-foreground font-medium">{project.excerpt}</p>
+          <div className="prose prose-lg prose-slate max-w-none
+            prose-headings:font-bold prose-headings:text-foreground
+            prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6
+            prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4
+            prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:mb-6
+            prose-a:text-primary prose-a:no-underline hover:prose-a:underline
+            prose-strong:text-foreground prose-strong:font-semibold
+            prose-ul:my-6 prose-ul:list-disc prose-ul:pl-6
+            prose-ol:my-6 prose-ol:list-decimal prose-ol:pl-6
+            prose-li:text-muted-foreground prose-li:my-2
+            prose-code:text-primary prose-code:bg-primary/5 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
+            prose-pre:bg-muted prose-pre:border prose-pre:border-border
+            prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-4 prose-blockquote:italic
+            prose-img:rounded-lg prose-img:shadow-lg">
+            {project.body && <Markdown>{project.body}</Markdown>}
           </div>
 
-          {/* Body Content */}
-          <div className="prose prose-lg max-w-none">
-            {renderBody(project.body)}
-          </div>
+          {/* Gallery */}
+          {project.gallery && project.gallery.length > 0 && (
+            <div className="mt-16 pt-16 border-t border-border">
+              <h2 className="text-3xl font-bold text-foreground mb-8">Project Gallery</h2>
+              <div className="grid md:grid-cols-2 gap-6">
+                {project.gallery.map((image, index) => (
+                  <div key={index} className="group relative aspect-video overflow-hidden rounded-xl shadow-lg">
+                    <img
+                      src={image}
+                      alt={`Project image ${index + 1}`}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Project Link */}
           {project.link && (
-            <div className="mt-12 pt-12 border-t border-border">
+            <div className="mt-16 pt-16 border-t border-border">
               <a
                 href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center px-6 py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-colors"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-xl hover:opacity-90 transition-opacity shadow-lg shadow-primary/25"
               >
+                <ExternalLink className="w-5 h-5" />
                 View Live Project
-                <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
               </a>
             </div>
           )}
         </div>
       </article>
+
+      {/* Footer Section */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        <div className="max-w-3xl mx-auto">
+          <div className="border-t border-b border-border py-8">
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div>
+                <p className="text-sm text-muted-foreground mb-1">Project for</p>
+                <p className="font-semibold text-foreground text-lg">{project.client}</p>
+              </div>
+              <Link
+                to="/portfolio"
+                className="inline-flex items-center gap-2 text-primary hover:underline font-semibold"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Back to all projects
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <Footer />
     </div>
