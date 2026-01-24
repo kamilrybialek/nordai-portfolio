@@ -4,90 +4,100 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>nordAi Portfolio - Content Manager</title>
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   </head>
   <body>
+    <!-- Set manual init flag BEFORE loading CMS -->
+    <script>
+      window.CMS_MANUAL_INIT = true;
+    </script>
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
     <script>
-      console.log('[DEBUG] Decap CMS script loaded');
-      console.log('[DEBUG] window.CMS:', typeof window.CMS);
-      console.log('[DEBUG] window.initCMS:', typeof window.initCMS);
-
-      // Wait for CMS to be available
-      if (window.CMS) {
-        console.log('[DEBUG] CMS available, registering manual init');
-        window.CMS_MANUAL_INIT = true;
-
-        const config = {
-          load_config_file: false,
-          backend: {
-            name: 'github',
-            repo: 'kamilrybialek/nordai-portfolio',
-            branch: 'main'
-          },
-          media_folder: 'public/images',
-          public_folder: '/images',
-          collections: [
-            {
-              name: 'blog',
-              label: 'Blog Articles',
-              folder: 'content/blog',
-              create: true,
-              slug: '{{slug}}',
-              extension: 'mdx',
-              format: 'frontmatter',
-              fields: [
-                { label: 'Title', name: 'title', widget: 'string' },
-                { label: 'Excerpt', name: 'excerpt', widget: 'text' },
-                { label: 'Category', name: 'category', widget: 'select', options: ['ai', 'automation', 'design', 'insights', 'trends'] },
-                { label: 'Date', name: 'date', widget: 'datetime' },
-                { label: 'Read Time (minutes)', name: 'readTime', widget: 'number', value_type: 'int' },
-                { label: 'Author', name: 'author', widget: 'string', default: 'nordAi Team' },
-                { label: 'Featured on Homepage', name: 'featured', widget: 'boolean', default: false, required: false },
-                { label: 'Main Image', name: 'image', widget: 'image', required: false, default: '/placeholder.svg' },
-                { label: 'Gallery Images', name: 'gallery', widget: 'list', summary: '{{fields.url}}', field: { label: 'Image URL', name: 'url', widget: 'image' }, required: false },
-                { label: 'SEO Title', name: 'seoTitle', widget: 'string', required: false },
-                { label: 'SEO Description', name: 'seoDescription', widget: 'text', required: false },
-                { label: 'Body', name: 'body', widget: 'markdown' }
-              ]
-            },
-            {
-              name: 'portfolio',
-              label: 'Portfolio Projects',
-              folder: 'content/portfolio',
-              create: true,
-              slug: '{{slug}}',
-              extension: 'mdx',
-              format: 'frontmatter',
-              fields: [
-                { label: 'Title', name: 'title', widget: 'string' },
-                { label: 'Client', name: 'client', widget: 'string' },
-                { label: 'Category', name: 'category', widget: 'select', options: ['ai', 'web', 'branding', 'design'] },
-                { label: 'Tags', name: 'tags', widget: 'list' },
-                { label: 'Excerpt', name: 'excerpt', widget: 'text' },
-                { label: 'Featured on Homepage', name: 'featured', widget: 'boolean', default: false, required: false },
-                { label: 'Main Image', name: 'image', widget: 'image', required: false, default: '/placeholder.svg' },
-                { label: 'Gallery Images', name: 'gallery', widget: 'list', summary: '{{fields.url}}', field: { label: 'Image URL', name: 'url', widget: 'image' }, required: false },
-                { label: 'Project Link', name: 'link', widget: 'string', required: false },
-                { label: 'SEO Title', name: 'seoTitle', widget: 'string', required: false },
-                { label: 'SEO Description', name: 'seoDescription', widget: 'text', required: false },
-                { label: 'Body', name: 'body', widget: 'markdown' }
-              ]
-            }
-          ]
-        };
-
-        console.log('[DEBUG] Config object:', config);
-        console.log('[DEBUG] Calling CMS.init()...');
-
-        try {
-          window.CMS.init({ config });
-          console.log('[DEBUG] CMS.init() completed successfully');
-        } catch(error) {
-          console.error('[DEBUG] CMS.init() error:', error);
-        }
+      // Prevent multiple initializations
+      if (window.cmsInitialized) {
+        console.log('[DEBUG] CMS already initialized, skipping');
       } else {
-        console.error('[DEBUG] window.CMS not available!');
+        window.cmsInitialized = true;
+
+        // Wait for DOM to be fully ready
+        function initCMS() {
+          if (!window.CMS) {
+            console.error('[DEBUG] window.CMS not available!');
+            return;
+          }
+
+          console.log('[DEBUG] Initializing Decap CMS');
+
+          const config = {
+            load_config_file: false,
+            backend: {
+              name: 'github',
+              repo: 'kamilrybialek/nordai-portfolio',
+              branch: 'main'
+            },
+            media_folder: 'public/images',
+            public_folder: '/images',
+            collections: [
+              {
+                name: 'blog',
+                label: 'Blog Articles',
+                folder: 'content/blog',
+                create: true,
+                slug: '{{slug}}',
+                extension: 'mdx',
+                format: 'frontmatter',
+                fields: [
+                  { label: 'Title', name: 'title', widget: 'string' },
+                  { label: 'Excerpt', name: 'excerpt', widget: 'text' },
+                  { label: 'Category', name: 'category', widget: 'select', options: ['ai', 'automation', 'design', 'insights', 'trends'] },
+                  { label: 'Date', name: 'date', widget: 'datetime' },
+                  { label: 'Read Time (minutes)', name: 'readTime', widget: 'number', value_type: 'int' },
+                  { label: 'Author', name: 'author', widget: 'string', default: 'nordAi Team' },
+                  { label: 'Featured on Homepage', name: 'featured', widget: 'boolean', default: false },
+                  { label: 'Image', name: 'image', widget: 'image', required: false },
+                  { label: 'SEO Title', name: 'seoTitle', widget: 'string', required: false },
+                  { label: 'SEO Description', name: 'seoDescription', widget: 'text', required: false },
+                  { label: 'Body', name: 'body', widget: 'markdown' }
+                ]
+              },
+              {
+                name: 'portfolio',
+                label: 'Portfolio Projects',
+                folder: 'content/portfolio',
+                create: true,
+                slug: '{{slug}}',
+                extension: 'mdx',
+                format: 'frontmatter',
+                fields: [
+                  { label: 'Title', name: 'title', widget: 'string' },
+                  { label: 'Client', name: 'client', widget: 'string' },
+                  { label: 'Category', name: 'category', widget: 'select', options: ['ai', 'web', 'branding', 'design'] },
+                  { label: 'Tags', name: 'tags', widget: 'list' },
+                  { label: 'Excerpt', name: 'excerpt', widget: 'text' },
+                  { label: 'Featured on Homepage', name: 'featured', widget: 'boolean', default: false },
+                  { label: 'Image', name: 'image', widget: 'image', required: false },
+                  { label: 'Project Link', name: 'link', widget: 'string', required: false },
+                  { label: 'SEO Title', name: 'seoTitle', widget: 'string', required: false },
+                  { label: 'SEO Description', name: 'seoDescription', widget: 'text', required: false },
+                  { label: 'Body', name: 'body', widget: 'markdown' }
+                ]
+              }
+            ]
+          };
+
+          try {
+            window.CMS.init({ config });
+            console.log('[DEBUG] CMS initialized successfully');
+          } catch(error) {
+            console.error('[DEBUG] CMS initialization error:', error);
+          }
+        }
+
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initCMS);
+        } else {
+          initCMS();
+        }
       }
     </script>
   </body>
