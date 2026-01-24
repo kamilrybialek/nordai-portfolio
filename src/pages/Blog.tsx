@@ -1,77 +1,25 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { ArrowRight, Clock } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import SEO from '@/components/SEO';
-
-// Sample blog data
-const articles = [
-  {
-    id: 'future-of-ai-automation',
-    title: 'The Future of AI Automation in Business',
-    excerpt: 'Exploring how artificial intelligence is reshaping enterprise workflows and what it means for the future of work.',
-    category: 'ai',
-    date: '2025-01-08',
-    readTime: 8,
-    image: '/placeholder.svg',
-  },
-  {
-    id: 'design-systems-scale',
-    title: 'Building Design Systems That Scale',
-    excerpt: 'A practical guide to creating maintainable design systems that grow with your product.',
-    category: 'design',
-    date: '2025-01-05',
-    readTime: 6,
-    image: '/placeholder.svg',
-  },
-  {
-    id: 'ai-branding-strategy',
-    title: 'How AI is Transforming Brand Strategy',
-    excerpt: 'Data-driven insights are revolutionizing how brands connect with their audiences.',
-    category: 'insights',
-    date: '2025-01-02',
-    readTime: 5,
-    image: '/placeholder.svg',
-  },
-  {
-    id: 'workflow-automation-guide',
-    title: 'Complete Guide to Workflow Automation',
-    excerpt: 'Step-by-step approach to identifying and automating repetitive business processes.',
-    category: 'automation',
-    date: '2024-12-28',
-    readTime: 10,
-    image: '/placeholder.svg',
-  },
-  {
-    id: 'ux-trends-2025',
-    title: 'UX Design Trends to Watch in 2025',
-    excerpt: 'From AI-powered interfaces to spatial design, here are the trends shaping user experience.',
-    category: 'trends',
-    date: '2024-12-22',
-    readTime: 7,
-    image: '/placeholder.svg',
-  },
-  {
-    id: 'measuring-ai-roi',
-    title: 'Measuring ROI on AI Investments',
-    excerpt: 'Practical frameworks for quantifying the business value of artificial intelligence initiatives.',
-    category: 'insights',
-    date: '2024-12-18',
-    readTime: 9,
-    image: '/placeholder.svg',
-  },
-];
+import { getBlogArticles, BlogArticle } from '@/lib/tina';
 
 const categories = ['all', 'ai', 'automation', 'design', 'insights', 'trends'];
 
 const Blog = () => {
   const { t } = useTranslation();
   const [activeCategory, setActiveCategory] = useState('all');
+  const [articles, setArticles] = useState<BlogArticle[]>([]);
 
-  const filteredArticles = activeCategory === 'all' 
-    ? articles 
+  useEffect(() => {
+    getBlogArticles().then(setArticles);
+  }, []);
+
+  const filteredArticles = activeCategory === 'all'
+    ? articles
     : articles.filter(a => a.category === activeCategory);
 
   const formatDate = (dateStr: string) => {
@@ -147,19 +95,19 @@ const Blog = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredArticles.map((article, index) => (
               <motion.article
-                key={article.id}
+                key={article._sys.filename}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 layout
               >
                 <Link
-                  to={`/blog/${article.id}`}
+                  to={`/blog/${article._sys.filename}`}
                   className="group block card-nordic overflow-hidden h-full"
                 >
                   <div className="aspect-[16/10] bg-muted rounded-lg mb-6 overflow-hidden">
-                    <img 
-                      src={article.image} 
+                    <img
+                      src={article.image || '/placeholder.svg'}
                       alt={article.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />

@@ -1,72 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { ArrowRight, ExternalLink } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import SEO from '@/components/SEO';
 import CTASection from '@/components/sections/CTASection';
-
-// Sample portfolio data
-const projects = [
-  {
-    id: 'fintech-automation',
-    title: 'FinTech AI Automation',
-    client: 'Nordic Bank Group',
-    category: 'ai',
-    image: '/placeholder.svg',
-    excerpt: 'Automated customer service reducing response times by 80%.',
-  },
-  {
-    id: 'ecommerce-redesign',
-    title: 'E-commerce Redesign',
-    client: 'Scandinavian Retail Co',
-    category: 'web',
-    image: '/placeholder.svg',
-    excerpt: 'Complete platform overhaul resulting in 150% conversion increase.',
-  },
-  {
-    id: 'brand-identity',
-    title: 'Tech Startup Branding',
-    client: 'GreenTech Innovations',
-    category: 'branding',
-    image: '/placeholder.svg',
-    excerpt: 'Full brand identity for sustainability-focused tech company.',
-  },
-  {
-    id: 'healthcare-app',
-    title: 'Healthcare App UX',
-    client: 'MedCare Solutions',
-    category: 'design',
-    image: '/placeholder.svg',
-    excerpt: 'Patient-centered mobile app with accessibility focus.',
-  },
-  {
-    id: 'ai-content-platform',
-    title: 'AI Content Platform',
-    client: 'MediaHouse International',
-    category: 'ai',
-    image: '/placeholder.svg',
-    excerpt: 'AI-powered content generation and distribution platform.',
-  },
-  {
-    id: 'saas-dashboard',
-    title: 'SaaS Analytics Dashboard',
-    client: 'DataDriven Inc',
-    category: 'web',
-    image: '/placeholder.svg',
-    excerpt: 'Real-time analytics dashboard with predictive insights.',
-  },
-];
+import { getPortfolioProjects, PortfolioProject } from '@/lib/tina';
 
 const categories = ['all', 'ai', 'branding', 'web', 'design'];
 
 const Portfolio = () => {
   const { t } = useTranslation();
   const [activeCategory, setActiveCategory] = useState('all');
+  const [projects, setProjects] = useState<PortfolioProject[]>([]);
 
-  const filteredProjects = activeCategory === 'all' 
-    ? projects 
+  useEffect(() => {
+    getPortfolioProjects().then(setProjects);
+  }, []);
+
+  const filteredProjects = activeCategory === 'all'
+    ? projects
     : projects.filter(p => p.category === activeCategory);
 
   return (
@@ -133,19 +87,19 @@ const Portfolio = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredProjects.map((project, index) => (
               <motion.article
-                key={project.id}
+                key={project._sys.filename}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 layout
               >
                 <Link
-                  to={`/portfolio/${project.id}`}
+                  to={`/portfolio/${project._sys.filename}`}
                   className="group block card-nordic overflow-hidden"
                 >
                   <div className="aspect-[4/3] bg-muted rounded-lg mb-6 overflow-hidden">
-                    <img 
-                      src={project.image} 
+                    <img
+                      src={project.image || '/placeholder.svg'}
                       alt={project.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
