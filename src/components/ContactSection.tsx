@@ -15,16 +15,37 @@ const ContactSection = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitStatus('idle');
 
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      // Submit to Netlify Forms
+      const form = e.target as HTMLFormElement;
+      const formDataEncoded = new FormData(form);
+
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formDataEncoded as any).toString(),
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', company: '', message: '' });
+
+        // Reset success message after 5 seconds
+        setTimeout(() => setSubmitStatus('idle'), 5000);
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setSubmitStatus('error');
+
+      // Reset error message after 5 seconds
+      setTimeout(() => setSubmitStatus('idle'), 5000);
+    } finally {
       setIsSubmitting(false);
-      setSubmitStatus('success');
-      setFormData({ name: '', email: '', company: '', message: '' });
-
-      // Reset success message after 3 seconds
-      setTimeout(() => setSubmitStatus('idle'), 3000);
-    }, 1000);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -68,7 +89,18 @@ const ContactSection = () => {
 
               {/* Contact Form */}
               <div className="bg-card rounded-xl p-8 border border-border">
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form
+                  onSubmit={handleSubmit}
+                  className="space-y-6"
+                  name="contact"
+                  method="POST"
+                  data-netlify="true"
+                  data-netlify-honeypot="bot-field"
+                >
+                  {/* Hidden inputs for Netlify Forms */}
+                  <input type="hidden" name="form-name" value="contact" />
+                  <input type="hidden" name="bot-field" />
+
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
                       {t('contact.form.name')}
@@ -141,8 +173,13 @@ const ContactSection = () => {
                   </button>
 
                   {submitStatus === 'success' && (
-                    <p className="text-center text-sm text-green-600 dark:text-green-400">
-                      Message sent successfully! We'll get back to you soon.
+                    <p className="text-center text-sm text-green-600 dark:text-green-400 font-medium">
+                      ✅ Message sent successfully! We'll get back to you soon.
+                    </p>
+                  )}
+                  {submitStatus === 'error' && (
+                    <p className="text-center text-sm text-red-600 dark:text-red-400 font-medium">
+                      ❌ Failed to send message. Please try again or email us directly.
                     </p>
                   )}
                 </form>
