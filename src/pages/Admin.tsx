@@ -93,14 +93,100 @@ export default function Admin() {
     setUser(null);
   };
 
+  const loadContentFromGitHub = async (type: 'blog' | 'portfolio') => {
+    console.log(`📖 [LOAD] Loading ${type} from GitHub API...`);
+    const token = localStorage.getItem('github_token');
+
+    try {
+      // Fetch directory listing from GitHub API
+      const response = await fetch(
+        `https://api.github.com/repos/kamilrybialek/nordai-portfolio/contents/content/${type}`,
+        {
+          headers: {
+            Authorization: `token ${token}`,
+            Accept: 'application/vnd.github.v3+json',
+          },
+        }
+      );
+
+      if (!response.ok) {
+        console.error(`📖 [LOAD] Failed to fetch ${type} directory:`, response.status);
+        return [];
+      }
+
+      const files = await response.json();
+      console.log(`📖 [LOAD] Found ${files.length} files in ${type}`);
+
+      // Filter only .mdx files
+      const mdxFiles = files.filter((file: any) => file.name.endsWith('.mdx'));
+      console.log(`📖 [LOAD] Filtered to ${mdxFiles.length} .mdx files`);
+
+      // Fetch and parse each file
+      const items = await Promise.all(
+        mdxFiles.map(async (file: any) => {
+          try {
+            const fileResponse = await fetch(file.download_url);
+            const content = await fileResponse.text();
+
+            // Parse frontmatter
+            const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
+            if (!frontmatterMatch) {
+              console.warn(`📖 [LOAD] No frontmatter in ${file.name}`);
+              return null;
+            }
+
+            const frontmatter = frontmatterMatch[1];
+            const metadata: any = {};
+
+            frontmatter.split('\n').forEach((line: string) => {
+              const match = line.match(/^(\w+):\s*(.+)$/);
+              if (match) {
+                const [, key, value] = match;
+                // Remove quotes and parse value
+                metadata[key] = value.replace(/^["']|["']$/g, '');
+              }
+            });
+
+            // Extract filename without extension
+            const filename = file.name.replace(/\.mdx$/, '');
+
+            return {
+              ...metadata,
+              _sys: {
+                filename,
+                path: file.path,
+              },
+            };
+          } catch (error) {
+            console.error(`📖 [LOAD] Error parsing ${file.name}:`, error);
+            return null;
+          }
+        })
+      );
+
+      // Filter out null results
+      const validItems = items.filter(item => item !== null);
+      console.log(`📖 [LOAD] Successfully loaded ${validItems.length} items from ${type}`);
+      return validItems;
+    } catch (error) {
+      console.error(`📖 [LOAD] Error loading ${type}:`, error);
+      return [];
+    }
+  };
+
   const loadContent = async () => {
+    console.log('📖 [LOAD] Starting content reload from GitHub API...');
     const [articles, portfolioProjects] = await Promise.all([
-      getBlogArticles(),
-      getPortfolioProjects(),
+      loadContentFromGitHub('blog'),
+      loadContentFromGitHub('portfolio'),
     ]);
-    setBlogPosts(articles);
-    setProjects(portfolioProjects);
+    setBlogPosts(articles as BlogArticle[]);
+    setProjects(portfolioProjects as PortfolioProject[]);
     setSelectedItems(new Set()); // Clear selection when reloading
+    console.log('📖 [LOAD] Content reload complete!', {
+      blogCount: articles.length,
+      portfolioCount: portfolioProjects.length
+    });
   };
 
   const handleDelete = async (filename: string) => {
