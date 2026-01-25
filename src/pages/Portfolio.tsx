@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import SEO from '@/components/SEO';
-import CTASection from '@/components/sections/CTASection';
+import ContactSection from '@/components/ContactSection';
 import { getPortfolioProjects, PortfolioProject } from '@/lib/tina';
 
 const categories = ['all', 'ai', 'branding', 'web', 'design'];
@@ -174,7 +174,7 @@ const Portfolio = () => {
         </div>
       </section>
 
-      <CTASection />
+      <ContactSection />
     </Layout>
   );
 };

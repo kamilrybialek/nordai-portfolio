@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Clock, Calendar } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import SEO from '@/components/SEO';
+import ContactSection from '@/components/ContactSection';
 import { getBlogArticles, BlogArticle } from '@/lib/tina';
 
 const categories = ['all', 'ai', 'automation', 'design', 'insights', 'trends'];
@@ -176,6 +177,8 @@ const Blog = () => {
           )}
         </div>
       </section>
+
+      <ContactSection />
     </Layout>
   );
 };
