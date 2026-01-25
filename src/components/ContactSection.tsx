@@ -18,15 +18,16 @@ const ContactSection = () => {
     setSubmitStatus('idle');
 
     try {
-      // Submit to Netlify Forms
-      const form = e.target as HTMLFormElement;
-      const formDataEncoded = new FormData(form);
-
-      const response = await fetch('/', {
+      // Submit to Vercel serverless function
+      const response = await fetch('/api/contact', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formDataEncoded as any).toString(),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
+
+      const data = await response.json();
 
       if (response.ok) {
         setSubmitStatus('success');
@@ -35,7 +36,7 @@ const ContactSection = () => {
         // Reset success message after 5 seconds
         setTimeout(() => setSubmitStatus('idle'), 5000);
       } else {
-        throw new Error('Form submission failed');
+        throw new Error(data.error || 'Form submission failed');
       }
     } catch (error) {
       console.error('Form submission error:', error);
@@ -92,15 +93,7 @@ const ContactSection = () => {
                 <form
                   onSubmit={handleSubmit}
                   className="space-y-6"
-                  name="contact"
-                  method="POST"
-                  data-netlify="true"
-                  data-netlify-honeypot="bot-field"
                 >
-                  {/* Hidden inputs for Netlify Forms */}
-                  <input type="hidden" name="form-name" value="contact" />
-                  <input type="hidden" name="bot-field" />
-
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
                       {t('contact.form.name')}
