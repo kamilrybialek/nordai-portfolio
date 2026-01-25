@@ -14,8 +14,10 @@ export default function Admin() {
   const [loading, setLoading] = useState(true);
   const [blogPosts, setBlogPosts] = useState<BlogArticle[]>([]);
   const [projects, setProjects] = useState<PortfolioProject[]>([]);
-  const [activeTab, setActiveTab] = useState<'blog' | 'portfolio'>('blog');
+  const [activeTab, setActiveTab] = useState<'blog' | 'portfolio' | 'messages'>('blog');
   const [languageFilter, setLanguageFilter] = useState<'all' | 'en' | 'pl' | 'sv'>('all');
+  const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set());
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     // Check for OAuth callback
@@ -98,6 +100,151 @@ export default function Admin() {
     ]);
     setBlogPosts(articles);
     setProjects(portfolioProjects);
+    setSelectedItems(new Set()); // Clear selection when reloading
+  };
+
+  const handleDelete = async (filename: string) => {
+    if (!confirm(`Are you sure you want to delete this ${activeTab === 'blog' ? 'article' : 'project'}?`)) {
+      return;
+    }
+
+    setDeleting(true);
+    try {
+      const token = localStorage.getItem('github_token');
+      const path = `content/${activeTab}/${filename}.mdx`;
+
+      // Get file SHA
+      const getResponse = await fetch(
+        `https://api.github.com/repos/kamilrybialek/nordai-portfolio/contents/${path}`,
+        {
+          headers: {
+            Authorization: `token ${token}`,
+            Accept: 'application/vnd.github.v3+json',
+          },
+        }
+      );
+
+      if (!getResponse.ok) {
+        throw new Error('Failed to get file info');
+      }
+
+      const fileData = await getResponse.json();
+
+      // Delete file
+      const deleteResponse = await fetch(
+        `https://api.github.com/repos/kamilrybialek/nordai-portfolio/contents/${path}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `token ${token}`,
+            Accept: 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            message: `Delete ${activeTab}: ${filename}`,
+            sha: fileData.sha,
+            branch: 'main',
+          }),
+        }
+      );
+
+      if (deleteResponse.ok) {
+        alert('✅ Deleted successfully!');
+        loadContent(); // Reload content
+      } else {
+        throw new Error('Failed to delete file');
+      }
+    } catch (error) {
+      console.error('Delete error:', error);
+      alert('❌ Failed to delete. Check console for details.');
+    } finally {
+      setDeleting(false);
+    }
+  };
+
+  const handleBulkDelete = async () => {
+    if (selectedItems.size === 0) {
+      alert('No items selected');
+      return;
+    }
+
+    if (!confirm(`Are you sure you want to delete ${selectedItems.size} items? This cannot be undone!`)) {
+      return;
+    }
+
+    setDeleting(true);
+    const token = localStorage.getItem('github_token');
+    let successCount = 0;
+    let failCount = 0;
+
+    for (const filename of Array.from(selectedItems)) {
+      try {
+        const path = `content/${activeTab}/${filename}.mdx`;
+
+        // Get file SHA
+        const getResponse = await fetch(
+          `https://api.github.com/repos/kamilrybialek/nordai-portfolio/contents/${path}`,
+          {
+            headers: {
+              Authorization: `token ${token}`,
+              Accept: 'application/vnd.github.v3+json',
+            },
+          }
+        );
+
+        if (!getResponse.ok) throw new Error('Failed to get file');
+
+        const fileData = await getResponse.json();
+
+        // Delete file
+        const deleteResponse = await fetch(
+          `https://api.github.com/repos/kamilrybialek/nordai-portfolio/contents/${path}`,
+          {
+            method: 'DELETE',
+            headers: {
+              Authorization: `token ${token}`,
+              Accept: 'application/vnd.github.v3+json',
+            },
+            body: JSON.stringify({
+              message: `Bulk delete: ${filename}`,
+              sha: fileData.sha,
+              branch: 'main',
+            }),
+          }
+        );
+
+        if (deleteResponse.ok) {
+          successCount++;
+        } else {
+          failCount++;
+        }
+      } catch (error) {
+        console.error(`Failed to delete ${filename}:`, error);
+        failCount++;
+      }
+    }
+
+    setDeleting(false);
+    alert(`✅ Deleted ${successCount} items${failCount > 0 ? `, ${failCount} failed` : ''}`);
+    loadContent();
+  };
+
+  const toggleItemSelection = (filename: string) => {
+    const newSelected = new Set(selectedItems);
+    if (newSelected.has(filename)) {
+      newSelected.delete(filename);
+    } else {
+      newSelected.add(filename);
+    }
+    setSelectedItems(newSelected);
+  };
+
+  const toggleSelectAll = () => {
+    if (selectedItems.size === items.length) {
+      setSelectedItems(new Set());
+    } else {
+      setSelectedItems(new Set(items.map(item => item._sys.filename)));
+    }
   };
 
   if (loading) {
@@ -141,9 +288,9 @@ export default function Admin() {
     return match ? match[1] : 'en';
   };
 
-  // Filter items by language
-  const allItems = activeTab === 'blog' ? blogPosts : projects;
-  const items = languageFilter === 'all'
+  // Filter items by language (only for blog/portfolio tabs)
+  const allItems = activeTab === 'messages' ? [] : (activeTab === 'blog' ? blogPosts : projects);
+  const items = (languageFilter === 'all' || activeTab === 'messages')
     ? allItems
     : allItems.filter(item => getLanguageFromSlug(item._sys.filename) === languageFilter);
 
@@ -172,20 +319,27 @@ export default function Admin() {
         <div className="flex gap-2 mb-6">
           <Button
             variant={activeTab === 'blog' ? 'default' : 'outline'}
-            onClick={() => setActiveTab('blog')}
+            onClick={() => { setActiveTab('blog'); setSelectedItems(new Set()); }}
           >
-            Blog Articles ({blogPosts.length})
+            📝 Blog Articles ({blogPosts.length})
           </Button>
           <Button
             variant={activeTab === 'portfolio' ? 'default' : 'outline'}
-            onClick={() => setActiveTab('portfolio')}
+            onClick={() => { setActiveTab('portfolio'); setSelectedItems(new Set()); }}
           >
-            Portfolio Projects ({projects.length})
+            💼 Portfolio Projects ({projects.length})
+          </Button>
+          <Button
+            variant={activeTab === 'messages' ? 'default' : 'outline'}
+            onClick={() => { setActiveTab('messages'); setSelectedItems(new Set()); }}
+          >
+            ✉️ Contact Messages
           </Button>
         </div>
 
-        {/* Language Filter */}
-        <div className="mb-6 p-4 border border-border rounded-lg bg-card">
+        {/* Language Filter - hide for messages tab */}
+        {activeTab !== 'messages' && (
+          <div className="mb-6 p-4 border border-border rounded-lg bg-card">
           <div className="flex items-center gap-4">
             <span className="text-sm font-medium">🌐 Filter by Language:</span>
             <div className="flex gap-2">
@@ -220,65 +374,159 @@ export default function Admin() {
             </div>
           </div>
         </div>
+        )}
+
+        {/* Bulk Actions Toolbar */}
+        {activeTab !== 'messages' && selectedItems.size > 0 && (
+          <div className="mb-6 p-4 border-2 border-primary/50 rounded-lg bg-primary/5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <span className="text-sm font-semibold">{selectedItems.size} items selected</span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setSelectedItems(new Set())}
+                >
+                  Clear Selection
+                </Button>
+              </div>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  onClick={handleBulkDelete}
+                  disabled={deleting}
+                >
+                  {deleting ? '⏳ Deleting...' : '🗑️ Delete Selected'}
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Create New Button */}
-        <div className="mb-6">
-          <Button
-            onClick={() => navigate(`/admin/edit?type=${activeTab}&new=true`)}
-            size="lg"
-          >
-            + Create New {activeTab === 'blog' ? 'Article' : 'Project'}
-          </Button>
-        </div>
+        {activeTab !== 'messages' && (
+          <div className="mb-6">
+            <Button
+              onClick={() => navigate(`/admin/edit?type=${activeTab}&new=true`)}
+              size="lg"
+            >
+              + Create New {activeTab === 'blog' ? 'Article' : 'Project'}
+            </Button>
+          </div>
+        )}
 
-        {/* Content List */}
-        <div className="grid gap-4">
-          {items.length === 0 ? (
-            <Card className="p-8 text-center">
-              <p className="text-muted-foreground">
-                No {activeTab === 'blog' ? 'articles' : 'projects'} found for this language.
-              </p>
-            </Card>
-          ) : (
-            items.map((item) => {
-              const itemLanguage = getLanguageFromSlug(item._sys.filename);
-              const languageEmoji = itemLanguage === 'en' ? '🇬🇧' : itemLanguage === 'pl' ? '🇵🇱' : '🇸🇪';
-              const languageLabel = itemLanguage === 'en' ? 'EN' : itemLanguage === 'pl' ? 'PL' : 'SV';
+        {/* Messages Tab Content */}
+        {activeTab === 'messages' ? (
+          <Card className="p-8 text-center">
+            <h2 className="text-2xl font-bold mb-4">Contact Form Messages</h2>
+            <p className="text-muted-foreground mb-4">
+              Contact form submissions will appear here once the form is connected to a backend.
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Currently using demo mode. Configure Netlify Forms or EmailJS to receive actual submissions.
+            </p>
+          </Card>
+        ) : (
+          <>
+            {/* Select All */}
+            {items.length > 0 && (
+              <div className="mb-4 flex items-center gap-2 px-2">
+                <input
+                  type="checkbox"
+                  checked={selectedItems.size === items.length && items.length > 0}
+                  onChange={toggleSelectAll}
+                  className="w-4 h-4 cursor-pointer"
+                  id="select-all"
+                />
+                <label htmlFor="select-all" className="text-sm font-medium cursor-pointer">
+                  Select All ({items.length} items)
+                </label>
+              </div>
+            )}
 
-              return (
-                <Card key={item._sys.filename} className="p-6 hover:shadow-lg transition-shadow">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <h3 className="text-xl font-semibold">{item.title}</h3>
-                        <span className="px-2 py-1 bg-primary/10 text-primary rounded text-xs font-medium">
-                          {languageEmoji} {languageLabel}
-                        </span>
-                      </div>
-                      <p className="text-muted-foreground text-sm mb-4">
-                        {item.excerpt}
-                      </p>
-                      <div className="flex gap-4 text-xs text-muted-foreground">
-                        <span>Category: {item.category}</span>
-                        {activeTab === 'blog' && 'date' in item && (
-                          <span>Date: {new Date(item.date).toLocaleDateString()}</span>
-                        )}
-                        {activeTab === 'portfolio' && 'client' in item && (
-                          <span>Client: {item.client}</span>
-                        )}
-                      </div>
-                    </div>
-                    <Button
-                      onClick={() => navigate(`/admin/edit?type=${activeTab}&slug=${item._sys.filename}`)}
-                    >
-                      Edit
-                    </Button>
-                  </div>
+            {/* Content List */}
+            <div className="grid gap-4">
+              {items.length === 0 ? (
+                <Card className="p-8 text-center">
+                  <p className="text-muted-foreground">
+                    No {activeTab === 'blog' ? 'articles' : 'projects'} found for this language.
+                  </p>
                 </Card>
-              );
-            })
-          )}
-        </div>
+              ) : (
+                items.map((item) => {
+                  const itemLanguage = getLanguageFromSlug(item._sys.filename);
+                  const languageEmoji = itemLanguage === 'en' ? '🇬🇧' : itemLanguage === 'pl' ? '🇵🇱' : '🇸🇪';
+                  const languageLabel = itemLanguage === 'en' ? 'EN' : itemLanguage === 'pl' ? 'PL' : 'SV';
+                  const isSelected = selectedItems.has(item._sys.filename);
+
+                  return (
+                    <Card
+                      key={item._sys.filename}
+                      className={`p-6 hover:shadow-lg transition-all ${isSelected ? 'ring-2 ring-primary' : ''}`}
+                    >
+                      <div className="flex items-start gap-4">
+                        {/* Checkbox */}
+                        <input
+                          type="checkbox"
+                          checked={isSelected}
+                          onChange={() => toggleItemSelection(item._sys.filename)}
+                          className="mt-1 w-5 h-5 cursor-pointer"
+                        />
+
+                        {/* Content */}
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3 mb-2">
+                            <h3 className="text-xl font-semibold">{item.title}</h3>
+                            <span className="px-2 py-1 bg-primary/10 text-primary rounded text-xs font-medium">
+                              {languageEmoji} {languageLabel}
+                            </span>
+                            {item.featured && (
+                              <span className="px-2 py-1 bg-yellow-500/10 text-yellow-600 rounded text-xs font-medium">
+                                ⭐ Featured
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-muted-foreground text-sm mb-4">
+                            {item.excerpt}
+                          </p>
+                          <div className="flex gap-4 text-xs text-muted-foreground">
+                            <span>Category: {item.category}</span>
+                            {activeTab === 'blog' && 'date' in item && (
+                              <span>Date: {new Date(item.date).toLocaleDateString()}</span>
+                            )}
+                            {activeTab === 'portfolio' && 'client' in item && (
+                              <span>Client: {item.client}</span>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Actions */}
+                        <div className="flex gap-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => navigate(`/admin/edit?type=${activeTab}&slug=${item._sys.filename}`)}
+                          >
+                            ✏️ Edit
+                          </Button>
+                          <Button
+                            variant="destructive"
+                            size="sm"
+                            onClick={() => handleDelete(item._sys.filename)}
+                            disabled={deleting}
+                          >
+                            🗑️ Delete
+                          </Button>
+                        </div>
+                      </div>
+                    </Card>
+                  );
+                })
+              )}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
