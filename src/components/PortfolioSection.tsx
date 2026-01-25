@@ -4,18 +4,28 @@ import { Link } from 'react-router-dom';
 import { getPortfolioProjects, PortfolioProject } from '@/lib/tina';
 
 const PortfolioSection = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [projects, setProjects] = useState<PortfolioProject[]>([]);
 
   useEffect(() => {
     getPortfolioProjects().then((allProjects) => {
-      // Filter only featured projects and limit to 6
-      const featuredProjects = allProjects
+      // Filter by language first
+      const currentLang = i18n.language;
+      const languageFilteredProjects = allProjects.filter(project => {
+        const languageSuffix = project._sys.filename.match(/\.(en|pl|sv)$/);
+        if (languageSuffix) {
+          return languageSuffix[1] === currentLang;
+        }
+        return currentLang === 'en';
+      });
+
+      // Then filter only featured projects and limit to 6
+      const featuredProjects = languageFilteredProjects
         .filter(project => project.featured)
         .slice(0, 6);
       setProjects(featuredProjects);
     });
-  }, []);
+  }, [i18n.language]);
 
   return (
     <section id="portfolio" className="py-24 bg-muted/30">

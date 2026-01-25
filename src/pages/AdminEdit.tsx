@@ -9,6 +9,7 @@ interface FormData {
   title: string;
   excerpt: string;
   category: string;
+  language: 'en' | 'pl' | 'sv';
   date?: string;
   readTime?: number;
   author?: string;
@@ -32,10 +33,12 @@ export default function AdminEdit() {
 
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     title: '',
     excerpt: '',
     category: type === 'blog' ? 'ai' : 'web',
+    language: 'en',
     date: new Date().toISOString().slice(0, 16),
     readTime: 5,
     author: 'nordAi Team',
@@ -74,14 +77,28 @@ export default function AdminEdit() {
         }
       );
 
+      if (!response.ok) {
+        throw new Error(`Failed to load file: ${response.status} ${response.statusText}`);
+      }
+
       const data = await response.json();
+
+      if (!data.content) {
+        throw new Error('No content in response');
+      }
+
       const content = atob(data.content);
       const { data: frontmatter, content: body } = matter(content);
+
+      // Parse language from slug (e.g., "my-post.en" -> "en")
+      const languageMatch = slug?.match(/\.(en|pl|sv)$/);
+      const detectedLanguage = languageMatch ? languageMatch[1] as 'en' | 'pl' | 'sv' : 'en';
 
       setFormData({
         title: frontmatter.title || '',
         excerpt: frontmatter.excerpt || '',
         category: frontmatter.category || '',
+        language: detectedLanguage,
         date: frontmatter.date || '',
         readTime: frontmatter.readTime,
         author: frontmatter.author,
@@ -111,9 +128,18 @@ export default function AdminEdit() {
     setSaving(true);
     try {
       const token = localStorage.getItem('github_token');
-      const fileSlug = isNew
-        ? formData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')
-        : slug;
+
+      // Generate base slug from title (without language suffix)
+      let baseSlug: string;
+      if (isNew) {
+        baseSlug = formData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      } else {
+        // Remove language suffix from existing slug (e.g., "my-post.en" -> "my-post")
+        baseSlug = slug?.replace(/\.(en|pl|sv)$/, '') || '';
+      }
+
+      // Add language suffix to filename
+      const fileSlug = `${baseSlug}.${formData.language}`;
       const path = `content/${type}/${fileSlug}.mdx`;
 
       // Create frontmatter
@@ -277,6 +303,98 @@ export default function AdminEdit() {
     });
   };
 
+  const uploadImageToGitHub = async (file: File): Promise<string> => {
+    const token = localStorage.getItem('github_token');
+    if (!token) throw new Error('Not authenticated');
+
+    setUploading(true);
+    try {
+      // Generate filename with timestamp to avoid conflicts
+      const timestamp = Date.now();
+      const extension = file.name.split('.').pop();
+      const filename = `${timestamp}-${file.name.replace(/[^a-z0-9.-]/gi, '-')}`;
+      const path = `public/images/${filename}`;
+
+      // Read file as base64
+      const reader = new FileReader();
+      const fileContent = await new Promise<string>((resolve, reject) => {
+        reader.onload = () => {
+          const result = reader.result as string;
+          // Remove data URL prefix
+          const base64 = result.split(',')[1];
+          resolve(base64);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+
+      // Upload to GitHub
+      const response = await fetch(
+        `https://api.github.com/repos/kamilrybialek/nordai-portfolio/contents/${path}`,
+        {
+          method: 'PUT',
+          headers: {
+            Authorization: `token ${token}`,
+            Accept: 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            message: `Upload image: ${filename}`,
+            content: fileContent,
+            branch: 'main',
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to upload image');
+      }
+
+      // Return public URL
+      return `/images/${filename}`;
+    } catch (error) {
+      console.error('Upload error:', error);
+      alert('❌ Failed to upload image');
+      throw error;
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, isGallery = false) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      alert('Please select an image file');
+      return;
+    }
+
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      alert('Image must be smaller than 5MB');
+      return;
+    }
+
+    try {
+      const imageUrl = await uploadImageToGitHub(file);
+
+      if (isGallery) {
+        setFormData({
+          ...formData,
+          gallery: [...(formData.gallery || []), imageUrl],
+        });
+        alert('✅ Image uploaded to gallery!');
+      } else {
+        setFormData({ ...formData, image: imageUrl });
+        alert('✅ Featured image uploaded!');
+      }
+    } catch (error) {
+      // Error already handled in uploadImageToGitHub
+    }
+  };
+
   const insertMarkdown = (before: string, after: string = '') => {
     const textarea = document.querySelector('textarea[name="body"]') as HTMLTextAreaElement;
     if (!textarea) return;
@@ -360,6 +478,25 @@ export default function AdminEdit() {
                 <h2 className="text-xl font-semibold">Basic Information</h2>
                 <p className="text-sm text-muted-foreground">
                   Main content details that will be visible to your readers
+                </p>
+              </div>
+
+              {/* Language Selector */}
+              <div className="p-4 border-2 border-primary/20 rounded-lg bg-primary/5">
+                <label className="block text-sm font-medium mb-2">
+                  🌐 Language <span className="text-red-500">*</span>
+                </label>
+                <select
+                  value={formData.language}
+                  onChange={(e) => setFormData({ ...formData, language: e.target.value as 'en' | 'pl' | 'sv' })}
+                  className="w-full px-4 py-3 border border-border rounded-lg bg-background focus:ring-2 focus:ring-primary focus:border-primary"
+                >
+                  <option value="en">🇬🇧 English</option>
+                  <option value="pl">🇵🇱 Polish (Polski)</option>
+                  <option value="sv">🇸🇪 Swedish (Svenska)</option>
+                </select>
+                <p className="text-xs text-muted-foreground mt-2">
+                  💡 Content language - Each language version is saved as a separate file
                 </p>
               </div>
 
@@ -640,15 +777,61 @@ This is a paragraph with **bold** and *italic* text.
                 </p>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium mb-2">Image URL</label>
-                <input
-                  type="text"
-                  value={formData.image}
-                  onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                  className="w-full px-4 py-2 border border-border rounded-lg bg-background"
-                  placeholder="/images/your-image.jpg"
-                />
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium mb-2">Upload Image</label>
+                  <div className="flex gap-2">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => handleImageUpload(e, false)}
+                      className="hidden"
+                      id="featured-image-upload"
+                      disabled={uploading}
+                    />
+                    <label
+                      htmlFor="featured-image-upload"
+                      className={`flex-1 px-4 py-3 border-2 border-dashed border-border rounded-lg text-center cursor-pointer hover:border-primary transition-colors ${
+                        uploading ? 'opacity-50 cursor-not-allowed' : ''
+                      }`}
+                    >
+                      {uploading ? (
+                        <span className="flex items-center justify-center gap-2">
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary"></div>
+                          Uploading...
+                        </span>
+                      ) : (
+                        <span className="flex items-center justify-center gap-2">
+                          📤 Click to upload image (max 5MB)
+                        </span>
+                      )}
+                    </label>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Automatically uploads to /public/images/ via GitHub
+                  </p>
+                </div>
+
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-border"></div>
+                  </div>
+                  <div className="relative flex justify-center text-xs">
+                    <span className="bg-card px-2 text-muted-foreground">OR</span>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">Image URL</label>
+                  <input
+                    type="text"
+                    value={formData.image}
+                    onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+                    className="w-full px-4 py-2 border border-border rounded-lg bg-background"
+                    placeholder="/images/your-image.jpg or https://..."
+                  />
+                </div>
+
                 {formData.image && formData.image !== '/placeholder.svg' && (
                   <div className="mt-4 rounded-lg border border-border overflow-hidden">
                     <img
@@ -704,25 +887,68 @@ This is a paragraph with **bold** and *italic* text.
               )}
 
               {/* Add Gallery Image */}
-              <div className="space-y-2">
-                <label className="block text-sm font-medium">Add Gallery Image</label>
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    value={newGalleryImage}
-                    onChange={(e) => setNewGalleryImage(e.target.value)}
-                    onKeyPress={(e) =>
-                      e.key === 'Enter' && (e.preventDefault(), addGalleryImage())
-                    }
-                    className="flex-1 px-4 py-2 border border-border rounded-lg bg-background"
-                    placeholder="/images/gallery-image.jpg"
-                  />
-                  <Button type="button" onClick={addGalleryImage}>
-                    + Add to Gallery
-                  </Button>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium mb-2">Upload to Gallery</label>
+                  <div className="flex gap-2">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => handleImageUpload(e, true)}
+                      className="hidden"
+                      id="gallery-image-upload"
+                      disabled={uploading}
+                    />
+                    <label
+                      htmlFor="gallery-image-upload"
+                      className={`flex-1 px-4 py-3 border-2 border-dashed border-border rounded-lg text-center cursor-pointer hover:border-primary transition-colors ${
+                        uploading ? 'opacity-50 cursor-not-allowed' : ''
+                      }`}
+                    >
+                      {uploading ? (
+                        <span className="flex items-center justify-center gap-2">
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary"></div>
+                          Uploading...
+                        </span>
+                      ) : (
+                        <span className="flex items-center justify-center gap-2">
+                          📤 Upload image to gallery (max 5MB)
+                        </span>
+                      )}
+                    </label>
+                  </div>
                 </div>
+
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-border"></div>
+                  </div>
+                  <div className="relative flex justify-center text-xs">
+                    <span className="bg-card px-2 text-muted-foreground">OR</span>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">Add from URL</label>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={newGalleryImage}
+                      onChange={(e) => setNewGalleryImage(e.target.value)}
+                      onKeyPress={(e) =>
+                        e.key === 'Enter' && (e.preventDefault(), addGalleryImage())
+                      }
+                      className="flex-1 px-4 py-2 border border-border rounded-lg bg-background"
+                      placeholder="/images/gallery-image.jpg or https://..."
+                    />
+                    <Button type="button" onClick={addGalleryImage}>
+                      + Add URL
+                    </Button>
+                  </div>
+                </div>
+
                 <p className="text-xs text-muted-foreground">
-                  💡 Upload images to <code>/public/images/</code> folder or use external URLs
+                  💡 Uploaded images are automatically committed to GitHub repository
                 </p>
               </div>
             </Card>

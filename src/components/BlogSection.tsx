@@ -4,18 +4,28 @@ import { Link } from 'react-router-dom';
 import { getBlogArticles, BlogArticle } from '@/lib/tina';
 
 const BlogSection = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [articles, setArticles] = useState<BlogArticle[]>([]);
 
   useEffect(() => {
     getBlogArticles().then((allArticles) => {
-      // Filter only featured articles and limit to 6
-      const featuredArticles = allArticles
+      // Filter by language first
+      const currentLang = i18n.language;
+      const languageFilteredArticles = allArticles.filter(article => {
+        const languageSuffix = article._sys.filename.match(/\.(en|pl|sv)$/);
+        if (languageSuffix) {
+          return languageSuffix[1] === currentLang;
+        }
+        return currentLang === 'en';
+      });
+
+      // Then filter only featured articles and limit to 6
+      const featuredArticles = languageFilteredArticles
         .filter(article => article.featured)
         .slice(0, 6);
       setArticles(featuredArticles);
     });
-  }, []);
+  }, [i18n.language]);
 
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);

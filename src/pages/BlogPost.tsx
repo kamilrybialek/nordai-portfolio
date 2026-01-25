@@ -2,8 +2,9 @@ import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ArrowLeft, Clock, Calendar } from 'lucide-react';
 import { getBlogArticleBySlug, BlogArticle } from '@/lib/tina';
-import Navigation from '@/components/Navigation';
-import Footer from '@/components/Footer';
+import Layout from '@/components/layout/Layout';
+import ContactSection from '@/components/ContactSection';
+import SEO from '@/components/SEO';
 import Markdown from 'markdown-to-jsx';
 
 const BlogPost = () => {
@@ -73,8 +74,12 @@ const BlogPost = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
+    <Layout>
+      <SEO
+        title={article.title}
+        description={article.excerpt}
+        canonical={`/blog/${article._sys.filename}`}
+      />
 
       {/* Hero Section */}
       <div className="bg-gradient-to-b from-muted/30 to-background py-16 md:py-20">
@@ -204,8 +209,8 @@ const BlogPost = () => {
         </div>
       </div>
 
-      <Footer />
-    </div>
+      <ContactSection />
+    </Layout>
   );
 };
 

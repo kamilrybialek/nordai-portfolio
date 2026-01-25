@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Mail, MapPin, Linkedin, Twitter, Github } from 'lucide-react';
+import { Mail, MapPin, Linkedin, Twitter, Github, Facebook, Instagram } from 'lucide-react';
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -20,8 +20,16 @@ const Footer = () => {
     { href: '/contact', label: t('nav.contact') },
   ];
 
+  const socialLinks = [
+    { icon: Linkedin, href: 'https://linkedin.com/company/nordai-studio', label: 'LinkedIn' },
+    { icon: Facebook, href: 'https://facebook.com/nordai.studio', label: 'Facebook' },
+    { icon: Instagram, href: 'https://instagram.com/nordai.studio', label: 'Instagram' },
+    { icon: Twitter, href: 'https://twitter.com/nordai_studio', label: 'X (Twitter)' },
+    { icon: Github, href: 'https://github.com/nordai-studio', label: 'GitHub' },
+  ];
+
   return (
-    <footer className="bg-muted/30 border-t border-border mt-24">
+    <footer className="bg-muted/30 border-t border-border mt-32">
       <div className="container-wide section-padding">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           {/* Brand */}
@@ -34,34 +42,19 @@ const Footer = () => {
             <p className="text-muted-foreground text-sm leading-relaxed mb-6">
               {t('footer.tagline')}
             </p>
-            <div className="flex items-center gap-4">
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 text-muted-foreground hover:text-primary transition-colors"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="w-5 h-5" />
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 text-muted-foreground hover:text-primary transition-colors"
-                aria-label="Twitter"
-              >
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 text-muted-foreground hover:text-primary transition-colors"
-                aria-label="GitHub"
-              >
-                <Github className="w-5 h-5" />
-              </a>
+            <div className="flex items-center gap-3">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-lg transition-all"
+                  aria-label={social.label}
+                >
+                  <social.icon className="w-5 h-5" />
+                </a>
+              ))}
             </div>
           </div>
 
