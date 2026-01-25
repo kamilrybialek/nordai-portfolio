@@ -145,7 +145,7 @@ export default function Admin() {
   const allItems = activeTab === 'blog' ? blogPosts : projects;
   const items = languageFilter === 'all'
     ? allItems
-    : allItems.filter(item => getLanguageFromSlug(item.slug) === languageFilter);
+    : allItems.filter(item => getLanguageFromSlug(item._sys.filename) === languageFilter);
 
   return (
     <div className="min-h-screen bg-background">
@@ -241,12 +241,12 @@ export default function Admin() {
             </Card>
           ) : (
             items.map((item) => {
-              const itemLanguage = getLanguageFromSlug(item.slug);
+              const itemLanguage = getLanguageFromSlug(item._sys.filename);
               const languageEmoji = itemLanguage === 'en' ? '🇬🇧' : itemLanguage === 'pl' ? '🇵🇱' : '🇸🇪';
               const languageLabel = itemLanguage === 'en' ? 'EN' : itemLanguage === 'pl' ? 'PL' : 'SV';
 
               return (
-                <Card key={item.slug} className="p-6 hover:shadow-lg transition-shadow">
+                <Card key={item._sys.filename} className="p-6 hover:shadow-lg transition-shadow">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
@@ -269,7 +269,7 @@ export default function Admin() {
                       </div>
                     </div>
                     <Button
-                      onClick={() => navigate(`/admin/edit?type=${activeTab}&slug=${item.slug}`)}
+                      onClick={() => navigate(`/admin/edit?type=${activeTab}&slug=${item._sys.filename}`)}
                     >
                       Edit
                     </Button>
