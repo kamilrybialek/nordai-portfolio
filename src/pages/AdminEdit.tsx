@@ -62,32 +62,60 @@ export default function AdminEdit() {
   }, [slug, isNew]);
 
   const loadContent = async () => {
+    console.log('📖 [LOAD] Starting load process', {
+      type,
+      slug,
+      isNew,
+      timestamp: new Date().toISOString()
+    });
+
     setLoading(true);
     try {
       const token = localStorage.getItem('github_token');
       const path = `content/${type}/${slug}.mdx`;
 
-      const response = await fetch(
-        `https://api.github.com/repos/kamilrybialek/nordai-portfolio/contents/${path}`,
-        {
-          headers: {
-            Authorization: `token ${token}`,
-            Accept: 'application/vnd.github.v3+json',
-          },
-        }
-      );
+      console.log('📖 [LOAD] Request details:', {
+        path,
+        hasToken: !!token,
+        tokenLength: token?.length
+      });
+
+      const url = `https://api.github.com/repos/kamilrybialek/nordai-portfolio/contents/${path}`;
+      console.log('📖 [LOAD] Fetching from:', url);
+
+      const response = await fetch(url, {
+        headers: {
+          Authorization: `token ${token}`,
+          Accept: 'application/vnd.github.v3+json',
+        },
+      });
+
+      console.log('📖 [LOAD] Response:', {
+        status: response.status,
+        statusText: response.statusText,
+        ok: response.ok
+      });
 
       if (!response.ok) {
+        const errorText = await response.text();
+        console.error('📖 [LOAD] Failed to load:', errorText);
         throw new Error(`Failed to load file: ${response.status} ${response.statusText}`);
       }
 
       const data = await response.json();
+      console.log('📖 [LOAD] Data received:', {
+        hasContent: !!data.content,
+        name: data.name,
+        size: data.size,
+        sha: data.sha
+      });
 
       if (!data.content) {
         throw new Error('No content in response');
       }
 
       const content = atob(data.content);
+      console.log('📖 [LOAD] Content decoded, length:', content.length);
       const { data: frontmatter, content: body } = matter(content);
 
       // Parse language from slug (e.g., "my-post.en" -> "en")
@@ -120,7 +148,21 @@ export default function AdminEdit() {
   };
 
   const handleSave = async () => {
+    console.log('💾 [SAVE] Starting save process', {
+      isNew,
+      type,
+      slug,
+      formData: {
+        title: formData.title,
+        language: formData.language,
+        hasBody: !!formData.body,
+        hasExcerpt: !!formData.excerpt
+      },
+      timestamp: new Date().toISOString()
+    });
+
     if (!formData.title || !formData.excerpt || !formData.body) {
+      console.warn('💾 [SAVE] Validation failed - missing required fields');
       alert('Please fill in all required fields (Title, Excerpt, Content)');
       return;
     }
@@ -128,6 +170,10 @@ export default function AdminEdit() {
     setSaving(true);
     try {
       const token = localStorage.getItem('github_token');
+      console.log('💾 [SAVE] Token check:', {
+        hasToken: !!token,
+        tokenLength: token?.length
+      });
 
       // Generate base slug from title (without language suffix)
       let baseSlug: string;
@@ -141,6 +187,13 @@ export default function AdminEdit() {
       // Add language suffix to filename
       const fileSlug = `${baseSlug}.${formData.language}`;
       const path = `content/${type}/${fileSlug}.mdx`;
+
+      console.log('💾 [SAVE] File path generated:', {
+        baseSlug,
+        fileSlug,
+        fullPath: path,
+        language: formData.language
+      });
 
       // Create frontmatter
       const frontmatter: any = {
@@ -168,12 +221,16 @@ export default function AdminEdit() {
         frontmatter.gallery = formData.gallery;
       }
 
+      console.log('💾 [SAVE] Frontmatter created:', frontmatter);
+
       // Create MDX content
       const mdxContent = matter.stringify(formData.body, frontmatter);
+      console.log('💾 [SAVE] MDX content length:', mdxContent.length);
 
       // Get current file SHA if updating
       let sha = undefined;
       if (!isNew) {
+        console.log('💾 [SAVE] Fetching existing file SHA...');
         const currentFile = await fetch(
           `https://api.github.com/repos/kamilrybialek/nordai-portfolio/contents/${path}`,
           {
@@ -183,11 +240,38 @@ export default function AdminEdit() {
             },
           }
         );
-        const currentData = await currentFile.json();
-        sha = currentData.sha;
+        console.log('💾 [SAVE] Get SHA response:', {
+          status: currentFile.status,
+          ok: currentFile.ok
+        });
+
+        if (currentFile.ok) {
+          const currentData = await currentFile.json();
+          sha = currentData.sha;
+          console.log('💾 [SAVE] Existing file SHA:', sha);
+        } else {
+          console.warn('💾 [SAVE] Could not get existing SHA, file might not exist');
+        }
       }
 
       // Save to GitHub
+      const requestBody = {
+        message: isNew
+          ? `Create ${type}: ${formData.title}`
+          : `Update ${type}: ${formData.title}`,
+        content: btoa(unescape(encodeURIComponent(mdxContent))),
+        sha,
+        branch: 'main',
+      };
+
+      console.log('💾 [SAVE] Sending PUT request:', {
+        url: `https://api.github.com/repos/kamilrybialek/nordai-portfolio/contents/${path}`,
+        method: 'PUT',
+        message: requestBody.message,
+        hasSHA: !!sha,
+        contentLength: requestBody.content.length
+      });
+
       const response = await fetch(
         `https://api.github.com/repos/kamilrybialek/nordai-portfolio/contents/${path}`,
         {
@@ -197,25 +281,34 @@ export default function AdminEdit() {
             Accept: 'application/vnd.github.v3+json',
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            message: isNew
-              ? `Create ${type}: ${formData.title}`
-              : `Update ${type}: ${formData.title}`,
-            content: btoa(unescape(encodeURIComponent(mdxContent))),
-            sha,
-            branch: 'main',
-          }),
+          body: JSON.stringify(requestBody),
         }
       );
 
+      console.log('💾 [SAVE] Save response:', {
+        status: response.status,
+        statusText: response.statusText,
+        ok: response.ok
+      });
+
       if (response.ok) {
+        const responseData = await response.json();
+        console.log('💾 [SAVE] Success! Response data:', responseData);
         alert('✅ Saved successfully!');
+        console.log('💾 [SAVE] Navigating to /admin');
         navigate('/admin');
       } else {
-        throw new Error('Failed to save');
+        const errorText = await response.text();
+        console.error('💾 [SAVE] Failed to save:', {
+          status: response.status,
+          statusText: response.statusText,
+          error: errorText
+        });
+        throw new Error(`Failed to save: ${response.status} ${errorText}`);
       }
     } catch (error) {
-      console.error('Error saving:', error);
+      console.error('💾 [SAVE] Error caught:', error);
+      console.error('💾 [SAVE] Error stack:', error instanceof Error ? error.stack : 'No stack');
       alert('❌ Failed to save content. Check console for details.');
     }
     setSaving(false);

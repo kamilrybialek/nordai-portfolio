@@ -104,7 +104,14 @@ export default function Admin() {
   };
 
   const handleDelete = async (filename: string) => {
+    console.log('🗑️ [DELETE] Starting delete process', {
+      filename,
+      activeTab,
+      timestamp: new Date().toISOString()
+    });
+
     if (!confirm(`Are you sure you want to delete this ${activeTab === 'blog' ? 'article' : 'project'}?`)) {
+      console.log('🗑️ [DELETE] User cancelled');
       return;
     }
 
@@ -113,24 +120,44 @@ export default function Admin() {
       const token = localStorage.getItem('github_token');
       const path = `content/${activeTab}/${filename}.mdx`;
 
+      console.log('🗑️ [DELETE] Request details:', {
+        path,
+        hasToken: !!token,
+        tokenLength: token?.length
+      });
+
       // Get file SHA
-      const getResponse = await fetch(
-        `https://api.github.com/repos/kamilrybialek/nordai-portfolio/contents/${path}`,
-        {
-          headers: {
-            Authorization: `token ${token}`,
-            Accept: 'application/vnd.github.v3+json',
-          },
-        }
-      );
+      const getUrl = `https://api.github.com/repos/kamilrybialek/nordai-portfolio/contents/${path}`;
+      console.log('🗑️ [DELETE] Fetching file info from:', getUrl);
+
+      const getResponse = await fetch(getUrl, {
+        headers: {
+          Authorization: `token ${token}`,
+          Accept: 'application/vnd.github.v3+json',
+        },
+      });
+
+      console.log('🗑️ [DELETE] Get file response:', {
+        status: getResponse.status,
+        statusText: getResponse.statusText,
+        ok: getResponse.ok
+      });
 
       if (!getResponse.ok) {
-        throw new Error('Failed to get file info');
+        const errorText = await getResponse.text();
+        console.error('🗑️ [DELETE] Failed to get file:', errorText);
+        throw new Error(`Failed to get file info: ${getResponse.status} ${errorText}`);
       }
 
       const fileData = await getResponse.json();
+      console.log('🗑️ [DELETE] File data received:', {
+        sha: fileData.sha,
+        name: fileData.name,
+        size: fileData.size
+      });
 
       // Delete file
+      console.log('🗑️ [DELETE] Sending DELETE request');
       const deleteResponse = await fetch(
         `https://api.github.com/repos/kamilrybialek/nordai-portfolio/contents/${path}`,
         {
@@ -148,17 +175,31 @@ export default function Admin() {
         }
       );
 
+      console.log('🗑️ [DELETE] Delete response:', {
+        status: deleteResponse.status,
+        statusText: deleteResponse.statusText,
+        ok: deleteResponse.ok
+      });
+
       if (deleteResponse.ok) {
+        const deleteData = await deleteResponse.json();
+        console.log('🗑️ [DELETE] Delete successful:', deleteData);
         alert('✅ Deleted successfully!');
-        loadContent(); // Reload content
+        console.log('🗑️ [DELETE] Reloading content...');
+        await loadContent(); // Reload content
+        console.log('🗑️ [DELETE] Content reloaded');
       } else {
-        throw new Error('Failed to delete file');
+        const errorText = await deleteResponse.text();
+        console.error('🗑️ [DELETE] Failed to delete:', errorText);
+        throw new Error(`Failed to delete file: ${deleteResponse.status} ${errorText}`);
       }
     } catch (error) {
-      console.error('Delete error:', error);
+      console.error('🗑️ [DELETE] Error caught:', error);
+      console.error('🗑️ [DELETE] Error stack:', error instanceof Error ? error.stack : 'No stack');
       alert('❌ Failed to delete. Check console for details.');
     } finally {
       setDeleting(false);
+      console.log('🗑️ [DELETE] Process completed');
     }
   };
 
