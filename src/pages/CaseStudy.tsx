@@ -2,8 +2,9 @@ import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { getPortfolioProjectBySlug, PortfolioProject } from '@/lib/tina';
-import Navigation from '@/components/Navigation';
-import Footer from '@/components/Footer';
+import Layout from '@/components/layout/Layout';
+import ContactSection from '@/components/ContactSection';
+import SEO from '@/components/SEO';
 import Markdown from 'markdown-to-jsx';
 
 const CaseStudy = () => {
@@ -53,8 +54,12 @@ const CaseStudy = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
+    <Layout>
+      <SEO
+        title={project.title}
+        description={project.excerpt}
+        canonical={`/portfolio/${project._sys.filename}`}
+      />
 
       {/* Hero Section */}
       <div className="bg-gradient-to-b from-muted/30 to-background py-16 md:py-20">
@@ -191,8 +196,8 @@ const CaseStudy = () => {
         </div>
       </div>
 
-      <Footer />
-    </div>
+      <ContactSection />
+    </Layout>
   );
 };
 

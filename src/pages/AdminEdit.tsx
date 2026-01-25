@@ -77,7 +77,16 @@ export default function AdminEdit() {
         }
       );
 
+      if (!response.ok) {
+        throw new Error(`Failed to load file: ${response.status} ${response.statusText}`);
+      }
+
       const data = await response.json();
+
+      if (!data.content) {
+        throw new Error('No content in response');
+      }
+
       const content = atob(data.content);
       const { data: frontmatter, content: body } = matter(content);
 
