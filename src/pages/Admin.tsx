@@ -15,6 +15,7 @@ export default function Admin() {
   const [blogPosts, setBlogPosts] = useState<BlogArticle[]>([]);
   const [projects, setProjects] = useState<PortfolioProject[]>([]);
   const [activeTab, setActiveTab] = useState<'blog' | 'portfolio'>('blog');
+  const [languageFilter, setLanguageFilter] = useState<'all' | 'en' | 'pl' | 'sv'>('all');
 
   useEffect(() => {
     // Check for OAuth callback
@@ -134,7 +135,17 @@ export default function Admin() {
     );
   }
 
-  const items = activeTab === 'blog' ? blogPosts : projects;
+  // Helper function to extract language from slug
+  const getLanguageFromSlug = (slug: string): string => {
+    const match = slug.match(/\.(en|pl|sv)$/);
+    return match ? match[1] : 'en';
+  };
+
+  // Filter items by language
+  const allItems = activeTab === 'blog' ? blogPosts : projects;
+  const items = languageFilter === 'all'
+    ? allItems
+    : allItems.filter(item => getLanguageFromSlug(item.slug) === languageFilter);
 
   return (
     <div className="min-h-screen bg-background">
@@ -173,6 +184,43 @@ export default function Admin() {
           </Button>
         </div>
 
+        {/* Language Filter */}
+        <div className="mb-6 p-4 border border-border rounded-lg bg-card">
+          <div className="flex items-center gap-4">
+            <span className="text-sm font-medium">🌐 Filter by Language:</span>
+            <div className="flex gap-2">
+              <Button
+                variant={languageFilter === 'all' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setLanguageFilter('all')}
+              >
+                All Languages
+              </Button>
+              <Button
+                variant={languageFilter === 'en' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setLanguageFilter('en')}
+              >
+                🇬🇧 English
+              </Button>
+              <Button
+                variant={languageFilter === 'pl' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setLanguageFilter('pl')}
+              >
+                🇵🇱 Polish
+              </Button>
+              <Button
+                variant={languageFilter === 'sv' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setLanguageFilter('sv')}
+              >
+                🇸🇪 Swedish
+              </Button>
+            </div>
+          </div>
+        </div>
+
         {/* Create New Button */}
         <div className="mb-6">
           <Button
@@ -185,32 +233,51 @@ export default function Admin() {
 
         {/* Content List */}
         <div className="grid gap-4">
-          {items.map((item) => (
-            <Card key={item.slug} className="p-6 hover:shadow-lg transition-shadow">
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                  <p className="text-muted-foreground text-sm mb-4">
-                    {item.excerpt}
-                  </p>
-                  <div className="flex gap-4 text-xs text-muted-foreground">
-                    <span>Category: {item.category}</span>
-                    {activeTab === 'blog' && 'date' in item && (
-                      <span>Date: {new Date(item.date).toLocaleDateString()}</span>
-                    )}
-                    {activeTab === 'portfolio' && 'client' in item && (
-                      <span>Client: {item.client}</span>
-                    )}
-                  </div>
-                </div>
-                <Button
-                  onClick={() => navigate(`/admin/edit?type=${activeTab}&slug=${item.slug}`)}
-                >
-                  Edit
-                </Button>
-              </div>
+          {items.length === 0 ? (
+            <Card className="p-8 text-center">
+              <p className="text-muted-foreground">
+                No {activeTab === 'blog' ? 'articles' : 'projects'} found for this language.
+              </p>
             </Card>
-          ))}
+          ) : (
+            items.map((item) => {
+              const itemLanguage = getLanguageFromSlug(item.slug);
+              const languageEmoji = itemLanguage === 'en' ? '🇬🇧' : itemLanguage === 'pl' ? '🇵🇱' : '🇸🇪';
+              const languageLabel = itemLanguage === 'en' ? 'EN' : itemLanguage === 'pl' ? 'PL' : 'SV';
+
+              return (
+                <Card key={item.slug} className="p-6 hover:shadow-lg transition-shadow">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <h3 className="text-xl font-semibold">{item.title}</h3>
+                        <span className="px-2 py-1 bg-primary/10 text-primary rounded text-xs font-medium">
+                          {languageEmoji} {languageLabel}
+                        </span>
+                      </div>
+                      <p className="text-muted-foreground text-sm mb-4">
+                        {item.excerpt}
+                      </p>
+                      <div className="flex gap-4 text-xs text-muted-foreground">
+                        <span>Category: {item.category}</span>
+                        {activeTab === 'blog' && 'date' in item && (
+                          <span>Date: {new Date(item.date).toLocaleDateString()}</span>
+                        )}
+                        {activeTab === 'portfolio' && 'client' in item && (
+                          <span>Client: {item.client}</span>
+                        )}
+                      </div>
+                    </div>
+                    <Button
+                      onClick={() => navigate(`/admin/edit?type=${activeTab}&slug=${item.slug}`)}
+                    >
+                      Edit
+                    </Button>
+                  </div>
+                </Card>
+              );
+            })
+          )}
         </div>
       </div>
     </div>

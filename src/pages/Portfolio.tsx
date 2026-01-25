@@ -11,13 +11,26 @@ import { getPortfolioProjects, PortfolioProject } from '@/lib/tina';
 const categories = ['all', 'ai', 'branding', 'web', 'design'];
 
 const Portfolio = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [activeCategory, setActiveCategory] = useState('all');
   const [projects, setProjects] = useState<PortfolioProject[]>([]);
 
   useEffect(() => {
-    getPortfolioProjects().then(setProjects);
-  }, []);
+    getPortfolioProjects().then(allProjects => {
+      // Filter projects by current language
+      const currentLang = i18n.language;
+      const languageFilteredProjects = allProjects.filter(project => {
+        // Check if filename ends with .en, .pl, or .sv
+        const languageSuffix = project._sys.filename.match(/\.(en|pl|sv)$/);
+        if (languageSuffix) {
+          return languageSuffix[1] === currentLang;
+        }
+        // If no language suffix, show in English by default
+        return currentLang === 'en';
+      });
+      setProjects(languageFilteredProjects);
+    });
+  }, [i18n.language]);
 
   const filteredProjects = activeCategory === 'all'
     ? projects

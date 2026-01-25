@@ -9,6 +9,7 @@ interface FormData {
   title: string;
   excerpt: string;
   category: string;
+  language: 'en' | 'pl' | 'sv';
   date?: string;
   readTime?: number;
   author?: string;
@@ -37,6 +38,7 @@ export default function AdminEdit() {
     title: '',
     excerpt: '',
     category: type === 'blog' ? 'ai' : 'web',
+    language: 'en',
     date: new Date().toISOString().slice(0, 16),
     readTime: 5,
     author: 'nordAi Team',
@@ -79,10 +81,15 @@ export default function AdminEdit() {
       const content = atob(data.content);
       const { data: frontmatter, content: body } = matter(content);
 
+      // Parse language from slug (e.g., "my-post.en" -> "en")
+      const languageMatch = slug?.match(/\.(en|pl|sv)$/);
+      const detectedLanguage = languageMatch ? languageMatch[1] as 'en' | 'pl' | 'sv' : 'en';
+
       setFormData({
         title: frontmatter.title || '',
         excerpt: frontmatter.excerpt || '',
         category: frontmatter.category || '',
+        language: detectedLanguage,
         date: frontmatter.date || '',
         readTime: frontmatter.readTime,
         author: frontmatter.author,
@@ -112,9 +119,18 @@ export default function AdminEdit() {
     setSaving(true);
     try {
       const token = localStorage.getItem('github_token');
-      const fileSlug = isNew
-        ? formData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')
-        : slug;
+
+      // Generate base slug from title (without language suffix)
+      let baseSlug: string;
+      if (isNew) {
+        baseSlug = formData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      } else {
+        // Remove language suffix from existing slug (e.g., "my-post.en" -> "my-post")
+        baseSlug = slug?.replace(/\.(en|pl|sv)$/, '') || '';
+      }
+
+      // Add language suffix to filename
+      const fileSlug = `${baseSlug}.${formData.language}`;
       const path = `content/${type}/${fileSlug}.mdx`;
 
       // Create frontmatter
@@ -453,6 +469,25 @@ export default function AdminEdit() {
                 <h2 className="text-xl font-semibold">Basic Information</h2>
                 <p className="text-sm text-muted-foreground">
                   Main content details that will be visible to your readers
+                </p>
+              </div>
+
+              {/* Language Selector */}
+              <div className="p-4 border-2 border-primary/20 rounded-lg bg-primary/5">
+                <label className="block text-sm font-medium mb-2">
+                  🌐 Language <span className="text-red-500">*</span>
+                </label>
+                <select
+                  value={formData.language}
+                  onChange={(e) => setFormData({ ...formData, language: e.target.value as 'en' | 'pl' | 'sv' })}
+                  className="w-full px-4 py-3 border border-border rounded-lg bg-background focus:ring-2 focus:ring-primary focus:border-primary"
+                >
+                  <option value="en">🇬🇧 English</option>
+                  <option value="pl">🇵🇱 Polish (Polski)</option>
+                  <option value="sv">🇸🇪 Swedish (Svenska)</option>
+                </select>
+                <p className="text-xs text-muted-foreground mt-2">
+                  💡 Content language - Each language version is saved as a separate file
                 </p>
               </div>
 
