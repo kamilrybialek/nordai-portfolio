@@ -5,18 +5,32 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Clock, Calendar } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import SEO from '@/components/SEO';
+import ContactSection from '@/components/ContactSection';
 import { getBlogArticles, BlogArticle } from '@/lib/tina';
 
 const categories = ['all', 'ai', 'automation', 'design', 'insights', 'trends'];
 
 const Blog = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [activeCategory, setActiveCategory] = useState('all');
   const [articles, setArticles] = useState<BlogArticle[]>([]);
 
   useEffect(() => {
-    getBlogArticles().then(setArticles);
-  }, []);
+    getBlogArticles().then(allArticles => {
+      // Filter articles by current language
+      const currentLang = i18n.language;
+      const languageFilteredArticles = allArticles.filter(article => {
+        // Check if filename ends with .en, .pl, or .sv
+        const languageSuffix = article._sys.filename.match(/\.(en|pl|sv)$/);
+        if (languageSuffix) {
+          return languageSuffix[1] === currentLang;
+        }
+        // If no language suffix, show in English by default
+        return currentLang === 'en';
+      });
+      setArticles(languageFilteredArticles);
+    });
+  }, [i18n.language]);
 
   const filteredArticles = activeCategory === 'all'
     ? articles
@@ -163,6 +177,8 @@ const Blog = () => {
           )}
         </div>
       </section>
+
+      <ContactSection />
     </Layout>
   );
 };
