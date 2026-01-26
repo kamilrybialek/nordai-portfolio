@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useTranslation } from 'react-i18next';
+import AppleWatchWords from './AppleWatchWords';
 
 const HeroSection = () => {
   const { t } = useTranslation();
@@ -60,16 +61,8 @@ const HeroSection = () => {
 
           <div className="relative hidden lg:block">
             <div className="aspect-square rounded-2xl bg-gradient-to-br from-secondary via-accent to-muted p-1">
-              <div className="w-full h-full rounded-2xl bg-background/95 backdrop-blur-sm flex items-center justify-center">
-                <div className="text-center space-y-4 p-12">
-                  <div className="w-24 h-24 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
-                    <svg className="w-12 h-12 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                  </div>
-                  <p className="text-2xl font-bold text-foreground">AI-Powered</p>
-                  <p className="text-muted-foreground">Next-gen web solutions</p>
-                </div>
+              <div className="w-full h-full rounded-2xl bg-background/95 backdrop-blur-sm flex items-center justify-center overflow-hidden">
+                <AppleWatchWords />
               </div>
             </div>
           </div>
