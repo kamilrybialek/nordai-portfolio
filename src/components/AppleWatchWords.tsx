@@ -54,7 +54,6 @@ const Word = ({ config, mousePosition, containerRef }: WordProps) => {
   };
 
   const scale = calculateScale();
-  const opacity = 0.5 + (config.importance / 10) * 0.5;
 
   return (
     <div
@@ -67,7 +66,7 @@ const Word = ({ config, mousePosition, containerRef }: WordProps) => {
         transition: 'transform 0.18s cubic-bezier(0.25, 0.1, 0.25, 1), color 0.2s ease, text-shadow 0.2s ease',
         fontSize: `${config.baseSize}rem`,
         whiteSpace: 'nowrap',
-        color: `hsl(0, 0%, ${10 + opacity * 40}%)`,
+        color: '#000000',
         fontWeight: config.importance > 7 ? 700 : 600,
         zIndex: Math.round(scale * 10),
       }}
