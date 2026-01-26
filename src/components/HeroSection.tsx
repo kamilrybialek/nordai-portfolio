@@ -15,7 +15,7 @@ const HeroSection = () => {
   return (
     <section className="min-h-screen pt-40 pb-32 px-8 flex items-center">
       <div className="container mx-auto max-w-6xl">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
           <div className="space-y-8">
             <div className="space-y-6">
               <div className="inline-block px-4 py-2 bg-primary rounded-full">

@@ -59,17 +59,16 @@ const Word = ({ config, mousePosition, containerRef }: WordProps) => {
   return (
     <div
       ref={wordRef}
-      className="absolute font-semibold cursor-pointer select-none hover:text-primary"
+      className="absolute font-semibold cursor-pointer select-none hover:text-primary hover:[text-shadow:0_2px_8px_rgba(0,0,0,0.15),0_1px_3px_rgba(0,0,0,0.1)]"
       style={{
         left: `${config.x}%`,
         top: `${config.y}%`,
         transform: `translate(-50%, -50%) scale(${scale})`,
-        transition: 'transform 0.18s cubic-bezier(0.25, 0.1, 0.25, 1), color 0.2s ease',
+        transition: 'transform 0.18s cubic-bezier(0.25, 0.1, 0.25, 1), color 0.2s ease, text-shadow 0.2s ease',
         fontSize: `${config.baseSize}rem`,
         whiteSpace: 'nowrap',
-        color: `hsl(0, 0%, ${20 + opacity * 50}%)`,
+        color: `hsl(0, 0%, ${10 + opacity * 40}%)`,
         fontWeight: config.importance > 7 ? 700 : 600,
-        textShadow: '0 2px 8px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.1)',
         zIndex: Math.round(scale * 10),
       }}
     >
