@@ -42,14 +42,14 @@ const Word = ({ config, mousePosition, containerRef }: WordProps) => {
       Math.pow(mousePosition.y - wordPosition.y, 2)
     );
 
-    const maxDistance = 120;
-    const minScale = 0.85;
-    const maxScale = 1.8;
+    const maxDistance = 140;
+    const minScale = 0.9;
+    const maxScale = 1.6;
 
     if (distance > maxDistance) return minScale;
 
     const normalizedDistance = distance / maxDistance;
-    const scale = maxScale - (Math.pow(normalizedDistance, 1.5) * (maxScale - minScale));
+    const scale = maxScale - (Math.pow(normalizedDistance, 1.8) * (maxScale - minScale));
     return scale;
   };
 
@@ -64,11 +64,12 @@ const Word = ({ config, mousePosition, containerRef }: WordProps) => {
         left: `${config.x}%`,
         top: `${config.y}%`,
         transform: `translate(-50%, -50%) scale(${scale})`,
-        transition: 'transform 0.25s cubic-bezier(0.2, 0, 0.2, 1), color 0.2s ease',
+        transition: 'transform 0.18s cubic-bezier(0.25, 0.1, 0.25, 1), color 0.2s ease',
         fontSize: `${config.baseSize}rem`,
         whiteSpace: 'nowrap',
         color: `hsl(0, 0%, ${20 + opacity * 50}%)`,
         fontWeight: config.importance > 7 ? 700 : 600,
+        textShadow: '0 2px 8px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.1)',
         zIndex: Math.round(scale * 10),
       }}
     >
@@ -80,6 +81,7 @@ const Word = ({ config, mousePosition, containerRef }: WordProps) => {
 const AppleWatchWords = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number>();
 
   const wordConfigs = useMemo(() => {
     const words: { text: string; importance: number }[] = [
@@ -107,49 +109,46 @@ const AppleWatchWords = () => {
     ];
 
     const configs: WordConfig[] = [];
-    let wordIndex = 0;
 
     // Center: 2 words (AI, Design)
     const centerWords = words.slice(0, 2);
     centerWords.forEach((word, i) => {
       const angle = (i / centerWords.length) * Math.PI * 2 - Math.PI / 2;
-      const radius = 8; // Very close to center
+      const radius = 8;
       configs.push({
         text: word.text,
         importance: word.importance,
         x: 50 + radius * Math.cos(angle),
         y: 50 + radius * Math.sin(angle),
-        baseSize: 1.0,
+        baseSize: 1.3, // Increased from 1.0
       });
     });
-    wordIndex = 2;
 
     // Inner ring: 6 words
     const innerRingWords = words.slice(2, 8);
     innerRingWords.forEach((word, i) => {
       const angle = (i / innerRingWords.length) * Math.PI * 2 - Math.PI / 2;
-      const radius = 22; // Inner ring
+      const radius = 22;
       configs.push({
         text: word.text,
         importance: word.importance,
         x: 50 + radius * Math.cos(angle),
         y: 50 + radius * Math.sin(angle),
-        baseSize: 0.85,
+        baseSize: 1.1, // Increased from 0.85
       });
     });
-    wordIndex = 8;
 
     // Outer ring: 8 words
     const outerRingWords = words.slice(8, 16);
     outerRingWords.forEach((word, i) => {
       const angle = (i / outerRingWords.length) * Math.PI * 2 - Math.PI / 2 + Math.PI / 8;
-      const radius = 38; // Outer ring
+      const radius = 38;
       configs.push({
         text: word.text,
         importance: word.importance,
         x: 50 + radius * Math.cos(angle),
         y: 50 + radius * Math.sin(angle),
-        baseSize: 0.75,
+        baseSize: 0.95, // Increased from 0.75
       });
     });
 
@@ -158,19 +157,30 @@ const AppleWatchWords = () => {
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect();
-        setMousePosition({
-          x: e.clientX - rect.left,
-          y: e.clientY - rect.top
-        });
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
       }
+
+      rafRef.current = requestAnimationFrame(() => {
+        if (containerRef.current) {
+          const rect = containerRef.current.getBoundingClientRect();
+          setMousePosition({
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top
+          });
+        }
+      });
     };
 
     const container = containerRef.current;
     if (container) {
       container.addEventListener('mousemove', handleMouseMove);
-      return () => container.removeEventListener('mousemove', handleMouseMove);
+      return () => {
+        container.removeEventListener('mousemove', handleMouseMove);
+        if (rafRef.current) {
+          cancelAnimationFrame(rafRef.current);
+        }
+      };
     }
   }, []);
 
