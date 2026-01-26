@@ -88,7 +88,7 @@ const AppleWatchWords = () => {
       { text: 'AI', importance: 10 },
       { text: 'Design', importance: 10 },
 
-      // Inner ring (importance 9-8) - 6 words
+      // High importance (9-8)
       { text: 'Creative', importance: 9 },
       { text: 'Innovation', importance: 9 },
       { text: 'Strategy', importance: 8 },
@@ -96,7 +96,7 @@ const AppleWatchWords = () => {
       { text: 'UX/UI', importance: 8 },
       { text: 'Vision', importance: 8 },
 
-      // Outer ring (importance 7-6) - 8 words
+      // Medium importance (7-6)
       { text: 'Digital', importance: 7 },
       { text: 'Smart', importance: 7 },
       { text: 'Data', importance: 7 },
@@ -108,46 +108,36 @@ const AppleWatchWords = () => {
     ];
 
     const configs: WordConfig[] = [];
+    const goldenAngle = Math.PI * (3 - Math.sqrt(5)); // ~137.5 degrees
 
-    // Center: 2 words (AI, Design)
-    const centerWords = words.slice(0, 2);
-    centerWords.forEach((word, i) => {
-      const angle = (i / centerWords.length) * Math.PI * 2 - Math.PI / 2;
-      const radius = 8;
+    words.forEach((word, i) => {
+      // Calculate spiral position using golden angle
+      const angle = i * goldenAngle;
+
+      // Map importance to radius (10 = center, 6 = outer)
+      // Use sqrt for more even distribution
+      const normalizedImportance = (10 - word.importance) / 4; // 0 to 1
+      const radius = 5 + normalizedImportance * 35 + (Math.random() - 0.5) * 8;
+
+      // Add slight angle variation for organic feel
+      const angleVariation = (Math.random() - 0.5) * 0.3;
+      const finalAngle = angle + angleVariation;
+
+      // Calculate position
+      const x = 50 + radius * Math.cos(finalAngle);
+      const y = 50 + radius * Math.sin(finalAngle);
+
+      // Size based on importance
+      const baseSize = word.importance === 10 ? 1.3 :
+                       word.importance >= 8 ? 1.1 :
+                       word.importance >= 7 ? 0.95 : 0.85;
+
       configs.push({
         text: word.text,
         importance: word.importance,
-        x: 50 + radius * Math.cos(angle),
-        y: 50 + radius * Math.sin(angle),
-        baseSize: 1.3, // Increased from 1.0
-      });
-    });
-
-    // Inner ring: 6 words
-    const innerRingWords = words.slice(2, 8);
-    innerRingWords.forEach((word, i) => {
-      const angle = (i / innerRingWords.length) * Math.PI * 2 - Math.PI / 2;
-      const radius = 22;
-      configs.push({
-        text: word.text,
-        importance: word.importance,
-        x: 50 + radius * Math.cos(angle),
-        y: 50 + radius * Math.sin(angle),
-        baseSize: 1.1, // Increased from 0.85
-      });
-    });
-
-    // Outer ring: 8 words
-    const outerRingWords = words.slice(8, 16);
-    outerRingWords.forEach((word, i) => {
-      const angle = (i / outerRingWords.length) * Math.PI * 2 - Math.PI / 2 + Math.PI / 8;
-      const radius = 38;
-      configs.push({
-        text: word.text,
-        importance: word.importance,
-        x: 50 + radius * Math.cos(angle),
-        y: 50 + radius * Math.sin(angle),
-        baseSize: 0.95, // Increased from 0.75
+        x,
+        y,
+        baseSize,
       });
     });
 
