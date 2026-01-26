@@ -6,6 +6,7 @@ interface WordConfig {
   x: number; // Position in circle
   y: number;
   baseSize: number; // Base font size multiplier
+  opacity: number; // Gray shade variation
 }
 
 interface WordProps {
@@ -58,7 +59,7 @@ const Word = ({ config, mousePosition, containerRef }: WordProps) => {
   return (
     <div
       ref={wordRef}
-      className="absolute text-foreground font-semibold cursor-pointer select-none hover:text-primary"
+      className="absolute font-semibold cursor-pointer select-none hover:text-primary"
       style={{
         left: `${config.x}%`,
         top: `${config.y}%`,
@@ -67,7 +68,8 @@ const Word = ({ config, mousePosition, containerRef }: WordProps) => {
         fontSize: `${config.baseSize}rem`,
         whiteSpace: 'nowrap',
         zIndex: Math.round(scale * 10),
-        fontWeight: config.importance > 7 ? 700 : 600
+        fontWeight: config.importance > 7 ? 700 : 600,
+        color: `hsl(0, 0%, ${15 + config.opacity * 60}%)`, // 15% to 75% lightness
       }}
     >
       {config.text}
@@ -89,51 +91,55 @@ const AppleWatchWords = () => {
       { text: 'Automation', importance: 8 },
       { text: 'Strategy', importance: 8 },
       { text: 'Branding', importance: 8 },
+      { text: 'UX/UI', importance: 8 },
+      { text: 'Vision', importance: 8 },
       { text: 'Digital', importance: 7 },
       { text: 'Future', importance: 7 },
       { text: 'Smart', importance: 7 },
       { text: 'Data', importance: 7 },
-      { text: 'UX/UI', importance: 8 },
+      { text: 'Growth', importance: 7 },
+      { text: 'Solutions', importance: 7 },
+      { text: 'Transform', importance: 7 },
+      { text: 'Analytics', importance: 7 },
       { text: 'Web', importance: 6 },
       { text: 'Mobile', importance: 6 },
       { text: 'Cloud', importance: 6 },
       { text: 'Tech', importance: 6 },
-      { text: 'Growth', importance: 7 },
-      { text: 'Marketing', importance: 6 },
-      { text: 'Solutions', importance: 7 },
-      { text: 'Vision', importance: 8 },
-      { text: 'Transform', importance: 7 },
-      { text: 'Modern', importance: 6 },
-      { text: 'Dynamic', importance: 6 },
-      { text: 'Analytics', importance: 7 }
     ];
 
-    // Position words in circular pattern
-    // Important words closer to center
+    // Position words in circular pattern with better spacing
     return words.map((word, index) => {
       // Calculate radius based on importance (inverse - higher importance = closer to center)
       const normalizedImportance = (word.importance - 5) / 5; // 0-1 range
-      const minRadius = 8; // Closest to center
-      const maxRadius = 45; // Farthest from center
-      const radius = maxRadius - (normalizedImportance * (maxRadius - minRadius));
+      const minRadius = 15; // Closest to center (increased from 8)
+      const maxRadius = 48; // Farthest from center (increased from 45)
 
-      // Random angle for circular distribution
-      const angle = (index / words.length) * Math.PI * 2 + (Math.random() - 0.5) * 0.8;
+      // Add more variation based on index to prevent clustering
+      const radiusVariation = (Math.sin(index * 2.4) * 0.5 + 0.5) * 8; // 0-8 variation
+      const radius = maxRadius - (normalizedImportance * (maxRadius - minRadius)) + radiusVariation;
+
+      // More evenly distributed angle with variation
+      const baseAngle = (index / words.length) * Math.PI * 2;
+      const angleVariation = (Math.random() - 0.5) * 1.2; // Increased variation
+      const angle = baseAngle + angleVariation;
 
       // Convert polar to cartesian coordinates
-      // Center is at 50%, 50%
       const x = 50 + radius * Math.cos(angle);
       const y = 50 + radius * Math.sin(angle);
 
-      // Base size correlates with importance
-      const baseSize = 0.75 + (word.importance / 10) * 0.65; // 0.75rem to 1.4rem
+      // Smaller base sizes to prevent overlapping
+      const baseSize = 0.7 + (word.importance / 10) * 0.5; // 0.7rem to 1.2rem (reduced)
+
+      // Random gray shade (0-1 range)
+      const opacity = 0.3 + Math.random() * 0.7; // 0.3 to 1.0 for variety
 
       return {
         text: word.text,
         importance: word.importance,
         x,
         y,
-        baseSize
+        baseSize,
+        opacity
       };
     });
   }, []);
