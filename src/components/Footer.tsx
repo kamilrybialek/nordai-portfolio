@@ -25,31 +25,30 @@ const Footer = () => {
     { icon: Facebook, href: 'https://facebook.com/nordai.studio', label: 'Facebook' },
     { icon: Instagram, href: 'https://instagram.com/nordai.studio', label: 'Instagram' },
     { icon: Twitter, href: 'https://twitter.com/nordai_studio', label: 'X (Twitter)' },
-    { icon: Github, href: 'https://github.com/nordai-studio', label: 'GitHub' },
   ];
 
   return (
-    <footer className="bg-muted/30 border-t border-border mt-32">
-      <div className="container-wide section-padding">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+    <footer className="bg-muted/30 border-t border-border mt-40">
+      <div className="max-w-7xl mx-auto px-8 sm:px-12 lg:px-16 py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 lg:gap-12">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <Link to="/" className="inline-block mb-6">
+            <Link to="/" className="inline-block mb-8">
               <span className="text-2xl font-display font-bold tracking-tight text-foreground">
-                nord<span className="text-primary">Ai</span>.studio
+                nordai.studio
               </span>
             </Link>
-            <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+            <p className="text-muted-foreground text-sm leading-relaxed mb-8">
               {t('footer.tagline')}
             </p>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-lg transition-all"
+                  className="p-2.5 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-lg transition-all"
                   aria-label={social.label}
                 >
                   <social.icon className="w-5 h-5" />
@@ -60,10 +59,10 @@ const Footer = () => {
 
           {/* Navigation */}
           <div>
-            <h4 className="text-sm font-display font-semibold uppercase tracking-wider mb-6 text-foreground">
+            <h4 className="text-sm font-display font-semibold uppercase tracking-wider mb-8 text-foreground">
               {t('footer.navigation')}
             </h4>
-            <ul className="space-y-3">
+            <ul className="space-y-4">
               {navigation.map((item) => (
                 <li key={item.href}>
                   <Link
@@ -79,10 +78,10 @@ const Footer = () => {
 
           {/* Services */}
           <div>
-            <h4 className="text-sm font-display font-semibold uppercase tracking-wider mb-6 text-foreground">
+            <h4 className="text-sm font-display font-semibold uppercase tracking-wider mb-8 text-foreground">
               {t('footer.services')}
             </h4>
-            <ul className="space-y-3">
+            <ul className="space-y-4">
               {services.map((item) => (
                 <li key={item.href}>
                   <Link
@@ -98,10 +97,10 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h4 className="text-sm font-display font-semibold uppercase tracking-wider mb-6 text-foreground">
+            <h4 className="text-sm font-display font-semibold uppercase tracking-wider mb-8 text-foreground">
               {t('footer.connect')}
             </h4>
-            <ul className="space-y-4">
+            <ul className="space-y-5">
               <li>
                 <a
                   href="mailto:hello@nordai.studio"
@@ -120,24 +119,10 @@ const Footer = () => {
         </div>
 
         {/* Bottom */}
-        <div className="mt-16 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mt-20 pt-10 border-t border-border flex flex-col sm:flex-row items-center justify-center gap-4">
           <p className="text-muted-foreground text-sm">
-            {t('footer.copyright')}
+            © 2026 nordai.studio. All rights reserved.
           </p>
-          <div className="flex items-center gap-6">
-            <Link
-              to="/privacy"
-              className="text-muted-foreground hover:text-foreground text-sm transition-colors"
-            >
-              {t('footer.legal.privacy')}
-            </Link>
-            <Link
-              to="/terms"
-              className="text-muted-foreground hover:text-foreground text-sm transition-colors"
-            >
-              {t('footer.legal.terms')}
-            </Link>
-          </div>
         </div>
       </div>
     </footer>
