@@ -1,9 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import AppleWatchWords from './AppleWatchWords';
 
 const HeroSection = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -40,7 +42,7 @@ const HeroSection = () => {
               <Button
                 size="lg"
                 variant="outline"
-                onClick={() => scrollToSection('work')}
+                onClick={() => navigate('/portfolio')}
                 className="rounded-full px-8"
               >
                 {t('hero.cta_secondary')}
