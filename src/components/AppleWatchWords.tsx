@@ -25,15 +25,16 @@ const AppleWatchWords = () => {
   ];
 
   return (
-    <div className="w-full h-full flex items-center justify-center" style={{ minHeight: '400px' }}>
-      <div className="flex items-center gap-4">
-        <p className="text-4xl md:text-5xl font-bold text-muted-foreground">
+    <div className="w-full h-full flex items-center justify-start">
+      <div className="flex items-center gap-3 flex-wrap">
+        <p className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground whitespace-nowrap">
           We deliver
         </p>
 
-        <div className="relative" style={{
-          height: '60px',
+        <div className="relative inline-block" style={{
+          height: '48px',
           overflow: 'hidden',
+          minWidth: '200px',
         }}>
           {/* Gradient mask overlay */}
           <div
@@ -59,10 +60,10 @@ const AppleWatchWords = () => {
             {words.map((word, index) => (
               <span
                 key={index}
-                className="text-4xl md:text-5xl font-bold text-primary block"
+                className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary block"
                 style={{
-                  height: '60px',
-                  lineHeight: '60px',
+                  height: '48px',
+                  lineHeight: '48px',
                   paddingLeft: '0.5rem',
                 }}
               >
@@ -80,37 +81,37 @@ const AppleWatchWords = () => {
             transform: translateY(0);
           }
           9% {
-            transform: translateY(-60px);
+            transform: translateY(-48px);
           }
           18% {
-            transform: translateY(-120px);
+            transform: translateY(-96px);
           }
           27% {
-            transform: translateY(-180px);
+            transform: translateY(-144px);
           }
           36% {
-            transform: translateY(-240px);
+            transform: translateY(-192px);
           }
           45% {
-            transform: translateY(-300px);
+            transform: translateY(-240px);
           }
           54% {
-            transform: translateY(-360px);
+            transform: translateY(-288px);
           }
           63% {
-            transform: translateY(-420px);
+            transform: translateY(-336px);
           }
           72% {
-            transform: translateY(-480px);
+            transform: translateY(-384px);
           }
           81% {
-            transform: translateY(-540px);
+            transform: translateY(-432px);
           }
           90% {
-            transform: translateY(-600px);
+            transform: translateY(-480px);
           }
           100% {
-            transform: translateY(-600px);
+            transform: translateY(-480px);
           }
         }
       `}</style>
