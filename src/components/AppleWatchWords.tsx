@@ -3,8 +3,8 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 interface WordConfig {
   text: string;
   importance: number;
-  row: number;
-  col: number;
+  x: number;
+  y: number;
   baseSize: number;
 }
 
@@ -42,35 +42,34 @@ const Word = ({ config, mousePosition, containerRef }: WordProps) => {
       Math.pow(mousePosition.y - wordPosition.y, 2)
     );
 
-    // Apple Watch style magnification
     const maxDistance = 120;
     const minScale = 0.85;
     const maxScale = 1.8;
 
     if (distance > maxDistance) return minScale;
 
-    // Smooth curve for magnification
     const normalizedDistance = distance / maxDistance;
     const scale = maxScale - (Math.pow(normalizedDistance, 1.5) * (maxScale - minScale));
     return scale;
   };
 
   const scale = calculateScale();
-
-  // Calculate opacity based on importance
-  const opacity = 0.5 + (config.importance / 10) * 0.5; // 0.5 to 1.0
+  const opacity = 0.5 + (config.importance / 10) * 0.5;
 
   return (
     <div
       ref={wordRef}
-      className="flex items-center justify-center font-semibold cursor-pointer select-none hover:text-primary"
+      className="absolute font-semibold cursor-pointer select-none hover:text-primary"
       style={{
-        transform: `scale(${scale})`,
+        left: `${config.x}%`,
+        top: `${config.y}%`,
+        transform: `translate(-50%, -50%) scale(${scale})`,
         transition: 'transform 0.25s cubic-bezier(0.2, 0, 0.2, 1), color 0.2s ease',
         fontSize: `${config.baseSize}rem`,
         whiteSpace: 'nowrap',
         color: `hsl(0, 0%, ${20 + opacity * 50}%)`,
         fontWeight: config.importance > 7 ? 700 : 600,
+        zIndex: Math.round(scale * 10),
       }}
     >
       {config.text}
@@ -84,13 +83,19 @@ const AppleWatchWords = () => {
 
   const wordConfigs = useMemo(() => {
     const words: { text: string; importance: number }[] = [
+      // Center (importance 10) - 2 words
       { text: 'AI', importance: 10 },
       { text: 'Design', importance: 10 },
+
+      // Inner ring (importance 9-8) - 6 words
       { text: 'Creative', importance: 9 },
       { text: 'Innovation', importance: 9 },
       { text: 'Strategy', importance: 8 },
       { text: 'Branding', importance: 8 },
       { text: 'UX/UI', importance: 8 },
+      { text: 'Vision', importance: 8 },
+
+      // Outer ring (importance 7-6) - 8 words
       { text: 'Digital', importance: 7 },
       { text: 'Smart', importance: 7 },
       { text: 'Data', importance: 7 },
@@ -101,23 +106,50 @@ const AppleWatchWords = () => {
       { text: 'Tech', importance: 6 },
     ];
 
-    // Create honeycomb-like grid layout
     const configs: WordConfig[] = [];
-    const cols = 4;
+    let wordIndex = 0;
 
-    words.forEach((word, index) => {
-      const row = Math.floor(index / cols);
-      const col = index % cols;
-
-      // Base size based on importance
-      const baseSize = 0.7 + (word.importance / 10) * 0.4; // 0.7rem to 1.1rem
-
+    // Center: 2 words (AI, Design)
+    const centerWords = words.slice(0, 2);
+    centerWords.forEach((word, i) => {
+      const angle = (i / centerWords.length) * Math.PI * 2 - Math.PI / 2;
+      const radius = 8; // Very close to center
       configs.push({
         text: word.text,
         importance: word.importance,
-        row,
-        col,
-        baseSize
+        x: 50 + radius * Math.cos(angle),
+        y: 50 + radius * Math.sin(angle),
+        baseSize: 1.0,
+      });
+    });
+    wordIndex = 2;
+
+    // Inner ring: 6 words
+    const innerRingWords = words.slice(2, 8);
+    innerRingWords.forEach((word, i) => {
+      const angle = (i / innerRingWords.length) * Math.PI * 2 - Math.PI / 2;
+      const radius = 22; // Inner ring
+      configs.push({
+        text: word.text,
+        importance: word.importance,
+        x: 50 + radius * Math.cos(angle),
+        y: 50 + radius * Math.sin(angle),
+        baseSize: 0.85,
+      });
+    });
+    wordIndex = 8;
+
+    // Outer ring: 8 words
+    const outerRingWords = words.slice(8, 16);
+    outerRingWords.forEach((word, i) => {
+      const angle = (i / outerRingWords.length) * Math.PI * 2 - Math.PI / 2 + Math.PI / 8;
+      const radius = 38; // Outer ring
+      configs.push({
+        text: word.text,
+        importance: word.importance,
+        x: 50 + radius * Math.cos(angle),
+        y: 50 + radius * Math.sin(angle),
+        baseSize: 0.75,
       });
     });
 
@@ -145,18 +177,10 @@ const AppleWatchWords = () => {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-full flex items-center justify-center p-6"
+      className="relative w-full h-full flex items-center justify-center"
       style={{ minHeight: '400px' }}
     >
-      <div
-        className="grid gap-x-6 gap-y-8"
-        style={{
-          gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
-          placeItems: 'center',
-          width: '90%',
-          maxWidth: '450px'
-        }}
-      >
+      <div className="relative w-full h-full">
         {wordConfigs.map((config, index) => (
           <Word
             key={index}

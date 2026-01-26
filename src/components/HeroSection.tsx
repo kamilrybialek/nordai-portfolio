@@ -62,10 +62,8 @@ const HeroSection = () => {
           </div>
 
           <div className="relative hidden lg:block">
-            <div className="aspect-square rounded-2xl bg-gradient-to-br from-secondary via-accent to-muted p-1">
-              <div className="w-full h-full rounded-2xl bg-background/95 backdrop-blur-sm flex items-center justify-center overflow-hidden">
-                <AppleWatchWords />
-              </div>
+            <div className="aspect-square flex items-center justify-center">
+              <AppleWatchWords />
             </div>
           </div>
         </div>
