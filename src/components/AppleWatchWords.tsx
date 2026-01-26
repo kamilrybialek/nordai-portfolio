@@ -110,14 +110,32 @@ const AppleWatchWords = () => {
     const configs: WordConfig[] = [];
     const goldenAngle = Math.PI * (3 - Math.sqrt(5)); // ~137.5 degrees
 
-    words.forEach((word, i) => {
+    // Separate center words (AI, Design) and others
+    const centerWords = words.filter(w => w.importance === 10);
+    const otherWords = words.filter(w => w.importance < 10);
+
+    // Position center words manually to avoid overlap
+    centerWords.forEach((word, i) => {
+      const angle = (i / centerWords.length) * Math.PI * 2 - Math.PI / 2;
+      const radius = 10; // Small radius for center words
+
+      configs.push({
+        text: word.text,
+        importance: word.importance,
+        x: 50 + radius * Math.cos(angle),
+        y: 50 + radius * Math.sin(angle),
+        baseSize: 1.3,
+      });
+    });
+
+    // Position other words with spiral
+    otherWords.forEach((word, i) => {
       // Calculate spiral position using golden angle
       const angle = i * goldenAngle;
 
-      // Map importance to radius (10 = center, 6 = outer)
-      // Use sqrt for more even distribution
-      const normalizedImportance = (10 - word.importance) / 4; // 0 to 1
-      const radius = 5 + normalizedImportance * 35 + (Math.random() - 0.5) * 8;
+      // Map importance to radius (9 = inner, 6 = outer)
+      const normalizedImportance = (9 - word.importance) / 3; // 0 to 1
+      const radius = 18 + normalizedImportance * 28 + (Math.random() - 0.5) * 8;
 
       // Add slight angle variation for organic feel
       const angleVariation = (Math.random() - 0.5) * 0.3;
@@ -128,8 +146,7 @@ const AppleWatchWords = () => {
       const y = 50 + radius * Math.sin(finalAngle);
 
       // Size based on importance
-      const baseSize = word.importance === 10 ? 1.3 :
-                       word.importance >= 8 ? 1.1 :
+      const baseSize = word.importance >= 8 ? 1.1 :
                        word.importance >= 7 ? 0.95 : 0.85;
 
       configs.push({
