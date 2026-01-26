@@ -82,6 +82,12 @@ const AppleWatchWords = () => {
   const rafRef = useRef<number>();
 
   const wordConfigs = useMemo(() => {
+    // Seeded random function for consistent positioning
+    const seededRandom = (seed: number) => {
+      const x = Math.sin(seed) * 10000;
+      return x - Math.floor(x);
+    };
+
     const words: { text: string; importance: number }[] = [
       // Center (importance 10) - 2 words
       { text: 'AI', importance: 10 },
@@ -134,10 +140,12 @@ const AppleWatchWords = () => {
 
       // Map importance to radius (9 = inner, 6 = outer)
       const normalizedImportance = (9 - word.importance) / 3; // 0 to 1
-      const radius = 18 + normalizedImportance * 28 + (Math.random() - 0.5) * 8;
+      // Use seeded random for consistent positioning
+      const radiusVariation = (seededRandom(i * 123) - 0.5) * 8;
+      const radius = 18 + normalizedImportance * 28 + radiusVariation;
 
-      // Add slight angle variation for organic feel
-      const angleVariation = (Math.random() - 0.5) * 0.3;
+      // Add slight angle variation for organic feel using seeded random
+      const angleVariation = (seededRandom(i * 456 + 789) - 0.5) * 0.3;
       const finalAngle = angle + angleVariation;
 
       // Calculate position
