@@ -13,6 +13,9 @@ const BlogPost = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Scroll to top when component mounts or slug changes
+    window.scrollTo(0, 0);
+
     const fetchArticle = async () => {
       if (!slug) return;
 

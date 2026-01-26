@@ -114,7 +114,8 @@ const Contact = () => {
               <h2 className="text-2xl font-display font-semibold mb-8">Get in Touch</h2>
               
               <div className="space-y-6">
-                <a 
+                {/* Email temporarily hidden */}
+                {/* <a
                   href="mailto:hello@nordai.studio"
                   className="flex items-start gap-4 p-4 rounded-xl bg-muted/50 hover:bg-muted transition-colors"
                 >
@@ -125,8 +126,8 @@ const Contact = () => {
                     <p className="font-medium mb-1">Email Us</p>
                     <p className="text-muted-foreground">{t('contact.info.email')}</p>
                   </div>
-                </a>
-                
+                </a> */}
+
                 <div className="flex items-start gap-4 p-4 rounded-xl bg-muted/50">
                   <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
                     <MapPin className="w-6 h-6 text-primary-foreground" />

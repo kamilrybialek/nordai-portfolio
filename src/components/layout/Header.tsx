@@ -30,7 +30,10 @@ const Header = () => {
     e.preventDefault();
     setIsMenuOpen(false);
 
-    if (isHomePage && item.scrollId) {
+    if (item.href === '/' && isHomePage) {
+      // On home page, clicking Home scrolls to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (isHomePage && item.scrollId) {
       // On home page, scroll to section
       const element = document.getElementById(item.scrollId);
       element?.scrollIntoView({ behavior: 'smooth' });
