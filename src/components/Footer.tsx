@@ -101,7 +101,8 @@ const Footer = () => {
               {t('footer.connect')}
             </h4>
             <ul className="space-y-5">
-              <li>
+              {/* Email temporarily hidden */}
+              {/* <li>
                 <a
                   href="mailto:hello@nordai.studio"
                   className="flex items-center gap-3 text-muted-foreground hover:text-foreground text-sm transition-colors"
@@ -109,7 +110,7 @@ const Footer = () => {
                   <Mail className="w-4 h-4" />
                   {t('contact.info.email')}
                 </a>
-              </li>
+              </li> */}
               <li className="flex items-center gap-3 text-muted-foreground text-sm">
                 <MapPin className="w-4 h-4" />
                 {t('contact.info.location')}
