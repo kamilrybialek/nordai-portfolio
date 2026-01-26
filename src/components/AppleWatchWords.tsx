@@ -1,8 +1,14 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 
 const AppleWatchWords = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [bgColor, setBgColor] = useState('#ffffff');
+
+  useEffect(() => {
+    // Get the actual background color from the page
+    const rootStyles = getComputedStyle(document.documentElement);
+    const bg = rootStyles.getPropertyValue('--background') || '#ffffff';
+    setBgColor(bg.trim());
+  }, []);
 
   const words = [
     'AI',
@@ -15,86 +21,99 @@ const AppleWatchWords = () => {
     'Digital',
     'Smart',
     'Growth',
+    'AI', // Repeat first word for seamless loop
   ];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % words.length);
-    }, 2500);
-
-    return () => clearInterval(interval);
-  }, [words.length]);
-
-  // Get visible words (3 before, current, 3 after)
-  const getVisibleWords = () => {
-    const visible = [];
-    for (let i = -3; i <= 3; i++) {
-      const index = (currentIndex + i + words.length) % words.length;
-      visible.push({
-        text: words[index],
-        offset: i,
-      });
-    }
-    return visible;
-  };
-
-  const visibleWords = getVisibleWords();
-
   return (
-    <div
-      ref={containerRef}
-      className="relative w-full h-full flex items-center justify-center"
-      style={{
-        minHeight: '400px',
-        perspective: '1000px',
-      }}
-    >
-      <div className="relative w-full h-full">
-        {visibleWords.map((word, idx) => {
-          const { offset, text } = word;
+    <div className="w-full h-full flex items-center justify-center" style={{ minHeight: '400px' }}>
+      <div className="flex items-center gap-4">
+        <p className="text-4xl md:text-5xl font-bold text-muted-foreground">
+          We deliver
+        </p>
 
-          // Calculate 3D rotation and position
-          const rotateY = offset * 35; // Degrees
-          const translateZ = Math.abs(offset) === 0 ? 100 : -Math.abs(offset) * 50;
-          const opacity = Math.max(0, 1 - Math.abs(offset) * 0.3);
-          const scale = Math.max(0.4, 1 - Math.abs(offset) * 0.15);
-
-          return (
-            <div
-              key={`${text}-${idx}`}
-              className="absolute inset-0 flex items-center justify-center font-bold cursor-pointer select-none"
-              style={{
-                transform: `rotateY(${rotateY}deg) translateZ(${translateZ}px) scale(${scale})`,
-                opacity: opacity,
-                transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
-                fontSize: offset === 0 ? '3rem' : '2rem',
-                color: offset === 0 ? '#000000' : '#666666',
-                zIndex: offset === 0 ? 10 : Math.max(0, 10 - Math.abs(offset)),
-                pointerEvents: offset === 0 ? 'auto' : 'none',
-                textShadow: offset === 0 ? '0 2px 8px rgba(0,0,0,0.1)' : 'none',
-              }}
-            >
-              {text}
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Navigation dots */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2">
-        {words.map((_, idx) => (
-          <button
-            key={idx}
-            onClick={() => setCurrentIndex(idx)}
-            className="w-2 h-2 rounded-full transition-all duration-300"
+        <div className="relative" style={{
+          height: '60px',
+          overflow: 'hidden',
+        }}>
+          {/* Gradient mask overlay */}
+          <div
+            className="absolute inset-0 pointer-events-none z-10"
             style={{
-              backgroundColor: idx === currentIndex ? '#000000' : '#cccccc',
-              transform: idx === currentIndex ? 'scale(1.2)' : 'scale(1)',
+              background: `linear-gradient(
+                to bottom,
+                hsl(var(--background)) 0%,
+                transparent 25%,
+                transparent 75%,
+                hsl(var(--background)) 100%
+              )`,
             }}
-            aria-label={`Go to word ${idx + 1}`}
           />
-        ))}
+
+          {/* Animated words */}
+          <div
+            className="flex flex-col"
+            style={{
+              animation: 'slideWords 15s infinite',
+            }}
+          >
+            {words.map((word, index) => (
+              <span
+                key={index}
+                className="text-4xl md:text-5xl font-bold text-primary block"
+                style={{
+                  height: '60px',
+                  lineHeight: '60px',
+                  paddingLeft: '0.5rem',
+                }}
+              >
+                {word}
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
+
+      {/* Keyframes animation */}
+      <style>{`
+        @keyframes slideWords {
+          0% {
+            transform: translateY(0);
+          }
+          9% {
+            transform: translateY(-60px);
+          }
+          18% {
+            transform: translateY(-120px);
+          }
+          27% {
+            transform: translateY(-180px);
+          }
+          36% {
+            transform: translateY(-240px);
+          }
+          45% {
+            transform: translateY(-300px);
+          }
+          54% {
+            transform: translateY(-360px);
+          }
+          63% {
+            transform: translateY(-420px);
+          }
+          72% {
+            transform: translateY(-480px);
+          }
+          81% {
+            transform: translateY(-540px);
+          }
+          90% {
+            transform: translateY(-600px);
+          }
+          100% {
+            transform: translateY(-600px);
+          }
+        }
+      `}</style>
     </div>
   );
 };
