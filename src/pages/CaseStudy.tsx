@@ -13,6 +13,9 @@ const CaseStudy = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Scroll to top when component mounts or id changes
+    window.scrollTo(0, 0);
+
     const fetchProject = async () => {
       if (!id) return;
 
