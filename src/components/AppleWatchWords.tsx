@@ -27,7 +27,13 @@ const AppleWatchWords = () => {
   return (
     <div className="w-full h-full flex items-center justify-start">
       <div className="flex items-center gap-3 flex-wrap">
-        <p className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground whitespace-nowrap">
+        <p
+          className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground whitespace-nowrap"
+          style={{
+            lineHeight: '48px',
+            height: '48px',
+          }}
+        >
           We deliver
         </p>
 
