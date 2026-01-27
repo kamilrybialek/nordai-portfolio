@@ -26,14 +26,15 @@ const AppleWatchWords = () => {
 
   return (
     <div className="w-full h-full flex items-center justify-center" style={{ minHeight: '400px' }}>
-      <div className="flex items-center gap-4">
-        <p className="text-4xl md:text-5xl font-bold text-muted-foreground">
+      <div className="flex items-center gap-4 flex-nowrap">
+        <p className="text-4xl md:text-5xl font-bold text-primary whitespace-nowrap">
           We deliver
         </p>
 
         <div className="relative" style={{
           height: '60px',
           overflow: 'hidden',
+          minWidth: '250px',
         }}>
           {/* Gradient mask overlay */}
           <div
@@ -59,7 +60,7 @@ const AppleWatchWords = () => {
             {words.map((word, index) => (
               <span
                 key={index}
-                className="text-4xl md:text-5xl font-bold text-primary block"
+                className="text-4xl md:text-5xl font-bold text-muted-foreground block"
                 style={{
                   height: '60px',
                   lineHeight: '60px',
