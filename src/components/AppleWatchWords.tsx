@@ -27,7 +27,7 @@ const AppleWatchWords = () => {
   return (
     <div className="w-full h-full flex items-center justify-center" style={{ minHeight: '400px' }}>
       <div className="flex items-center gap-4 flex-nowrap">
-        <p className="text-4xl md:text-5xl font-bold text-primary whitespace-nowrap">
+        <p className="text-4xl md:text-5xl font-bold text-muted-foreground whitespace-nowrap">
           We deliver
         </p>
 
@@ -60,7 +60,7 @@ const AppleWatchWords = () => {
             {words.map((word, index) => (
               <span
                 key={index}
-                className="text-4xl md:text-5xl font-bold text-muted-foreground block"
+                className="text-4xl md:text-5xl font-bold text-primary block"
                 style={{
                   height: '60px',
                   lineHeight: '60px',
