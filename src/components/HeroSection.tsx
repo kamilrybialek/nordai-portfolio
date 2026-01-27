@@ -62,7 +62,7 @@ const HeroSection = () => {
           </div>
 
           <div className="relative hidden lg:block">
-            <div className="aspect-square flex items-center justify-center">
+            <div className="aspect-square flex items-start justify-center pt-0">
               <AppleWatchWords />
             </div>
           </div>
