@@ -16,6 +16,11 @@ const Blog = () => {
   const [articles, setArticles] = useState<BlogArticle[]>([]);
 
   useEffect(() => {
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     getBlogArticles().then(allArticles => {
       // Filter articles by current language
       const currentLang = i18n.language;

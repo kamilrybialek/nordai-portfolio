@@ -16,6 +16,11 @@ const Portfolio = () => {
   const [projects, setProjects] = useState<PortfolioProject[]>([]);
 
   useEffect(() => {
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     getPortfolioProjects().then(allProjects => {
       // Filter projects by current language
       const currentLang = i18n.language;
